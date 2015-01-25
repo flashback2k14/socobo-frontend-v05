@@ -1,0 +1,275 @@
+<!-- Polymer -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- Roboto Font -->
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<!-- Drawer Panel -->
+<link rel="import" href="../../bower_components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
+<!-- Elements for Drawer Menu Panel -->
+<link rel="import" href="../../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<!-- Toolbar -->
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<!-- Icon Sets -->
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<!-- Paper Effects -->
+<link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
+<!-- Ripple Effect -->
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<!-- Route Controller -->
+<link rel="import" href="../../bower_components/flatiron-director/flatiron-director.html">
+<!-- Core Pages -->
+<link rel="import" href="../../bower_components/core-pages/core-pages.html">
+<!-- Circle Image View -->
+<link rel="import" href="../../bower_components/image-mask/image-mask.html">
+<!-- Toast -->
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<!-- Own Socobo Elements -->
+<link rel="import" href="../socobo-home/socobo-home.html">
+<link rel="import" href="../socobo-signup/socobo-signup.html">
+<link rel="import" href="../socobo-login/socobo-login.html">
+<link rel="import" href="../socobo-myprofile/socobo-myprofile.html">
+<link rel="import" href="../socobo-myfridge/socobo-myfridge.html">
+<link rel="import" href="../socobo-myrecipes/socobo-myrecipes.html">
+<link rel="import" href="../socobo-bugreport/socobo-bugreport.html">
+<link rel="import" href="../socobo-about/socobo-about.html">
+
+
+<polymer-element name="socobo-app">
+  <template>
+  <!--<template>-->
+    <style>
+      /*Default Element Settings*/
+      :host {
+        font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+        margin-left: 10px;
+      }
+
+      /*Drawer Panel Style*/
+      [drawer] {
+        background-color: #fff;
+      }
+
+      [main] > div {
+        padding: 1em;
+      }
+
+      [drawer] > core-item {
+        padding: 1em;
+      }
+
+      [main] paper-checkbox {
+        margin-right: 1em;
+      }
+
+      [main] {
+        height: 100%;
+        background-color: #f1f1f3;
+      }
+
+      [drawer] core-toolbar {
+        background-color: #4F7DC9;
+        color: #fff;
+      }
+
+      [main] core-toolbar {
+        background-color: #526E9C;
+        color: #fff;
+      }
+
+      [drawer] image-mask {
+        margin-left: 14px;
+        margin-bottom: 5px;
+      }
+
+      [drawer] p {
+        margin: 16px 0px 0px 10px;
+        font-size: 14px;
+      }
+
+      /*core menu + item*/
+      core-menu {
+        color: #01579b;
+        margin: 10px 0 0 0;
+      }
+
+      core-menu > paper-item {
+        transition: all 200ms ease-in-out;
+      }
+
+      paper-item a {
+        text-decoration: none;
+        color: currentcolor;
+        margin-left: 5px;
+      }
+
+      core-menu > paper-item.core-selected {
+        background: #e1f5fe;
+      }
+
+      /*testDialog
+      #testDialog {
+        visibility: hidden;
+        margin: 50px;
+        width: 650px;
+        height: 440px;
+      }*/
+    </style>
+
+    <!-- Element Content -->
+
+    <!-- Route controller -->
+    <flatiron-director route="{{route}}" autoHash></flatiron-director>
+
+    <!-- Drawer Panel -->
+    <core-drawer-panel id="drawerPanel" responsiveWidth="600px">
+
+      <!-- Area: Drawer -->
+      <core-header-panel drawer mode="waterfall">
+        <!-- Area: Toolbar Drawer -->
+        <paper-shadow z="1">
+          <core-toolbar class="medium-tall">
+            <span flex>Menu</span>
+            <div class="bottom fit" horizontal layout>
+              <!-- Profile Pic -->
+              <image-mask shape="square" size="50" src="{{user.pictureUrl}}" title="User Profile Picture"></image-mask>
+              <!-- Profile Username -->
+              <p flex>{{user.name}}</p>
+            </div>
+          </core-toolbar>
+        </paper-shadow>
+        <!-- Menu -->
+        <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}">
+
+          <template repeat="{{page in pages}}">
+            <paper-item hash="{{page.hash}}" noink>
+              <core-icon icon="{{page.icon}}"></core-icon>
+              <a href="#{{page.hash}}">{{page.name}}</a>
+            </paper-item>
+          </template>
+
+        </core-menu>
+      </core-header-panel>
+
+      <!-- Area: Main -->
+      <core-header-panel main mode="waterfall">
+
+        <!-- Area: Toolbar Main -->
+        <paper-shadow z="1">
+          <core-toolbar class="medium-tall">
+            <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
+            <span flex>socobo</span>
+            <paper-icon-button icon="refresh" on-tap="{{refreshAction}}"></paper-icon-button>
+            <paper-icon-button icon="close" on-tap="{{logout}}"></paper-icon-button>
+            <paper-icon-button icon="more-vert" on-tap="{{settingsAction}}"></paper-icon-button>
+          </core-toolbar>
+        </paper-shadow>
+
+        <!-- Area: Content -->
+        <div>
+          <core-pages selected="{{route}}" valueattr="hash">
+
+            <div hash="home" vertical layout center center-justified>
+              <socobo-home></socobo-home>
+            </div>
+
+            <div hash="signup" vertical layout center center-justified>
+              <socobo-signup id="socoboSignUp"></socobo-signup>
+            </div>
+
+            <div hash="login" vertical layout center center-justified>
+              <socobo-login id="socoboLogin"></socobo-login>
+            </div>
+
+            <div hash="myprofile" vertical layout center center-justified>
+              <socobo-myprofile></socobo-myprofile>
+            </div>
+
+            <div hash="myfridge" vertical layout center center-justified>
+              <socobo-myfridge></socobo-myfridge>
+            </div>
+
+            <div hash="myrecipes" vertical layout center center-justified>
+              <socobo-myrecipes></socobo-myrecipes>
+            </div>
+
+            <div hash="bugreport" vertical layout center center-justified>
+              <socobo-bugreport></socobo-bugreport>
+            </div>
+
+            <div hash="about" vertical layout center center-justified>
+              <socobo-about></socobo-about>
+            </div>
+          </core-pages>
+        </div>
+
+        <!--<paper-action-dialog id="testDialog" backdrop autoCloseDisabled layered="false">
+          <socobo-signup></socobo-signup>
+        </paper-action-dialog>-->
+
+        <paper-toast id="toast"
+                     duration="1500"></paper-toast>
+
+      </core-header-panel>
+    </core-drawer-panel>
+  </template>
+
+  <script>
+    Polymer('socobo-app', {
+
+      user: {
+        name: 'Username',
+        pictureUrl: 'images/github.png'
+      },
+
+      DEFAULT_ROUTE: 'home',
+
+      pages: [
+        {name: 'Home', icon: 'home', hash: 'home'},
+        {name: 'SignUp', icon: 'create', hash: 'signup'},
+        {name: 'Login', icon: 'exit-to-app', hash: 'login'},
+        {name: 'My Profile', icon: 'account-circle', hash: 'myprofile'},
+        {name: 'My Fridge', icon: 'dashboard', hash: 'myfridge'},
+        {name: 'My Recipes', icon: 'assignment', hash: 'myrecipes'},
+        {name: 'Report a Bug', icon: 'bug-report', hash: 'bugreport'},
+        {name: 'About', icon: 'info', hash: 'about'}
+      ],
+
+      ready: function() {
+        this.route = this.route || this.DEFAULT_ROUTE;
+
+        signUp = this.$.socoboSignUp;
+        signUp.addEventListener('signup-response-profile', function(e) {
+
+          this.user.name = e.detail.username;
+          this.user.pictureUrl = e.detail.pictureUrl;
+        });
+      },
+
+      refreshAction: function() {
+
+        this.$.toast.text = "Refreshing Page...";
+        this.$.toast.show();
+      },
+
+      logout: function() {
+
+        this.$.toast.text = "Logging out...";
+        this.$.toast.show();
+      },
+
+      settingsAction: function() {
+
+        this.$.toast.text = "Settings...";
+        this.$.toast.show();
+        /*if (this.$.testDialog.style.visibiliy === 'visible') {
+          this.$.testDialog.style.visibility = 'hidden';
+        } else {
+          this.$.testDialog.style.visibility = 'visible';
+        }*/
+      }
+    });
+  </script>
+</polymer-element>

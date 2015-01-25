@@ -1,0 +1,24 @@
+{
+  "name": "socobo-frontend",
+  "description": "Frontend Project for Socobo",
+  "homepage": "",
+  "keywords": [
+  ],
+  "author": "flashback2k14 <https://github.com/flashback2k14>",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#latest",
+    "paper-elements": "Polymer/paper-elements#latest",
+    "core-elements": "Polymer/core-elements#latest",
+    "font-roboto": "Polymer/font-roboto#latest",
+    "flatiron-director": "PolymerLabs/flatiron-director#master"
+  }
+}

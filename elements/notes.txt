@@ -1,0 +1,25 @@
+###################################################
+##                                               ##
+##                ToDos                          ##
+##                                               ##
+###################################################
+
+- fix cardview resizing in main panel on mobile resolution
+- login / signup as popup? how?
+- logout button in toolbar --> functionality
+- recipe in recipes
+  --> 3 elements (viewholder with fab for opening dialog (popup?) for new recipe, recipes list, recipe
+- bugreport
+  --> username + switch button (frontend - backend) as popup
+  --> redirect to github page
+
+
+###################################################
+##                                               ##
+##                Questions                      ##
+##                                               ##
+###################################################
+
+- Debugging Polymer Elements?!?!?!?!??!
+- Handling Bad Requests from server
+- Communication between components
