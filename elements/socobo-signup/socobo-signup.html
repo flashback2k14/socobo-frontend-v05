@@ -128,21 +128,29 @@
         this.$.toast.text = "Response entered!";
         this.$.toast.show();
 
-        var registerData = JSON.parse(e.detail.response.d);
+        var statusCode = e.detail.xhr.status;
 
-        //console.log('Registerdata: ' + registerData);
+        if (statusCode === 200) {
 
-        var username = registerData.userName;
-    		var name = registerData.name;
-    		var email = registerData.email;
-    		var pictureUrl = registerData.pictureUrl;
+          var registerData = e.detail.response;
 
-    		console.log('Username ' + username);
-    		console.log('Name ' + name);
-    		console.log('Email ' + email);
-    		console.log('PictureUrl ' + pictureUrl);
+          console.log('Registerdata: ' + registerData);
 
-    		this.fire('signup-response-profile', {username: this.username, pictureurl: this.pictureUrl});
+          var username = registerData.userName;
+          var name = registerData.name;
+          var email = registerData.email;
+          var pictureUrl = registerData.pictureUrl;
+
+          console.log('Username ' + username);
+          console.log('Name ' + name);
+          console.log('Email ' + email);
+          console.log('PictureUrl ' + pictureUrl);
+
+          this.fire('signup-response-ok', {username: username, pictureurl: pictureUrl});
+        } else {
+
+          this.fire('signup-response-failed');
+        }
       }
     });
 

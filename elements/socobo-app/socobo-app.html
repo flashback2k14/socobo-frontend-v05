@@ -134,9 +134,9 @@
             <span flex>Menu</span>
             <div class="bottom fit" horizontal layout>
               <!-- Profile Pic -->
-              <image-mask shape="square" size="50" src="{{user.pictureUrl}}" title="User Profile Picture"></image-mask>
+              <image-mask id="imUserPicture" shape="square" size="50" src="{{userPictureUrl}}" title="User Profile Picture"></image-mask>
               <!-- Profile Username -->
-              <p flex>{{user.name}}</p>
+              <p id="pUserName" flex>{{userName}}</p>
             </div>
           </core-toolbar>
         </paper-shadow>
@@ -219,10 +219,9 @@
   <script>
     Polymer('socobo-app', {
 
-      user: {
-        name: 'Username',
-        pictureUrl: 'images/github.png'
-      },
+      authToken: '',
+      userName: 'Username',
+      userPictureUrl: 'images/github.png',
 
       DEFAULT_ROUTE: 'home',
 
@@ -240,35 +239,50 @@
       ready: function() {
         this.route = this.route || this.DEFAULT_ROUTE;
 
-        signUp = this.$.socoboSignUp;
-        signUp.addEventListener('signup-response-profile', function(e) {
+        signUpElement = this.$.socoboSignUp;
+        loginElement = this.$.socoboLogin;
 
-          this.user.name = e.detail.username;
-          this.user.pictureUrl = e.detail.pictureUrl;
+        signUpElement.addEventListener('signup-response-ok', function(e) {
+          this.userName = e.detail.username;
+          //this.$.pUserName.text = this.userName;
+
+          this.userPictureUrl = e.detail.pictureUrl;
+          //this.$.imUserPicture.src = this.userPictureUrl;
+
+          this.route = 'home';
+        });
+
+        signUpElement.addEventListener('signup-response-failed', function(e) {
+          this.$.toast.text = "SignUp failed...";
+          this.$.toast.show();
+          this.route = 'signup';
+        });
+
+  		  loginElement.addEventListener('login-response-ok', function(e) {
+          this.authToken = e.detail.authToken;
+          this.route = 'home';
+        });
+
+        loginElement.addEventListener('login-response-failed', function(e) {
+          this.$.toast.text = "Login failed...";
+          this.$.toast.show();
+          this.route = 'login';
         });
       },
 
       refreshAction: function() {
-
         this.$.toast.text = "Refreshing Page...";
         this.$.toast.show();
       },
 
       logout: function() {
-
         this.$.toast.text = "Logging out...";
         this.$.toast.show();
       },
 
       settingsAction: function() {
-
         this.$.toast.text = "Settings...";
         this.$.toast.show();
-        /*if (this.$.testDialog.style.visibiliy === 'visible') {
-          this.$.testDialog.style.visibility = 'hidden';
-        } else {
-          this.$.testDialog.style.visibility = 'visible';
-        }*/
       }
     });
   </script>

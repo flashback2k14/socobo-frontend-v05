@@ -57,7 +57,7 @@
 
         <paper-input id="paper_input_email"
                      type="email"
-                     value="{{email}}"
+                     value="{{emailAddress}}"
                      label="Enter your email address..."
                      error="no email address entered"
                      validationmessage="Please fill out this field."
@@ -79,7 +79,7 @@
 
         <core-ajax
     			id="socoboLoginForm" url="/login" method="POST"
-    			params='{"email":"{{email}}", "password": "{{password}}"}'
+    			params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
     			handleAs="json"
     			response="{{resp}}"
     			on-core-response="{{handleLoginResponse}}">
@@ -112,19 +112,25 @@
         this.$.toast.text = "Response entered!";
         this.$.toast.show();
 
-        var registerData = JSON.parse(e.detail.response.d);
+        var statusCode = e.detail.xhr.status;
 
-        var authToken = registerData.authToken;
-    		/*var name = registerData.name;
-    		var email = registerData.email;
-    		var pictureUrl = registerData.pictureUrl;*/
+        if (statusCode === 200) {
 
-    		console.log('AuthToken ' + authToken);
-    		/*console.log('Name ' + name);
-    		console.log('Email ' + email);
-    		console.log('PictureUrl ' + pictureUrl);*/
+          var registerData = e.detail.response;
 
-    		this.fire('login-response-profile', {authToken: this.authToken});
+          var authToken = registerData.authToken;
+          /*var userName = registerData.userName;
+          var pictureUrl = registerData.pictureUrl;*/
+
+          console.log('AuthToken ' + authToken);
+          /*console.log('Username ' + userName);
+          console.log('PictureUrl ' + pictureUrl);*/
+
+          this.fire('login-response-ok', {authToken: authToken});
+        } else {
+
+          this.fire('login-response-failed');
+        }
       }
     });
 
