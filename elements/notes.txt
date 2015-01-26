@@ -20,6 +20,6 @@
 ##                                               ##
 ###################################################
 
-- Debugging Polymer Elements?!?!?!?!??!
-- Handling Bad Requests from server
-- Communication between components
+- Debugging Polymer Elements?!?!?!?!??! - check
+- Handling Bad Requests from server     - check
+- Communication between components      - check
