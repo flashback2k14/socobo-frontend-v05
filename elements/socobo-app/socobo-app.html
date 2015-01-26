@@ -134,9 +134,9 @@
             <span flex>Menu</span>
             <div class="bottom fit" horizontal layout>
               <!-- Profile Pic -->
-              <image-mask id="imUserPicture" shape="square" size="50" src="{{userPictureUrl}}" title="User Profile Picture"></image-mask>
+              <image-mask shape="square" size="50" src="{{userPictureUrl}}" title="User Profile Picture"></image-mask>
               <!-- Profile Username -->
-              <p id="pUserName" flex>{{userName}}</p>
+              <p flex>{{userName}}</p>
             </div>
           </core-toolbar>
         </paper-shadow>
@@ -176,11 +176,17 @@
             </div>
 
             <div hash="signup" vertical layout center center-justified>
-              <socobo-signup id="socoboSignUp"></socobo-signup>
+              <socobo-signup id="socoboSignUp"
+                             on-signup-response-ok="{{signupOk}}"
+                             on-signup-response-failed="{{signupFailed}}">
+              </socobo-signup>
             </div>
 
             <div hash="login" vertical layout center center-justified>
-              <socobo-login id="socoboLogin"></socobo-login>
+              <socobo-login id="socoboLogin"
+                            on-login-response-ok="{{loginOk}}"
+                            on-login-response-failed="{{loginFailed}}">
+              </socobo-login>
             </div>
 
             <div hash="myprofile" vertical layout center center-justified>
@@ -205,10 +211,6 @@
           </core-pages>
         </div>
 
-        <!--<paper-action-dialog id="testDialog" backdrop autoCloseDisabled layered="false">
-          <socobo-signup></socobo-signup>
-        </paper-action-dialog>-->
-
         <paper-toast id="toast"
                      duration="1500"></paper-toast>
 
@@ -219,12 +221,53 @@
   <script>
     Polymer('socobo-app', {
 
-      authToken: '',
-      userName: 'Username',
-      userPictureUrl: 'images/github.png',
+      /**
+       * @variable: authToken
+       * @datatype: String
+       * @defaultValue: undefined
+       * @description:
+       * - ! usage unknown (at the moment :-))
+       */
+      authToken: undefined,
 
+      /**
+       * @variable: userName
+       * @datatype: String
+       * @defaultValue: 'Username'
+       * @description:
+       * - it's self-describing
+       */
+      userName: 'Username',
+
+      /**
+       * @variable: userPictureUrl
+       * @datatype: String
+       * @defaultValue: '/assets/images/github.png'
+       * @description:
+       * - it's self-describing
+       * - ! changing for production
+       */
+      userPictureUrl: '/assets/images/github.png',
+
+      /**
+       * @variable: DEFAULT_ROUTE
+       * @datatype: String
+       * @defaultValue: 'home'
+       * @description:
+       * - default navigation start point in menu
+       */
       DEFAULT_ROUTE: 'home',
 
+      /**
+       * @variable: pages
+       * @datatype: array
+       * @defaultValue: object w/ parameter name, icon, hash
+       * @description:
+       * - set the navigation menu
+       * - name: visual Name for menu item
+       * - icon: icon for menu item
+       * - hash: used for navigation
+       */
       pages: [
         {name: 'Home', icon: 'home', hash: 'home'},
         {name: 'SignUp', icon: 'create', hash: 'signup'},
@@ -236,52 +279,109 @@
         {name: 'About', icon: 'info', hash: 'about'}
       ],
 
+	    /**
+       * @function: ready
+       * @params:
+       * @description:
+       * - default polymer function
+       * - is called after component is fully loaded
+       * - sets the route for navigation
+       */
       ready: function() {
         this.route = this.route || this.DEFAULT_ROUTE;
-
-        signUpElement = this.$.socoboSignUp;
-        loginElement = this.$.socoboLogin;
-
-        signUpElement.addEventListener('signup-response-ok', function(e) {
-          this.userName = e.detail.username;
-          //this.$.pUserName.text = this.userName;
-
-          this.userPictureUrl = e.detail.pictureUrl;
-          //this.$.imUserPicture.src = this.userPictureUrl;
-
-          this.route = 'home';
-        });
-
-        signUpElement.addEventListener('signup-response-failed', function(e) {
-          this.$.toast.text = "SignUp failed...";
-          this.$.toast.show();
-          this.route = 'signup';
-        });
-
-  		  loginElement.addEventListener('login-response-ok', function(e) {
-          this.authToken = e.detail.authToken;
-          this.route = 'home';
-        });
-
-        loginElement.addEventListener('login-response-failed', function(e) {
-          this.$.toast.text = "Login failed...";
-          this.$.toast.show();
-          this.route = 'login';
-        });
       },
 
+      /**
+       * @function: signupOk
+       * @params: e - event
+       * @description:
+       * - is called from socobo-signup if the signup was successfully
+       * - sets the Username and Profile picture to the local variable
+       * - sets the Username and Profile picture to the Toolbar
+       * - redirects to socobo-home
+       */
+      signupOk: function(e) {
+        this.userName = e.detail.username;
+        this.userPictureUrl = e.detail.pictureurl;
+        this.route = 'home';
+      },
+
+      /**
+       * @function: signupFailed
+       * @params:
+       * @description:
+       * - is called from socobo-signup if the signup failed
+       * - sets the Username and Profile picture to the Toolbar
+       * - shows a toast message to inform the user
+       * - ? redirects to socobo-signup (maybe unnecessary)
+       */
+      signupFailed: function() {
+        this.$.toast.text = 'SignUp failed...';
+        this.$.toast.show();
+        this.route = 'signup';
+      },
+
+      /**
+       * @function: loginOk
+       * @params: e - event
+       * @description:
+       * - is called from socobo-login if the login was successfully
+       * - sets the authToken to the local variable
+       * - redirects to socobo-home
+       * - ! at the moment no specific use for authToken
+       */
+      loginOk: function(e) {
+        this.authToken = e.detail.authToken;
+        this.route = 'home';
+      },
+
+      /**
+       * @function: loginFailed
+       * @params: e - event
+       * @description:
+       * - is called from socobo-login if the login failed
+       * - shows a toast message to inform the user
+       * - ? redirects to socobo-login (maybe unnecessary)
+       */
+      loginFailed: function() {
+        this.$.toast.text = 'Login failed...';
+        this.$.toast.show();
+        this.route = 'login';
+      },
+
+      /**
+       * @function: refreshAction
+       * @params:
+       * @description:
+       * - shows a toast message to inform the user
+       * - ! at the moment no functionality
+       */
       refreshAction: function() {
-        this.$.toast.text = "Refreshing Page...";
+        this.$.toast.text = 'Refreshing Page...';
         this.$.toast.show();
       },
 
+      /**
+       * @function: logout
+       * @params:
+       * @description:
+       * - shows a toast message to inform the user
+       * - ! at the moment no functionality
+       */
       logout: function() {
-        this.$.toast.text = "Logging out...";
+        this.$.toast.text = 'Logging out...';
         this.$.toast.show();
       },
 
+      /**
+       * @function: settingsAction
+       * @params:
+       * @description:
+       * - shows a toast message to inform the user
+       * - ! at the moment no functionality
+       */
       settingsAction: function() {
-        this.$.toast.text = "Settings...";
+        this.$.toast.text = 'Settings...';
         this.$.toast.show();
       }
     });

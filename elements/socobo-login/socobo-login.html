@@ -78,15 +78,12 @@
                    recenteringtouch end></paper-fab>
 
         <core-ajax
-    			id="socoboLoginForm" url="/login" method="POST"
-    			params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
-    			handleAs="json"
-    			response="{{resp}}"
-    			on-core-response="{{handleLoginResponse}}">
-    		</core-ajax>
-
-    		<!-- Testing -->
-    		<textarea style="padding: 5px; margin: 5px; width: 60%" value="Auth-Token: {{resp.authToken}}"></textarea>
+          id="socoboLoginForm" url="/login" method="POST"
+          params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
+          handleAs="json"
+          on-core-response="{{handleLoginOnResponse}}"
+          on-core-error="{{handleLoginOnError}}">
+        </core-ajax>
 
       </core-card>
     </paper-shadow>
@@ -99,15 +96,28 @@
   <script>
 
     Polymer('socobo-login', {
-      //fire form content to backend
+      /**
+       * @function: loginSubmit
+       * @params:
+       * @description:
+       * - fire form content to backend
+       * - shows a toast message to inform the user
+       */
       loginSubmit: function(){
         this.$.socoboLoginForm.go();
         this.$.toast.text = "Login submitted!";
         this.$.toast.show();
       },
 
-      //handle response from backend
-      handleLoginResponse: function(e) {
+      /**
+       * @function: handleLoginOnResponse
+       * @params: e - event
+       * @description:
+       * - handle response from backend
+       * - shows a toast message to inform the user
+       * - firing custom event to socobo-app with userData
+       */
+      handleLoginOnResponse: function(e) {
 
         this.$.toast.text = "Response entered!";
         this.$.toast.show();
@@ -115,9 +125,7 @@
         var statusCode = e.detail.xhr.status;
 
         if (statusCode === 200) {
-
           var registerData = e.detail.response;
-
           var authToken = registerData.authToken;
           /*var userName = registerData.userName;
           var pictureUrl = registerData.pictureUrl;*/
@@ -128,12 +136,22 @@
 
           this.fire('login-response-ok', {authToken: authToken});
         } else {
-
           this.fire('login-response-failed');
         }
+      },
+
+      /**
+       * @function: handleLoginOnError
+       * @params: e - event
+       * @description:
+       * - handle error from backend
+       * - firing custom event to socobo-app
+       */
+      handleLoginOnError: function(e) {
+        console.log('handleLoginOnError: ' + e.detail.xhr.status);
+        this.fire('login-response-failed');
       }
     });
 
   </script>
-
 </polymer-element>

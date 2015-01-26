@@ -19,7 +19,7 @@
       #core_card_signup {
         margin-top: 50px;
         width: 650px;
-        height: 440px;
+        height: 400px;
         border-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         background-color: rgb(255, 255, 255);
@@ -95,15 +95,12 @@
                    recenteringtouch end></paper-fab>
 
         <core-ajax
-    			id="socoboSignUpForm" url="/signup" method="POST"
-    			params='{"userName":"{{userName}}", "email":"{{email}}", "password": "{{password}}", "passwordRepeat": "{{passwordRepeat}}"}'
-    			handleAs="json"
-    			response="{{resp}}"
-    			on-core-response="{{handleRegisterResponse}}">
-    		</core-ajax>
-
-    		<!-- Testing -->
-    		<textarea style="padding: 5px; margin: 5px; width: 60%" value="Username:{{resp.userName}}, Name: {{resp.name}}, Email: {{resp.email}}, PictureUrl: {{resp.pictureUrl}}"></textarea>
+          id="socoboSignUpForm" url="/signup" method="POST"
+          params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
+          handleAs="json"
+          on-core-response="{{handleSignupOnResponse}}"
+          on-core-error="{{handleSignupOnError}}">
+        </core-ajax>
 
       </core-card>
     </paper-shadow>
@@ -116,14 +113,28 @@
   <script>
 
     Polymer('socobo-signup', {
-      //fire form content to backend
-      signUpSubmit: function(){
+       /**
+       * @function: signUpSubmit
+       * @params:
+       * @description:
+       * - fire form content to backend
+       * - shows a toast message to inform the user
+       */
+      signUpSubmit: function() {
         this.$.socoboSignUpForm.go();
         this.$.toast.text = "SignUp submitted!";
         this.$.toast.show();
       },
-      //handle response from backend
-      handleRegisterResponse: function(e) {
+
+      /**
+       * @function: handleSignupOnResponse
+       * @params: e - event
+       * @description:
+       * - handle response from backend
+       * - shows a toast message to inform the user
+       * - firing custom event to socobo-app with userData
+       */
+      handleSignupOnResponse: function(e) {
 
         this.$.toast.text = "Response entered!";
         this.$.toast.show();
@@ -131,15 +142,13 @@
         var statusCode = e.detail.xhr.status;
 
         if (statusCode === 200) {
+          var responseData = e.detail.response;
+          console.log('responseData: ' + responseData);
 
-          var registerData = e.detail.response;
-
-          console.log('Registerdata: ' + registerData);
-
-          var username = registerData.userName;
-          var name = registerData.name;
-          var email = registerData.email;
-          var pictureUrl = registerData.pictureUrl;
+          var username = responseData.userName;
+          var name = responseData.name;
+          var email = responseData.email;
+          var pictureUrl = responseData.pictureUrl;
 
           console.log('Username ' + username);
           console.log('Name ' + name);
@@ -148,12 +157,22 @@
 
           this.fire('signup-response-ok', {username: username, pictureurl: pictureUrl});
         } else {
-
           this.fire('signup-response-failed');
         }
+      },
+
+      /**
+       * @function: handleSignupOnError
+       * @params: e - event
+       * @description:
+       * - handle error from backend
+       * - firing custom event to socobo-app
+       */
+      handleSignupOnError: function(e) {
+        console.log('handleSignupOnError: ' + e.detail.xhr.status);
+        this.fire('signup-response-failed');
       }
     });
 
   </script>
-
 </polymer-element>
