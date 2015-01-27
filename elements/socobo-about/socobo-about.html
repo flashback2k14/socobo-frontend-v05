@@ -1,7 +1,11 @@
-<!-- Polymer -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<!-- Roboto Font -->
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
+
+<!--<link rel="import" href="../socobo-popup/socobo-popup.html">-->
+
 
 <polymer-element name="socobo-about">
   <template>
@@ -12,15 +16,62 @@
         margin-left: 10px;
       }
 
+      core-card {
+        width: 30%;
+        min-width: 320px;
+        height: 220px;
+        border-radius: 2px;
+        margin-top: 50px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        background-color: rgb(255, 255, 255);
+      }
+
+      core-toolbar {
+        color: rgb(255, 255, 255);
+        fill: rgb(255, 255, 255);
+        background-color: rgb(79, 125, 201);
+      }
+
+      paper-button, p {
+        margin: 10px;
+        padding: 10px;
+      }
+
+      paper-button.colored {
+        color: #4285f4;
+      }
+
+      paper-button[raised].colored {
+        background: #4285f4;
+        color: #fff;
+      }
     </style>
 
     <!-- Element Content -->
-    <p>PlaceHolder</p>
+    <core-card vertical layout>
+      <core-toolbar shadow>
+        <div flex>About</div>
+      </core-toolbar>
+
+      <p>PlaceHolder</p>
+      <paper-button label="Paper Button"
+                    id="paper_button"
+                    raised active
+                    class="colored"
+                    on-click="{{showPopup}}">Popup Test</paper-button>
+
+
+      <!--<socobo-popup id="testPopup" active="true" header="test"></socobo-popup>-->
+    </core-card>
 
   </template>
   <script>
     Polymer({
 
+      /*showPopup: function() {
+
+        this.$.testPopup.show();
+      }*/
     });
   </script>
 </polymer-element>

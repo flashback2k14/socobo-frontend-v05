@@ -48,45 +48,46 @@
       }
 
       /*Drawer Panel Style*/
-      [drawer] {
-        background-color: #fff;
-      }
-
-      [main] > div {
-        padding: 1em;
-      }
-
-      [drawer] > core-item {
-        padding: 1em;
-      }
-
-      [main] paper-checkbox {
-        margin-right: 1em;
+      #core_drawer_panel {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
       }
 
       [main] {
         height: 100%;
-        background-color: #f1f1f3;
+        min-width: 320px;
+        box-sizing: border-box;
+        background-color: rgb(221, 221, 221);
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        overflow: auto;
       }
 
-      [drawer] core-toolbar {
-        background-color: #4F7DC9;
-        color: #fff;
+      [drawer] {
+        height: 100%;
+        box-sizing: border-box;
+        background-color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        overflow: auto;
       }
 
-      [main] core-toolbar {
+      #core_toolbar_main {
+        color: rgb(255, 255, 255);
+        fill: rgb(255, 255, 255);
         background-color: #526E9C;
-        color: #fff;
       }
 
-      [drawer] image-mask {
-        margin-left: 14px;
-        margin-bottom: 5px;
+      #core_toolbar_drawer {
+        color: rgb(255, 255, 255);
+        fill: rgb(255, 255, 255);
+        background-color: #4F7DC9;
       }
 
-      [drawer] p {
-        margin: 16px 0px 0px 10px;
-        font-size: 14px;
+      .content {
+        height: 100%;
+        width: 100%;
       }
 
       /*core menu + item*/
@@ -109,13 +110,17 @@
         background: #e1f5fe;
       }
 
-      /*testDialog
-      #testDialog {
-        visibility: hidden;
-        margin: 50px;
-        width: 650px;
-        height: 440px;
-      }*/
+      /*User Profile*/
+      [drawer] image-mask {
+        margin-left: 14px;
+        margin-bottom: 5px;
+      }
+
+      [drawer] p {
+        margin: 16px 0px 0px 10px;
+        font-size: 14px;
+      }
+
     </style>
 
     <!-- Element Content -->
@@ -124,13 +129,14 @@
     <flatiron-director route="{{route}}" autoHash></flatiron-director>
 
     <!-- Drawer Panel -->
-    <core-drawer-panel id="drawerPanel" responsiveWidth="600px">
+    <core-drawer-panel id="drawerPanel" responsiveWidth="600px" touch-action>
 
       <!-- Area: Drawer -->
-      <core-header-panel drawer mode="waterfall">
+      <core-header-panel mode="waterfall-tall" tallClass="medium-tall" shadow drawer>
+
         <!-- Area: Toolbar Drawer -->
-        <paper-shadow z="1">
-          <core-toolbar class="medium-tall">
+        <div class="core-header">
+          <core-toolbar id="core_toolbar_drawer" class="medium-tall" shadow>
             <span flex>Menu</span>
             <div class="bottom fit" horizontal layout>
               <!-- Profile Pic -->
@@ -139,75 +145,81 @@
               <p flex>{{userName}}</p>
             </div>
           </core-toolbar>
-        </paper-shadow>
+        </div>
+
         <!-- Menu -->
-        <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}">
+        <div id="content">
+          <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}">
 
-          <template repeat="{{page in pages}}">
-            <paper-item hash="{{page.hash}}" noink>
-              <core-icon icon="{{page.icon}}"></core-icon>
-              <a href="#{{page.hash}}">{{page.name}}</a>
-            </paper-item>
-          </template>
+            <template repeat="{{page in pages}}">
+              <paper-item hash="{{page.hash}}" noink>
+                <core-icon icon="{{page.icon}}"></core-icon>
+                <a href="#{{page.hash}}">{{page.name}}</a>
+              </paper-item>
+            </template>
 
-        </core-menu>
+          </core-menu>
+        </div>
       </core-header-panel>
 
       <!-- Area: Main -->
-      <core-header-panel main mode="waterfall">
+      <core-header-panel mode="waterfall-tall" tallClass="medium-tall" shadow main>
 
         <!-- Area: Toolbar Main -->
-        <paper-shadow z="1">
-          <core-toolbar class="medium-tall">
+        <div class="core-header">
+          <core-toolbar id="core_toolbar_main" class="medium-tall" shadow>
             <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
             <span flex>socobo</span>
             <paper-icon-button icon="refresh" on-tap="{{refreshAction}}"></paper-icon-button>
             <paper-icon-button icon="close" on-tap="{{logout}}"></paper-icon-button>
             <paper-icon-button icon="more-vert" on-tap="{{settingsAction}}"></paper-icon-button>
           </core-toolbar>
-        </paper-shadow>
+        </div>
 
         <!-- Area: Content -->
-        <div>
+        <div class="content">
           <core-pages selected="{{route}}" valueattr="hash">
 
-            <div hash="home" vertical layout center center-justified>
-              <socobo-home></socobo-home>
+            <div hash="home">
+              <socobo-home vertical layout center center-justified></socobo-home>
             </div>
 
-            <div hash="signup" vertical layout center center-justified>
+            <div hash="signup">
               <socobo-signup id="socoboSignUp"
                              on-signup-response-ok="{{signupOk}}"
-                             on-signup-response-failed="{{signupFailed}}">
+                             on-signup-response-failed="{{signupFailed}}"
+                             vertical layout center center-justified>
               </socobo-signup>
             </div>
 
-            <div hash="login" vertical layout center center-justified>
+            <div hash="login">
               <socobo-login id="socoboLogin"
                             on-login-response-ok="{{loginOk}}"
-                            on-login-response-failed="{{loginFailed}}">
+                            on-login-response-failed="{{loginFailed}}"
+                            vertical layout center center-justified>
               </socobo-login>
             </div>
 
-            <div hash="myprofile" vertical layout center center-justified>
-              <socobo-myprofile></socobo-myprofile>
+            <div hash="myprofile">
+              <socobo-myprofile vertical layout center center-justified></socobo-myprofile>
             </div>
 
-            <div hash="myfridge" vertical layout center center-justified>
-              <socobo-myfridge></socobo-myfridge>
+            <div hash="myfridge">
+              <socobo-myfridge vertical layout center center-justified></socobo-myfridge>
             </div>
 
-            <div hash="myrecipes" vertical layout center center-justified>
-              <socobo-myrecipes></socobo-myrecipes>
+            <div hash="myrecipes">
+              <socobo-myrecipes vertical layout center center-justified></socobo-myrecipes>
             </div>
 
-            <div hash="bugreport" vertical layout center center-justified>
-              <socobo-bugreport></socobo-bugreport>
+            <div hash="bugreport">
+              <socobo-bugreport vertical layout center center-justified></socobo-bugreport>
             </div>
 
-            <div hash="about" vertical layout center center-justified>
-              <socobo-about></socobo-about>
+            <div hash="about">
+              <socobo-about vertical layout center center-justified></socobo-about>
             </div>
+
           </core-pages>
         </div>
 
@@ -215,6 +227,7 @@
                      duration="1500"></paper-toast>
 
       </core-header-panel>
+
     </core-drawer-panel>
   </template>
 

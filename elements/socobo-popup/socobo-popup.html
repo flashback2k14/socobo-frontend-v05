@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+
+<polymer-element name="socobo-popup">
+  <template>
+    <style>
+
+    </style>
+
+  </template>
+  <script>
+
+    Polymer('socobo-popup', {
+
+      showPopup: function() {
+
+        /**
+         * Tutorial
+         *
+         * http://jsfiddle.net/4rBaS/1/
+         */
+
+      },
+
+      blanketSize: function('popupDivVar') {
+
+        if (typeof window.innerWidth != 'undefined') {
+          viewportheight = window.innerHeight;
+	      } else {
+		      viewportheight = document.documentElement.clientHeight;
+	      }
+
+	      if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
+		      blanket_height = viewportheight;
+	      } else {
+		      if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
+			    blanket_height = document.body.parentNode.clientHeight;
+		    } else {
+			    blanket_height = document.body.parentNode.scrollHeight;
+		    }
+      }
+
+
+    });
+  </script>
+</polymer-element>

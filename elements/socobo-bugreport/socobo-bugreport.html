@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
 
 
 <polymer-element name="socobo-bugreport">
@@ -12,9 +13,11 @@
       }
 
       #core_card_bugreport {
-        width: 380px;
+        width: 30%;
+        min-width: 320px;
         height: 250px;
         border-radius: 2px;
+        margin-top: 50px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         background-color: rgb(255, 255, 255);
       }
@@ -42,27 +45,24 @@
       }
     </style>
 
-    <paper-shadow z="2">
-      <core-card id="core_card_bugreport" vertical layout>
-        <paper-shadow z="1">
-          <core-toolbar id="core_toolbar_bugreport">
-            <div id="div" flex>Bugreport</div>
-          </core-toolbar>
-        </paper-shadow>
+    <core-card id="core_card_bugreport" vertical layout shadow>
+      <paper-shadow z="2">
+        <core-toolbar id="core_toolbar_bugreport">
+          <div id="div" flex>Bugreport</div>
+        </core-toolbar>
+      </paper-shadow>
 
-        <br/>
+      <br/>
 
-        <paper-button id="btnBackend" on-click="{{btnBackend}}" raised class="colored">
-          Backend - New Issue
-        </paper-button>
+      <paper-button id="btnBackend" on-click="{{btnBackend}}" raised class="colored">
+        Backend - New Issue
+      </paper-button>
 
-        <paper-button id="btnFrontend" on-click="{{btnFrontend}}" raised class="colored">
-          Frontend - New Issue
-        </paper-button>
+      <paper-button id="btnFrontend" on-click="{{btnFrontend}}" raised class="colored">
+        Frontend - New Issue
+      </paper-button>
 
-      </core-card>
-    </paper-shadow>
-
+    </core-card>
   </template>
 
   <script>

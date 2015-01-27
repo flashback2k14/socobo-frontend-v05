@@ -12,51 +12,69 @@
         font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
         margin-left: 10px;
       }
+
       #core_card_home {
-        margin-top: 50px;
-        width: 650px;
-        height: 350px;
+        width: 70%;
+        min-width: 320px;
+        height: 320px;
         border-radius: 2px;
+        margin-top: 50px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         background-color: rgb(255, 255, 255);
       }
+
       #core_toolbar_home {
         right: 0px;
         color: rgb(255, 255, 255);
         fill: rgb(255, 255, 255);
         background-color: rgb(79, 125, 201);
       }
+
       #sectionHeadline {
         padding: 5px;
         margin: 10px;
         opacity: 1;
         font-size: 20px;
       }
+
       #sectionLorem {
         padding: 5px;
         margin: 10px;
+        height: 100%;
+        overflow: auto;
       }
     </style>
 
-    <paper-shadow z="2">
-      <core-card id="core_card_home" vertical layout>
-        <paper-shadow z="1">
-          <core-toolbar id="core_toolbar_home">
-            <div id="div" flex>Home</div>
-          </core-toolbar>
-        </paper-shadow>
+    <core-card id="core_card_home" vertical layout shadow>
+      <paper-shadow z="1">
+        <core-toolbar id="core_toolbar_home" shadow>
+          <div id="div" flex>Home</div>
+        </core-toolbar>
+      </paper-shadow>
 
-        <section id="sectionHeadline">Welcome to Socobo</section>
-        <section id="sectionLorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                                              sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                              sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                                              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                                              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                                              tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-                                              vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-                                              no sea takimata sanctus est Lorem ipsum dolor sit amet.</section>
-      </core-card>
-    </paper-shadow>
+      <br/>
+
+      <section id="sectionHeadline">
+        <h4>Welcome to Socobo</h4>
+      </section>
+
+      <br/>
+
+      <section id="sectionLorem">
+        <article>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                 sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                 sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                 clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                 tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+                 vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                 no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet,
+                 consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                 dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+                 duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+                 Lorem ipsum dolor sit amet.</article>
+      </section>
+    </core-card>
   </template>
 
   <script>

@@ -6,6 +6,8 @@
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
+
 
 <polymer-element name="socobo-login">
 
@@ -17,12 +19,14 @@
       }
 
       #core_card_login {
-        margin-top: 50px;
-        width: 650px;
-        height: 260px;
+        width: 30%;
+        min-width: 320px;
+        height: 270px;
         border-radius: 2px;
+        margin-top: 50px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         background-color: rgb(255, 255, 255);
+        /*overflow: auto;*/
       }
 
       #core_toolbar_login {
@@ -33,7 +37,9 @@
       }
 
       paper-input {
-        width: 350px;
+        width: 60%;
+        min-width: 200px;
+        max-width: 350px;
         height: 70px;
         margin: 2px 2px 2px 5px;
         padding: 2px 2px 2px 5px;
@@ -41,7 +47,9 @@
 
       /*paper input decorator*/
       paper-input-decorator {
-        width: 350px;
+        width: 60%;
+        min-width: 200px;
+        max-width: 350px;
         margin-left: 10px;
       }
 
@@ -91,45 +99,41 @@
       paper-fab {
         background-color: #e0a30b;
         position: absolute !important;
-        bottom: 16px;
+        bottom: -28px;
         right: 16px;
         z-index: 10;
       }
 
     </style>
 
-    <paper-shadow z="2">
-      <core-card id="core_card_login" vertical layout>
-        <paper-shadow z="1">
-          <core-toolbar id="core_toolbar_login">
-            <div id="div" flex>Login</div>
-          </core-toolbar>
-        </paper-shadow>
+    <core-card id="core_card_login" vertical layout>
+      <paper-shadow z="2">
+        <core-toolbar id="core_toolbar_login">
+          <div id="div" flex>Login</div>
+          <paper-fab id="paper_fab_login"
+                 icon="send"
+                 on-click="{{loginSubmit}}"
+                 recenteringtouch end></paper-fab>
+        </core-toolbar>
+      </paper-shadow>
 
-        <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
-          <input is="core-input" id="paper_input_email" type="email" value="{{emailAddress}}" required>
-        </paper-input-decorator>
+      <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
+        <input is="core-input" id="paper_input_email" type="email" value="{{emailAddress}}" required>
+      </paper-input-decorator>
 
-        <paper-input-decorator label="Enter your password..." floatingLabel error="password is required!" isInvalid="{{!$.paper_input_password.validity.valid}}" >
-          <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
-        </paper-input-decorator>
+      <paper-input-decorator label="Enter your password..." floatingLabel error="password is required!" isInvalid="{{!$.paper_input_password.validity.valid}}" >
+        <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
+      </paper-input-decorator>
 
-        <paper-fab id="paper_fab_login"
-                   icon="send"
-                   type="submit"
-                   on-click="{{loginSubmit}}"
-                   recenteringtouch end></paper-fab>
+      <core-ajax
+        id="socoboLoginForm" url="/login" method="POST"
+        params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
+        handleAs="json"
+        on-core-response="{{handleLoginOnResponse}}"
+        on-core-error="{{handleLoginOnError}}">
+      </core-ajax>
 
-        <core-ajax
-          id="socoboLoginForm" url="/login" method="POST"
-          params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
-          handleAs="json"
-          on-core-response="{{handleLoginOnResponse}}"
-          on-core-error="{{handleLoginOnError}}">
-        </core-ajax>
-
-      </core-card>
-    </paper-shadow>
+    </core-card>
 
     <paper-toast id="toast"
                  duration="1500"></paper-toast>
