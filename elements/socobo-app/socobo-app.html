@@ -25,6 +25,10 @@
 <link rel="import" href="../../bower_components/image-mask/image-mask.html">
 <!-- Toast -->
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<!-- Paper Menu Button -->
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown/paper-dropdown.html">
+<link rel="import" href="../../bower_components/paper-dropdown/paper-dropdown-transition.html">
 
 <!-- Own Socobo Elements -->
 <link rel="import" href="../socobo-home/socobo-home.html">
@@ -35,11 +39,12 @@
 <link rel="import" href="../socobo-myrecipes/socobo-myrecipes.html">
 <link rel="import" href="../socobo-bugreport/socobo-bugreport.html">
 <link rel="import" href="../socobo-about/socobo-about.html">
+<link rel="import" href="../socobo-popup/socobo-signup-popup.html">
 
 
 <polymer-element name="socobo-app">
   <template>
-  <!--<template>-->
+    <!--<template>-->
     <style>
       /*Default Element Settings*/
       :host {
@@ -121,10 +126,25 @@
         font-size: 14px;
       }
 
+      /*Dropdown*/
+      paper-dropdown {
+        width: 150px;
+      }
+
+      paper-dropdown core-menu paper-item {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      paper-dropdown core-menu paper-item core-icon, a {
+        margin: 0px;
+        padding: 0px;
+      }
+
     </style>
-
-    <!-- Element Content -->
-
+    <!--##################-->
+    <!-- Element Content  -->
+    <!--##################-->
     <!-- Route controller -->
     <flatiron-director route="{{route}}" autoHash></flatiron-director>
 
@@ -152,7 +172,7 @@
           <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}">
 
             <template repeat="{{page in pages}}">
-              <paper-item hash="{{page.hash}}" noink>
+              <paper-item hash="{{page.hash}}" on-click="{{closeNavDrawer}}" noink>
                 <core-icon icon="{{page.icon}}"></core-icon>
                 <a href="#{{page.hash}}">{{page.name}}</a>
               </paper-item>
@@ -169,10 +189,34 @@
         <div class="core-header">
           <core-toolbar id="core_toolbar_main" class="medium-tall" shadow>
             <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
-            <span flex>socobo</span>
+            <span flex>socobo - social cookbook</span>
             <paper-icon-button icon="refresh" on-tap="{{refreshAction}}"></paper-icon-button>
-            <paper-icon-button icon="close" on-tap="{{logout}}"></paper-icon-button>
-            <paper-icon-button icon="more-vert" on-tap="{{settingsAction}}"></paper-icon-button>
+
+            <paper-menu-button>
+              <paper-icon-button icon="menu" noink></paper-icon-button>
+
+              <paper-dropdown halign="right" duration="350" class="dropdown">
+                <core-menu class="menu">
+                  <paper-item on-click="{{showPopupSignup}}">
+                    <core-icon icon="create"></core-icon>
+                    <a>Signup</a>
+                  </paper-item>
+                  <paper-item on-click="{{showPopupLogin}}">
+                    <core-icon icon="exit-to-app"></core-icon>
+                    <a>Login</a>
+                  </paper-item>
+                  <paper-item on-click="{{logout}}">
+                    <core-icon icon="close"></core-icon>
+                    <a>Logout</a>
+                  </paper-item>
+                  <paper-item on-click="{{settingsAction}}">
+                    <core-icon icon="settings"></core-icon>
+                    <a>Settings</a>
+                  </paper-item>
+                </core-menu>
+              </paper-dropdown>
+            </paper-menu-button>
+
           </core-toolbar>
         </div>
 
@@ -221,6 +265,11 @@
             </div>
 
           </core-pages>
+
+          <socobo-signup-popup id="socoboSignupPopup"
+                               on-signup-response-ok="{{signupOk}}"
+                               on-signup-response-failed="{{signupFailed}}">
+          </socobo-signup-popup>
         </div>
 
         <paper-toast id="toast"
@@ -233,7 +282,6 @@
 
   <script>
     Polymer('socobo-app', {
-
       /**
        * @variable: authToken
        * @datatype: String
@@ -255,12 +303,12 @@
       /**
        * @variable: userPictureUrl
        * @datatype: String
-       * @defaultValue: '/assets/images/github.png'
+       * @defaultValue: 'images/github.png'
        * @description:
        * - it's self-describing
        * - ! changing for production
        */
-      userPictureUrl: '/assets/images/github.png',
+      userPictureUrl: 'images/github.png',
 
       /**
        * @variable: DEFAULT_ROUTE
@@ -283,7 +331,7 @@
        */
       pages: [
         {name: 'Home', icon: 'home', hash: 'home'},
-        {name: 'SignUp', icon: 'create', hash: 'signup'},
+        {name: 'Signup', icon: 'create', hash: 'signup'},
         {name: 'Login', icon: 'exit-to-app', hash: 'login'},
         {name: 'My Profile', icon: 'account-circle', hash: 'myprofile'},
         {name: 'My Fridge', icon: 'dashboard', hash: 'myfridge'},
@@ -305,6 +353,16 @@
       },
 
       /**
+       * @function: showPopupSignup
+       * @params:
+       * @description:
+       * - show Signup Form as popup window
+       */
+      showPopupSignup: function() {
+        this.$.socoboSignupPopup.showPopup();
+      },
+
+      /**
        * @function: signupOk
        * @params: e - event
        * @description:
@@ -316,6 +374,9 @@
       signupOk: function(e) {
         this.userName = e.detail.username;
         this.userPictureUrl = e.detail.pictureurl;
+
+        this.$.socoboSignupPopup.closePopup();
+
         this.route = 'home';
       },
 
@@ -328,10 +389,22 @@
        * - shows a toast message to inform the user
        * - ? redirects to socobo-signup (maybe unnecessary)
        */
-      signupFailed: function() {
-        this.$.toast.text = 'SignUp failed...';
+      signupFailed: function(e) {
+        var statusCode = e.detail.statusCode;
+        this.$.toast.text = 'SignUp failed! Statuscode: ' + statusCode;
         this.$.toast.show();
         this.route = 'signup';
+      },
+
+      /**
+       * @function: showPopupLogin
+       * @params:
+       * @description:
+       * - show Login Form as popup window
+       */
+      showPopupLogin: function() {
+        //ToDo
+
       },
 
       /**
@@ -361,6 +434,16 @@
         this.$.toast.show();
         this.route = 'login';
       },
+
+      /**
+       * @function: closeNavDrawer
+       * @params:
+       * @description:
+       * - close Drawer after Menu item click
+       */
+       closeNavDrawer: function() {
+         this.$.drawerPanel.closeDrawer();
+       },
 
       /**
        * @function: refreshAction

@@ -1,56 +1,82 @@
-<link rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-decorator.html">
-<link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
 
 
-<polymer-element name="socobo-signup">
-
+<polymer-element name="socobo-signup-popup">
   <template>
     <style>
+      /*Default Element Settings*/
       :host {
         font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-        margin-left: 10px;
+        margin: 0px 0px 0px 10px;
+        padding: 0px;
       }
 
-      #core_card_signup {
-        width: 40%;
-        min-width: 320px;
-        height: 440px;
-        border-radius: 2px;
-        margin-top: 50px;
+      core-header-panel {
+        height: 100%;
+        box-sizing: border-box;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        background-color: rgb(255, 255, 255);
-        /*overflow: auto;*/
       }
 
-      #core_toolbar_signup {
+      paper-dialog {
+        width: 25%;
+        min-width: 320px;
+        /*height: 66%;*/
+        max-height: 440px;
+        margin: 0px;
+        padding: 0px;
+        border-radius: 2px;
+      }
+
+      paper-dialog::shadow #scroller {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+      }
+
+      core-toolbar{
         right: 0px;
         color: rgb(255, 255, 255);
         fill: rgb(255, 255, 255);
         background-color: rgb(79, 125, 201);
       }
 
+      paper-fab {
+        background-color: #e0a30b;
+        position: absolute !important;
+        bottom: -28px;
+        right: 16px;
+        z-index: 10;
+      }
+
+      #content {
+        margin-top: 20px;
+      }
+
       paper-input {
-        width: 80%;
+        width: 94%;
         min-width: 200px;
         max-width: 350px;
         height: 70px;
-        margin: 2px 2px 2px 10px;
-        padding: 2px 2px 2px 10px;
+        margin-left: 10px;
+        margin-right: 10px;
       }
 
       /*paper input decorator*/
       paper-input-decorator {
-        width: 80%;
+        width: 94%;
         min-width: 200px;
         max-width: 350px;
         margin-left: 10px;
+        margin-right: 10px;
       }
 
       paper-input-decorator.invalid {
@@ -98,68 +124,78 @@
         /* line and color when the input is invalid and focused */
         background-color: salmon;
       }
-
-      /*FAB*/
-      paper-fab {
-        background-color: #e0a30b;
-        position: absolute !important;
-        bottom: -28px;
-        right: 16px;
-        z-index: 10;
-      }
-
-      #content {
-        margin-top: 15px;
-      }
     </style>
 
-    <core-card id="core_card_signup" vertical layout shadow>
-      <paper-shadow z="2">
-        <core-toolbar id="core_toolbar_signup">
-          <div id="div" flex>Signup</div>
-          <paper-fab id="paper_fab_signup"
-                     icon="send"
-                     on-click="{{signUpSubmit}}"
-                     recenteringtouch end></paper-fab>
-        </core-toolbar>
-      </paper-shadow>
+    <!-- Element Content -->
+    <paper-dialog id="socoboSignupPopup" backdrop autoCloseDisabled layered="false">
+      <core-header-panel mode="waterfall" shadow>
+        <div class="core-header">
+          <paper-shadow z="2">
+            <core-toolbar>
+              <div id="div" on-click="{{closePopup}}" flex>Signup</div>
+              <paper-fab icon="send"
+                         on-click="{{signUpSubmit}}"
+                         recenteringtouch end></paper-fab>
+            </core-toolbar>
+          </paper-shadow>
+        </div>
 
-      <div id="content">
-        <paper-input-decorator label="Enter your username..." floatingLabel error="username is required! min. 3 digits" isInvalid="{{!$.paper_input_name.validity.valid}}" >
-          <input is="core-input" id="paper_input_name" type="text" value="{{userName}}" required>
-        </paper-input-decorator>
+        <div id="content">
+          <paper-input-decorator label="Enter your username..." floatingLabel error="username is required! min. 3 digits" isInvalid="{{!$.paper_input_name.validity.valid}}" >
+            <input is="core-input" id="paper_input_name" type="text" value="{{userName}}" required>
+          </paper-input-decorator>
 
-        <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
-          <input is="core-input" id="paper_input_email" type="email" value="{{email}}" required>
-        </paper-input-decorator>
+          <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
+            <input is="core-input" id="paper_input_email" type="email" value="{{email}}" required>
+          </paper-input-decorator>
 
-        <paper-input-decorator label="Enter your password..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password.validity.valid}}" >
-          <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
-        </paper-input-decorator>
+          <paper-input-decorator label="Enter your password..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password.validity.valid}}" >
+            <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
+          </paper-input-decorator>
 
-        <paper-input-decorator label="Enter your password again..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password_again.validity.valid}}" >
-          <input is="core-input" id="paper_input_password_again" type="password" value="{{passwordRepeat}}" required>
-        </paper-input-decorator>
-      </div>
+          <paper-input-decorator label="Enter your password again..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password_again.validity.valid}}" >
+            <input is="core-input" id="paper_input_password_again" type="password" value="{{passwordRepeat}}" required>
+          </paper-input-decorator>
+        </div>
 
-      <core-ajax
-        id="socoboSignUpForm" url="/signup" method="POST"
-        params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
-        handleAs="json"
-        on-core-response="{{handleSignupOnResponse}}"
-        on-core-error="{{handleSignupOnError}}">
-      </core-ajax>
-
-    </core-card>
+        <core-ajax
+          id="socoboSignUpForm" url="/signup" method="POST"
+          params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
+          handleAs="json"
+          on-core-response="{{handleSignupOnResponse}}"
+          on-core-error="{{handleSignupOnError}}">
+        </core-ajax>
+      </core-header-panel>
+    </paper-dialog>
 
     <paper-toast id="toast"
-                 duration="1500"></paper-toast>
+                 duration="1500">
+    </paper-toast>
 
   </template>
-
   <script>
 
-    Polymer('socobo-signup', {
+    Polymer('socobo-signup-popup', {
+      /**
+       * @function: showPopup
+       * @params:
+       * @description:
+       * - show popup
+       */
+      showPopup: function() {
+         this.$.socoboSignupPopup.toggle();
+      },
+
+      /**
+       * @function: closePopup
+       * @params:
+       * @description:
+       * - close popup
+       */
+      closePopup: function() {
+        this.$.socoboSignupPopup.toggle();
+      },
+
       /**
        * @function: signUpSubmit
        * @params:
@@ -251,6 +287,5 @@
         this.fire('signup-response-failed', {statusCode: statusCode});
       }
     });
-
   </script>
 </polymer-element>
