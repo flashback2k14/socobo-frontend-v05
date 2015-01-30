@@ -10,7 +10,7 @@
 <link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
 
 
-<polymer-element name="socobo-signup-popup">
+<polymer-element name="socobo-login-popup">
   <template>
     <style>
       /*Default Element Settings*/
@@ -29,8 +29,8 @@
       paper-dialog {
         width: 25%;
         min-width: 320px;
-        height: 66%;
-        max-height: 470px;
+        height: 42%;
+        max-height: 320px;
         margin: 0px;
         padding: 0px;
         border-radius: 2px;
@@ -131,43 +131,36 @@
     </style>
 
     <!-- Element Content -->
-    <paper-dialog id="socoboSignupPopup" backdrop autoCloseDisabled layered="false">
+    <paper-dialog id="socoboLoginpPopup" backdrop autoCloseDisabled layered="false">
       <core-header-panel mode="waterfall" shadow>
         <div class="core-header">
           <paper-shadow z="2">
             <core-toolbar>
-              <div id="div" on-click="{{closePopup}}" flex>Signup</div>
-              <paper-fab icon="send"
-                         on-click="{{signUpSubmit}}"
+              <div id="div" on-click="{{closePopup}}" flex>Login</div>
+              <paper-fab id="paper_fab_login"
+                         icon="send"
+                         on-click="{{loginSubmit}}"
                          recenteringtouch end></paper-fab>
             </core-toolbar>
           </paper-shadow>
         </div>
 
         <div id="content">
-          <paper-input-decorator label="Enter your username..." floatingLabel error="username is required! min. 3 digits" isInvalid="{{!$.paper_input_name.validity.valid}}" >
-            <input is="core-input" id="paper_input_name" type="text" value="{{userName}}" required>
+           <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
+            <input is="core-input" id="paper_input_email" type="email" value="{{emailAddress}}" required>
           </paper-input-decorator>
 
-          <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
-            <input is="core-input" id="paper_input_email" type="email" value="{{email}}" required>
-          </paper-input-decorator>
-
-          <paper-input-decorator label="Enter your password..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password.validity.valid}}" >
+          <paper-input-decorator label="Enter your password..." floatingLabel error="password is required!" isInvalid="{{!$.paper_input_password.validity.valid}}" >
             <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
-          </paper-input-decorator>
-
-          <paper-input-decorator label="Enter your password again..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password_again.validity.valid}}" >
-            <input is="core-input" id="paper_input_password_again" type="password" value="{{passwordRepeat}}" required>
           </paper-input-decorator>
         </div>
 
         <core-ajax
-          id="socoboSignUpForm" url="/signup" method="POST"
-          params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
+          id="socoboLoginForm" url="/login" method="POST"
+          params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
           handleAs="json"
-          on-core-response="{{handleSignupOnResponse}}"
-          on-core-error="{{handleSignupOnError}}">
+          on-core-response="{{handleLoginOnResponse}}"
+          on-core-error="{{handleLoginOnError}}">
         </core-ajax>
       </core-header-panel>
     </paper-dialog>
@@ -179,7 +172,7 @@
   </template>
   <script>
 
-    Polymer('socobo-signup-popup', {
+    Polymer('socobo-login-popup', {
       /**
        * @function: showPopup
        * @params:
@@ -187,7 +180,7 @@
        * - show popup
        */
       showPopup: function() {
-         this.$.socoboSignupPopup.toggle();
+         this.$.socoboLoginpPopup.toggle();
       },
 
       /**
@@ -197,48 +190,31 @@
        * - close popup
        */
       closePopup: function() {
-        this.$.socoboSignupPopup.toggle();
+        this.$.socoboLoginpPopup.toggle();
       },
 
       /**
-       * @function: signUpSubmit
+       * @function: loginSubmit
        * @params:
        * @description:
-       * - user input validation
        * - fire form content to backend
        * - shows a toast message to inform the user
        */
-      signUpSubmit: function() {
-        var inputIsValid = false;
-
-        if (this.$.paper_input_name.value.length >= 3 && this.$.paper_input_password.value.length >= 8 && this.$.paper_input_password_again.value.length >= 8) {
-          if (this.$.paper_input_password.value.match(this.$.paper_input_password_again.value)) {
-            inputIsValid = true;
-          }
-        }
-
-        if (inputIsValid) {
-          this.$.socoboSignUpForm.go();
-          this.$.toast.text = "SignUp submitted!";
-          this.$.toast.show();
-        } else {
-          this.$.paper_input_password.value = '';
-          this.$.paper_input_password_again.value = '';
-
-          this.$.toast.text = "Input validation failed!";
-          this.$.toast.show();
-        }
+      loginSubmit: function(){
+        this.$.socoboLoginForm.go();
+        this.$.toast.text = "Login submitted!";
+        this.$.toast.show();
       },
 
       /**
-       * @function: handleSignupOnResponse
+       * @function: handleLoginOnResponse
        * @params: e - event
        * @description:
        * - handle response from backend
        * - shows a toast message to inform the user
        * - firing custom event to socobo-app with userData
        */
-      handleSignupOnResponse: function(e) {
+      handleLoginOnResponse: function(e) {
 
         this.$.toast.text = "Response entered!";
         this.$.toast.show();
@@ -246,49 +222,42 @@
         var statusCode = e.detail.xhr.status;
 
         if (statusCode === 200) {
-          var responseData = e.detail.response;
-          console.log('responseData: ' + responseData);
+          var registerData = e.detail.response;
+          var authToken = registerData.authToken;
+          /*var userName = registerData.userName;
+          var pictureUrl = registerData.pictureUrl;*/
 
-          var username = responseData.userName;
-          var name = responseData.name;
-          var email = responseData.email;
-          var pictureUrl = responseData.pictureUrl;
+          console.log('AuthToken ' + authToken);
+          /*console.log('Username ' + userName);
+          console.log('PictureUrl ' + pictureUrl);*/
 
-          console.log('Username ' + username);
-          console.log('Name ' + name);
-          console.log('Email ' + email);
-          console.log('PictureUrl ' + pictureUrl);
-
-          this.$.paper_input_name.value = '';
           this.$.paper_input_email.value = '';
           this.$.paper_input_password.value = '';
-          this.$.paper_input_password_again.value = '';
 
-          this.fire('signup-response-ok', {username: username, pictureurl: pictureUrl});
+          this.fire('login-response-ok', {authToken: authToken});
         } else {
+          this.$.paper_input_email.value = '';
           this.$.paper_input_password.value = '';
-          this.$.paper_input_password_again.value = '';
 
-          this.fire('signup-response-failed', {statusCode: statusCode});
+          this.fire('login-response-failed', {statusCode: statusCode});
         }
       },
 
       /**
-       * @function: handleSignupOnError
+       * @function: handleLoginOnError
        * @params: e - event
        * @description:
        * - handle error from backend
        * - firing custom event to socobo-app
        */
-      handleSignupOnError: function(e) {
-
+      handleLoginOnError: function(e) {
         var statusCode = e.detail.xhr.status;
         console.log('handleSignupOnError: ' + statusCode);
 
+        this.$.paper_input_email.value = '';
         this.$.paper_input_password.value = '';
-        this.$.paper_input_password_again.value = '';
 
-        this.fire('signup-response-failed', {statusCode: statusCode});
+        this.fire('login-response-failed', {statusCode: statusCode});
       }
     });
   </script>
