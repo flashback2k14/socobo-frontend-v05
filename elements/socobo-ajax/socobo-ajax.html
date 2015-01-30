@@ -1,0 +1,43 @@
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="socobo-ajax"
+                 attributes="url method params authtoken">
+
+  <core-ajax
+    id="socoboAjax" url="{{url}}" method="{{method}}"
+    params='{{params}}'
+    headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
+    handleAs="json"
+    on-core-response="{{handleOnResponse}}"
+    on-core-error="{{handleOnError}}">
+  </core-ajax>
+
+  <script>
+    Polymer('socobo-ajax', {
+
+      url: '',
+      method: '',
+      params: '',
+      authtoken: '',
+
+      call: function() {
+        this.$.socoboAjax.go();
+      },
+
+      handleOnResponse: function(e) {
+        var statusCode = e.detail.xhr.status;
+        if (statusCode === 200) {
+          var responseData = e.detail.response;
+          this.fire('socobo-ajax-response-ok', {responsedata: responseData});
+        } else {
+          this.fire('socobo-ajax-response-failed', {statusCode: statusCode});
+        }
+      },
+
+      handleOnError: function(e) {
+        var statusCode = e.detail.xhr.status;
+        this.fire('socobo-ajax-response-failed', {statusCode: statusCode});
+      }
+    });
+  </script>
+</polymer-element>

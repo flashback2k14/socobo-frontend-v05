@@ -12,6 +12,12 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-decorator.html">
+<!--
+OpenStreetMap
+  https://github.com/nhnb/leaflet-map !!!
+  https://github.com/prtksxna/leaflet-map-component
+  https://github.com/ruben96/open-map
+-->
 
 
 <polymer-element name="socobo-home">
@@ -125,6 +131,7 @@
       }
     </style>
 
+    <!-- Welcome Card -->
     <core-card id="core_card_home" vertical layout shadow>
       <paper-shadow z="1">
         <core-toolbar id="core_toolbar_home" shadow>
@@ -150,6 +157,7 @@
       </section>
     </core-card>
 
+    <!-- Map Card -->
     <core-card id="core_card_maps" vertical layout shadow>
       <paper-shadow z="1">
         <core-toolbar id="core_toolbar_maps" shadow>
@@ -160,14 +168,16 @@
                    id="txtLatitude"
                    type="number"
                    align="right"
-                   value="{{latitude}}">
+                   value="{{latitude}}"
+                   step="any">
           </paper-input-decorator>
           <paper-input-decorator label="Enter your longitude...">
             <input is="core-input"
                    id="txtLongitude"
                    type="number"
                    align="right"
-                   value="{{longitude}}">
+                   value="{{longitude}}"
+                   step="any">
           </paper-input-decorator>
         </core-toolbar>
       </paper-shadow>
