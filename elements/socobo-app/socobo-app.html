@@ -32,14 +32,17 @@
 
 <!-- Own Socobo Elements -->
 <link rel="import" href="../socobo-home/socobo-home.html">
+<!-- Not needed with, if we use popups
 <link rel="import" href="../socobo-signup/socobo-signup.html">
 <link rel="import" href="../socobo-login/socobo-login.html">
+-->
 <link rel="import" href="../socobo-myprofile/socobo-myprofile.html">
 <link rel="import" href="../socobo-myfridge/socobo-myfridge.html">
 <link rel="import" href="../socobo-myrecipes/socobo-myrecipes.html">
 <link rel="import" href="../socobo-bugreport/socobo-bugreport.html">
 <link rel="import" href="../socobo-about/socobo-about.html">
 <link rel="import" href="../socobo-popup/socobo-signup-popup.html">
+<link rel="import" href="../socobo-popup/socobo-login-popup.html">
 
 
 <polymer-element name="socobo-app">
@@ -228,6 +231,8 @@
               <socobo-home vertical layout center center-justified></socobo-home>
             </div>
 
+            <!-- Not needed with, if we use popups
+
             <div hash="signup">
               <socobo-signup id="socoboSignUp"
                              on-signup-response-ok="{{signupOk}}"
@@ -243,6 +248,7 @@
                             vertical layout center center-justified>
               </socobo-login>
             </div>
+            -->
 
             <div hash="myprofile">
               <socobo-myprofile vertical layout center center-justified></socobo-myprofile>
@@ -265,6 +271,17 @@
             </div>
 
           </core-pages>
+
+          <!-- Popup - Area -->
+          <socobo-signup-popup id="socoboSignupPopup"
+                               on-signup-response-ok="{{signupOk}}"
+                               on-signup-response-failed="{{signupFailed}}">
+          </socobo-signup-popup>
+
+          <socobo-login-popup id="socoboLoginPopup"
+                               on-login-response-ok="{{loginOk}}"
+                               on-login-response-failed="{{loginFailed}}">
+          </socobo-login-popup>
         </div>
 
         <socobo-signup-popup id="socoboSignupPopup"
@@ -276,7 +293,6 @@
                      duration="1500"></paper-toast>
 
       </core-header-panel>
-
     </core-drawer-panel>
   </template>
 
@@ -331,8 +347,8 @@
        */
       pages: [
         {name: 'Home', icon: 'home', hash: 'home'},
-        {name: 'Signup', icon: 'create', hash: 'signup'},
-        {name: 'Login', icon: 'exit-to-app', hash: 'login'},
+        /*{name: 'Signup', icon: 'create', hash: 'signup'},     //Not needed with, if we use popups
+        {name: 'Login', icon: 'exit-to-app', hash: 'login'},*/  //Not needed with, if we use popups
         {name: 'My Profile', icon: 'account-circle', hash: 'myprofile'},
         {name: 'My Fridge', icon: 'dashboard', hash: 'myfridge'},
         {name: 'My Recipes', icon: 'assignment', hash: 'myrecipes'},
@@ -391,9 +407,9 @@
        */
       signupFailed: function(e) {
         var statusCode = e.detail.statusCode;
-        this.$.toast.text = 'SignUp failed! Statuscode: ' + statusCode;
+        this.$.toast.text = 'Signup failed! Statuscode: ' + statusCode;
         this.$.toast.show();
-        this.route = 'signup';
+        //this.route = 'signup';    //Not needed with, if we use popups
       },
 
       /**
@@ -403,8 +419,7 @@
        * - show Login Form as popup window
        */
       showPopupLogin: function() {
-        //ToDo
-
+        this.$.socoboLoginPopup.showPopup();
       },
 
       /**
@@ -429,10 +444,11 @@
        * - shows a toast message to inform the user
        * - ? redirects to socobo-login (maybe unnecessary)
        */
-      loginFailed: function() {
-        this.$.toast.text = 'Login failed...';
+      loginFailed: function(e) {
+        var statusCode = e.detail.statusCode;
+        this.$.toast.text = 'Login failed! Statuscode: ' + statusCode;
         this.$.toast.show();
-        this.route = 'login';
+        //this.route = 'login';     //Not needed with, if we use popups
       },
 
       /**

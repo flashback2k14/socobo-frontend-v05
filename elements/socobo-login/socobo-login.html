@@ -189,7 +189,7 @@
           this.$.paper_input_email.value = '';
           this.$.paper_input_password.value = '';
 
-          this.fire('login-response-failed');
+          this.fire('login-response-failed', {statusCode: statusCode});
         }
       },
 
@@ -201,12 +201,13 @@
        * - firing custom event to socobo-app
        */
       handleLoginOnError: function(e) {
-        console.log('handleLoginOnError: ' + e.detail.xhr.status);
+        var statusCode = e.detail.xhr.status;
+        console.log('handleSignupOnError: ' + statusCode);
 
         this.$.paper_input_email.value = '';
         this.$.paper_input_password.value = '';
 
-        this.fire('login-response-failed');
+        this.fire('login-response-failed', {statusCode: statusCode});
       }
     });
 
