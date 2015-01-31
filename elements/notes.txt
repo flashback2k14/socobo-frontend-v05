@@ -23,3 +23,72 @@
 - Debugging Polymer Elements?!?!?!?!??! - check
 - Handling Bad Requests from server     - check
 - Communication between components      - check
+
+
+###################################################
+##                                               ##
+##                Dead Code                      ##
+##                                               ##
+###################################################
+
+-socobo-app:
+-- imports
+  <!-- Not needed with, if we use popups
+  <link rel="import" href="../socobo-signup/socobo-signup.html">
+  <link rel="import" href="../socobo-login/socobo-login.html">
+  -->
+-- content area
+  <!-- Not needed with, if we use popups
+  <div hash="signup">
+    <socobo-signup id="socoboSignUp"
+                   on-signup-response-ok="{{signupOk}}"
+                   on-signup-response-failed="{{signupFailed}}"
+                   vertical layout center center-justified>
+    </socobo-signup>
+  </div>
+
+  <div hash="login">
+    <socobo-login id="socoboLogin"
+                  on-login-response-ok="{{loginOk}}"
+                  on-login-response-failed="{{loginFailed}}"
+                  vertical layout center center-justified>
+    </socobo-login>
+  </div>
+  -->
+
+-- script
+  /*{name: 'Signup', icon: 'create', hash: 'signup'},     //Not needed with, if we use popups
+  {name: 'Login', icon: 'exit-to-app', hash: 'login'},*/  //Not needed with, if we use popups
+
+-socobo-home:
+-- imports
+  <!--
+  OpenStreetMap
+    https://github.com/nhnb/leaflet-map !!!
+    https://github.com/prtksxna/leaflet-map-component
+    https://github.com/ruben96/open-map
+  GoogleMaps
+    "google-map": "GoogleWebComponents/google-map#latest",
+    <link rel="import" href="../../bower_components/google-map/google-map.html">
+    <link rel="import" href="../../bower_components/google-map/google-map-directions.html">
+    <link rel="import" href="../../bower_components/google-map/google-map-search.html">
+  -->
+
+-- stylesheet
+  /*google-map {
+    display: block;
+    height: 100%;
+  }*/
+
+-- content area
+  <!--<google-map map="{{map}}"
+            latitude="{{latitude}}"
+            longitude="{{longitude}}"
+            zoom="19">
+    <google-map-marker id="gMarker"
+                       latitude="{{latitude}}"
+                       longitude="{{longitude}}"
+                       title="You are here!"
+                       draggable="true">
+    </google-map-marker>
+  </google-map>-->

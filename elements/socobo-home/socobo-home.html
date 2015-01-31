@@ -2,22 +2,16 @@
 <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
 <!-- Paper Effects -->
 <link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
-<!-- Google Maps -->
-<link rel="import" href="../../bower_components/google-map/google-map.html">
-<link rel="import" href="../../bower_components/google-map/google-map-directions.html">
-<link rel="import" href="../../bower_components/google-map/google-map-search.html">
 <!-- Input Fields -->
 <link rel="import" href="../../bower_components/core-field/core-field.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-decorator.html">
-<!--
-OpenStreetMap
-  https://github.com/nhnb/leaflet-map !!!
-  https://github.com/prtksxna/leaflet-map-component
-  https://github.com/ruben96/open-map
--->
+<!-- OpenStreetMap -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/leaflet-map/leaflet-map.html">
+<link rel="import" href="../../bower_components/leaflet-map/leaflet-marker.html">
 
 
 <polymer-element name="socobo-home">
@@ -110,7 +104,7 @@ OpenStreetMap
         height: 370px;
       }
 
-      google-map {
+      leaflet-map {
         display: block;
         height: 100%;
       }
@@ -183,23 +177,21 @@ OpenStreetMap
       </paper-shadow>
 
       <div id="mapsContainer">
-        <google-map map="{{map}}"
-                    latitude="{{latitude}}"
-                    longitude="{{longitude}}"
-                    zoom="19">
-          <google-map-marker id="gMarker"
-                             latitude="{{latitude}}"
-                             longitude="{{longitude}}"
-                             title="You are here!"
-                             draggable="true">
-          </google-map-marker>
-        </google-map>
+        <leaflet-map latitude="{{latitude}}"
+                     longitude="{{longitude}}"
+                     zoom="19">
+          <leaflet-marker latitude="{{latitude}}"
+                          longitude="{{longitude}}"
+                          title="You are here!">
+              <b>You are here!</b>
+          </leaflet-marker>
+        </leaflet-map>
       </div>
 
       <paper-button id="btnBackend"
                     on-click="{{getLocation}}"
                     raised
-                    class="colored">Get Location</paper-button>
+                    class="colored">Get My Location</paper-button>
     </core-card>
   </template>
 

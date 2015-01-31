@@ -20,8 +20,7 @@
     "font-roboto": "Polymer/font-roboto#^0.5.4",
     "flatiron-director": "PolymerLabs/flatiron-director#^0.5.0",
     "image-mask": "hejty/image-mask#^0.1.1",
-    "openstreetmap": "emersion/polymer-openstreetmap#master",
-    "google-map": "GoogleWebComponents/google-map#latest",
+    "leaflet-map": "nhnb/leaflet-map#master",
     "github-card": "pazguille/github-card#master"
   },
   "resolutions": {

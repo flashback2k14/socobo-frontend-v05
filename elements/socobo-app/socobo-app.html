@@ -32,10 +32,6 @@
 
 <!-- Own Socobo Elements -->
 <link rel="import" href="../socobo-home/socobo-home.html">
-<!-- Not needed with, if we use popups
-<link rel="import" href="../socobo-signup/socobo-signup.html">
-<link rel="import" href="../socobo-login/socobo-login.html">
--->
 <link rel="import" href="../socobo-myprofile/socobo-myprofile.html">
 <link rel="import" href="../socobo-myfridge/socobo-myfridge.html">
 <link rel="import" href="../socobo-myrecipes/socobo-myrecipes.html">
@@ -43,11 +39,12 @@
 <link rel="import" href="../socobo-about/socobo-about.html">
 <link rel="import" href="../socobo-popup/socobo-signup-popup.html">
 <link rel="import" href="../socobo-popup/socobo-login-popup.html">
+<link rel="import" href="../socobo-popup/socobo-logout-popup.html">
 
 
 <polymer-element name="socobo-app">
   <template>
-    <!--<template>-->
+    <!--<Styling>-->
     <style>
       /*Default Element Settings*/
       :host {
@@ -208,7 +205,7 @@
                     <core-icon icon="exit-to-app"></core-icon>
                     <a>Login</a>
                   </paper-item>
-                  <paper-item on-click="{{logout}}">
+                  <paper-item on-click="{{showPopupLogout}}">
                     <core-icon icon="close"></core-icon>
                     <a>Logout</a>
                   </paper-item>
@@ -230,25 +227,6 @@
             <div hash="home">
               <socobo-home vertical layout center center-justified></socobo-home>
             </div>
-
-            <!-- Not needed with, if we use popups
-
-            <div hash="signup">
-              <socobo-signup id="socoboSignUp"
-                             on-signup-response-ok="{{signupOk}}"
-                             on-signup-response-failed="{{signupFailed}}"
-                             vertical layout center center-justified>
-              </socobo-signup>
-            </div>
-
-            <div hash="login">
-              <socobo-login id="socoboLogin"
-                            on-login-response-ok="{{loginOk}}"
-                            on-login-response-failed="{{loginFailed}}"
-                            vertical layout center center-justified>
-              </socobo-login>
-            </div>
-            -->
 
             <div hash="myprofile">
               <socobo-myprofile vertical layout center center-justified></socobo-myprofile>
@@ -279,15 +257,17 @@
           </socobo-signup-popup>
 
           <socobo-login-popup id="socoboLoginPopup"
-                               on-login-response-ok="{{loginOk}}"
-                               on-login-response-failed="{{loginFailed}}">
+                              authToken="{{authToken}}"
+                              on-login-response-ok="{{loginOk}}"
+                              on-login-response-failed="{{loginFailed}}">
           </socobo-login-popup>
-        </div>
 
-        <socobo-signup-popup id="socoboSignupPopup"
-                             on-signup-response-ok="{{signupOk}}"
-                             on-signup-response-failed="{{signupFailed}}">
-        </socobo-signup-popup>
+          <socobo-logout-popup id="socoboLogoutPopup"
+                               authToken="{{authToken}}"
+                               on-logout-response-ok="{{logoutOk}}"
+                               on-logout-response-failed="{{logoutFailed}}">
+          </socobo-logout-popup>
+        </div>
 
         <paper-toast id="toast"
                      duration="1500"></paper-toast>
@@ -299,11 +279,14 @@
   <script>
     Polymer('socobo-app', {
       /**
+       * PROPERTIES
+       */
+      /**
        * @variable: authToken
        * @datatype: String
        * @defaultValue: undefined
        * @description:
-       * - ! usage unknown (at the moment :-))
+       * - identify the user
        */
       authToken: undefined,
 
@@ -347,8 +330,6 @@
        */
       pages: [
         {name: 'Home', icon: 'home', hash: 'home'},
-        /*{name: 'Signup', icon: 'create', hash: 'signup'},     //Not needed with, if we use popups
-        {name: 'Login', icon: 'exit-to-app', hash: 'login'},*/  //Not needed with, if we use popups
         {name: 'My Profile', icon: 'account-circle', hash: 'myprofile'},
         {name: 'My Fridge', icon: 'dashboard', hash: 'myfridge'},
         {name: 'My Recipes', icon: 'assignment', hash: 'myrecipes'},
@@ -356,12 +337,16 @@
         {name: 'About', icon: 'info', hash: 'about'}
       ],
 
+      /**
+       * DEFAULT POLYMER
+       */
 	    /**
        * @function: ready
        * @params:
        * @description:
        * - default polymer function
        * - is called after component is fully loaded
+       * - get the authToken from cookie
        * - sets the route for navigation
        */
       ready: function() {
@@ -384,6 +369,9 @@
         this.route = this.route || this.DEFAULT_ROUTE;
       },
 
+      /**
+       * SIGNUP
+       */
       /**
        * @function: showPopupSignup
        * @params:
@@ -425,9 +413,11 @@
         var statusCode = e.detail.statusCode;
         this.$.toast.text = 'Signup failed! Statuscode: ' + statusCode;
         this.$.toast.show();
-        //this.route = 'signup';    //Not needed with, if we use popups
       },
 
+      /**
+       * LOGIN
+       */
       /**
        * @function: showPopupLogin
        * @params:
@@ -445,10 +435,15 @@
        * - is called from socobo-login if the login was successfully
        * - sets the authToken to the local variable
        * - redirects to socobo-home
-       * - ! at the moment no specific use for authToken
+       * - sets authToken
        */
       loginOk: function(e) {
         this.authToken = e.detail.authToken;
+        this.userName = e.detail.username;
+        this.userPictureUrl = e.detail.pictureurl;
+
+        this.$.socoboLoginPopup.closePopup();
+
         this.route = 'home';
       },
 
@@ -458,22 +453,65 @@
        * @description:
        * - is called from socobo-login if the login failed
        * - shows a toast message to inform the user
-       * - ? redirects to socobo-login (maybe unnecessary)
        */
       loginFailed: function(e) {
         var statusCode = e.detail.statusCode;
         this.$.toast.text = 'Login failed! Statuscode: ' + statusCode;
         this.$.toast.show();
-        //this.route = 'login';     //Not needed with, if we use popups
       },
 
+      /**
+       * LOGOUT
+       */
+      /**
+       * @function: showPopupLogout
+       * @params:
+       * @description:
+       * - show Logout Form as popup window
+       */
+      showPopupLogout: function() {
+        this.$.socoboLogoutPopup.showPopup();
+      },
+
+      /**
+       * @function: logoutOk
+       * @params: e - event
+       * @description:
+       * - is called from socobo-login if the login was successfully
+       * - sets the authToken to the local variable
+       * - redirects to socobo-home
+       * - reset authToken
+       */
+      logoutOk: function(e) {
+        this.authToken = e.detail.authToken;
+        this.$.socoboLogoutPopup.closePopup();
+        this.route = 'home';
+      },
+
+      /**
+       * @function: logoutFailed
+       * @params: e - event
+       * @description:
+       * - is called from socobo-login if the login failed
+       * - shows a toast message to inform the user
+       */
+      logoutFailed: function(e) {
+        var statusCode = e.detail.statusCode;
+        this.$.socoboLogoutPopup.closePopup();
+        this.$.toast.text = 'Logout failed! Statuscode: ' + statusCode;
+        this.$.toast.show();
+      },
+
+      /**
+       * UTILS
+       */
       /**
        * @function: closeNavDrawer
        * @params:
        * @description:
        * - close Drawer after Menu item click
        */
-       closeNavDrawer: function() {
+      closeNavDrawer: function() {
          this.$.drawerPanel.closeDrawer();
        },
 
@@ -486,18 +524,6 @@
        */
       refreshAction: function() {
         this.$.toast.text = 'Refreshing Page...';
-        this.$.toast.show();
-      },
-
-      /**
-       * @function: logout
-       * @params:
-       * @description:
-       * - shows a toast message to inform the user
-       * - ! at the moment no functionality
-       */
-      logout: function() {
-        this.$.toast.text = 'Logging out...';
         this.$.toast.show();
       },
 

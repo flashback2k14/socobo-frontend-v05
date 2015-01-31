@@ -131,7 +131,7 @@
     </style>
 
     <!-- Element Content -->
-    <paper-dialog id="socoboSignupPopup" backdrop autoCloseDisabled layered="false">
+    <paper-dialog id="socoboSignupPopup" transition="core-transition-top" layered="false" backdrop autoCloseDisabled>
       <core-header-panel mode="waterfall" shadow>
         <div class="core-header">
           <paper-shadow z="2">
@@ -166,6 +166,7 @@
           id="socoboSignUpForm" url="/signup" method="POST"
           params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
           handleAs="json"
+          contentType="application/json"
           on-core-response="{{handleSignupOnResponse}}"
           on-core-error="{{handleSignupOnError}}">
         </core-ajax>
@@ -211,7 +212,9 @@
       signUpSubmit: function() {
         var inputIsValid = false;
 
-        if (this.$.paper_input_name.value.length >= 3 && this.$.paper_input_password.value.length >= 8 && this.$.paper_input_password_again.value.length >= 8) {
+        if (this.$.paper_input_name.value.length >= 3 &&
+            this.$.paper_input_password.value.length >= 8 &&
+            this.$.paper_input_password_again.value.length >= 8) {
           if (this.$.paper_input_password.value.match(this.$.paper_input_password_again.value)) {
             inputIsValid = true;
           }
@@ -219,7 +222,7 @@
 
         if (inputIsValid) {
           this.$.socoboSignUpForm.go();
-          this.$.toast.text = "SignUp submitted!";
+          this.$.toast.text = "Signup submitted!";
           this.$.toast.show();
         } else {
           this.$.paper_input_password.value = '';

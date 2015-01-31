@@ -9,8 +9,11 @@
 <link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
 <link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
 
+<!--<link rel="import" href="../socobo-ajax/socobo-ajax.html">-->
 
-<polymer-element name="socobo-login-popup">
+
+<polymer-element name="socobo-login-popup"
+                 attributes="authToken">
   <template>
     <style>
       /*Default Element Settings*/
@@ -131,7 +134,7 @@
     </style>
 
     <!-- Element Content -->
-    <paper-dialog id="socoboLoginpPopup" backdrop autoCloseDisabled layered="false">
+    <paper-dialog id="socoboLoginpPopup" transition="core-transition-top" layered="false" backdrop autoCloseDisabled>
       <core-header-panel mode="waterfall" shadow>
         <div class="core-header">
           <paper-shadow z="2">
@@ -156,9 +159,13 @@
         </div>
 
         <core-ajax
-          id="socoboLoginForm" url="/login" method="POST"
+          id="socoboLoginForm"
+          url="/login"
+          method="POST"
           params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
+          headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
           handleAs="json"
+          contentType="application/json"
           on-core-response="{{handleLoginOnResponse}}"
           on-core-error="{{handleLoginOnError}}">
         </core-ajax>
@@ -173,6 +180,15 @@
   <script>
 
     Polymer('socobo-login-popup', {
+      /**
+       * @variable: authToken
+       * @datatype: String
+       * @defaultValue: undefined
+       * @description:
+       * - identify the user
+       */
+      authToken: undefined,
+
       /**
        * @function: showPopup
        * @params:
@@ -224,17 +240,17 @@
         if (statusCode === 200) {
           var registerData = e.detail.response;
           var authToken = registerData.authToken;
-          /*var userName = registerData.userName;
-          var pictureUrl = registerData.pictureUrl;*/
+          var userName = registerData.userName;
+          var pictureUrl = registerData.pictureUrl;
 
           console.log('AuthToken ' + authToken);
-          /*console.log('Username ' + userName);
-          console.log('PictureUrl ' + pictureUrl);*/
+          console.log('Username ' + userName);
+          console.log('PictureUrl ' + pictureUrl);
 
           this.$.paper_input_email.value = '';
           this.$.paper_input_password.value = '';
 
-          this.fire('login-response-ok', {authToken: authToken});
+          this.fire('login-response-ok', {authToken: authToken, username: userName, pictureurl: pictureUrl});
         } else {
           this.$.paper_input_email.value = '';
           this.$.paper_input_password.value = '';
@@ -252,7 +268,7 @@
        */
       handleLoginOnError: function(e) {
         var statusCode = e.detail.xhr.status;
-        console.log('handleSignupOnError: ' + statusCode);
+        console.log('handleLoginOnError: ' + statusCode);
 
         this.$.paper_input_email.value = '';
         this.$.paper_input_password.value = '';
