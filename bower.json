@@ -21,11 +21,12 @@
     "flatiron-director": "PolymerLabs/flatiron-director#^0.5.0",
     "image-mask": "hejty/image-mask#^0.1.1",
     "leaflet-map": "nhnb/leaflet-map#master",
-    "github-card": "pazguille/github-card#master"
+    "polymer-github-card": "iamolivinius/polymer-github-card"
   },
   "resolutions": {
     "polymer": "^0.5",
     "core-component-page": "^0.5",
-    "webcomponentsjs": "^0.5"
+    "webcomponentsjs": "^0.5",
+    "platform": "^0.3.0"
   }
 }
