@@ -1,0 +1,147 @@
+{
+  "data":[
+    {
+      "id":"1",
+      "name":"Rezept Name 1",
+      "bild":"images/github_login_icon.gif",
+      "zutatenliste":[
+        {
+          "id":"1",
+          "bezeichnung":"Zutat 1",
+          "menge":"1",
+          "einheit":"stueck"
+        },
+        {
+          "id":"2",
+          "bezeichnung":"Zutat 2",
+          "menge":"5",
+          "einheit":"stueck"
+        }
+      ],
+      "dauer":"60",
+      "menge":"min",
+      "erstellungsdatum":"01-01-2015",
+      "kategorie":"Kategorie 1",
+      "skilllevel":"Einfach",
+      "anleitung":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+    },
+    {
+      "id":"2",
+      "name":"Rezept Name 2",
+      "bild":"images/github_login_icon.gif",
+      "zutatenliste":[
+        {
+          "id":"1",
+          "bezeichnung":"Zutat 1",
+          "menge":"150",
+          "einheit":"gramm"
+        },
+        {
+          "id":"2",
+          "bezeichnung":"Zutat 2",
+          "menge":"5",
+          "einheit":"stueck"
+        },
+        {
+          "id":"3",
+          "bezeichnung":"Zutat 3",
+          "menge":"500",
+          "einheit":"milliliter"
+        }
+      ],
+      "dauer":"45",
+      "menge":"min",
+      "erstellungsdatum":"02-01-2015",
+      "kategorie":"Kategorie 2",
+      "skilllevel":"Mittel",
+      "anleitung":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+    },
+    {
+      "id":"3",
+      "name":"Rezept Name 3",
+      "bild":"images/github_login_icon.gif",
+      "zutatenliste":[
+        {
+          "id":"1",
+          "bezeichnung":"Zutat 1",
+          "menge":"100",
+          "einheit":"gramm"
+        },
+        {
+          "id":"2",
+          "bezeichnung":"Zutat 2",
+          "menge":"8",
+          "einheit":"stueck"
+        },
+        {
+          "id":"3",
+          "bezeichnung":"Zutat 3",
+          "menge":"1",
+          "einheit":"liter"
+        },
+        {
+          "id":"4",
+          "bezeichnung":"Zutat 4",
+          "menge":"300",
+          "einheit":"gramm"
+        }
+      ],
+      "dauer":"1",
+      "menge":"Stunde",
+      "erstellungsdatum":"03-0-2015",
+      "kategorie":"Kategorie 3",
+      "skilllevel":"Schwer",
+      "anleitung":"Computer"
+    },
+    {
+      "id":"4",
+      "name":"Rezept Name 4",
+      "bild":"images/github_login_icon.gif",
+      "zutatenliste":[
+        {
+          "id":"1",
+          "bezeichnung":"zutat 1",
+          "menge":"1",
+          "einheit":"stueck"
+        },
+        {
+          "id":"2",
+          "bezeichnung":"zutat 2",
+          "menge":"1",
+          "einheit":"stueck"
+        }
+      ],
+      "dauer":"20",
+      "menge":"min",
+      "erstellungsdatum":"01-01-2015",
+      "kategorie":"Kategorie 1",
+      "skilllevel":"einfach",
+      "anleitung":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+    },
+    {
+      "id":"5",
+      "name":"Rezept Name 5",
+      "bild":"images/github_login_icon.gif",
+      "zutatenliste":[
+        {
+          "id":"1",
+          "bezeichnung":"zutat 1",
+          "menge":"1",
+          "einheit":"liter"
+        },
+        {
+          "id":"2",
+          "bezeichnung":"zutat 2",
+          "menge":"200",
+          "einheit":"gramm"
+        }
+      ],
+      "dauer":"15",
+      "menge":"min",
+      "erstellungsdatum":"Computer",
+      "kategorie":"Kategorie 3",
+      "skilllevel":"Mittel",
+      "anleitung":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+    }
+  ]
+}
