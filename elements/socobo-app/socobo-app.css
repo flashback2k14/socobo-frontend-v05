@@ -1,0 +1,94 @@
+/*Default Element Settings*/
+:host {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  margin-left: 10px;
+}
+
+/*Drawer Panel Style*/
+#core_drawer_panel {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+[main] {
+  height: 100%;
+  min-width: 320px;
+  box-sizing: border-box;
+  background-color: rgb(221, 221, 221);
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  overflow: auto;
+}
+
+[drawer] {
+  height: 100%;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  overflow: auto;
+}
+
+#core_toolbar_main {
+  color: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+  background-color: #526E9C;
+}
+
+#core_toolbar_drawer {
+  color: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+  background-color: #4F7DC9;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+}
+
+/*core menu + item*/
+core-menu {
+  color: #01579b;
+  margin: 10px 0 0 0;
+}
+
+core-menu > paper-item {
+  transition: all 200ms ease-in-out;
+}
+
+paper-item a {
+  text-decoration: none;
+  color: currentcolor;
+  margin-left: 5px;
+}
+
+core-menu > paper-item.core-selected {
+  background: #e1f5fe;
+}
+
+/*User Profile*/
+[drawer] image-mask {
+  margin-left: 14px;
+  margin-bottom: 5px;
+}
+
+[drawer] p {
+  margin: 16px 0px 0px 10px;
+  font-size: 14px;
+}
+
+/*Dropdown*/
+paper-dropdown {
+  width: 150px;
+}
+
+paper-dropdown core-menu paper-item {
+  margin: 0px;
+  padding: 0px;
+}
+
+paper-dropdown core-menu paper-item core-icon, a {
+  margin: 0px;
+  padding: 0px;
+}

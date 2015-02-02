@@ -1,0 +1,42 @@
+<link rel="import" href="../../socobo-imports/socobo-imports.html">
+<script src="socobo-logout-popup.js"></script>
+
+
+<polymer-element name="socobo-logout-popup"
+                 attributes="authToken">
+  <template>
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-logout-popup.css">
+    <!-- Element Content -->
+    <paper-dialog id="socoboLogoutPopup"
+                  heading="Logout"
+                  layered="false"
+                  transition="core-transition-top"
+                  backdrop
+                  autoCloseDisabled>
+      <p>Are you sure you want to log out?</p>
+
+      <paper-button on-click="{{closePopup}}"
+                    affirmative
+                    autofocus>Cancel</paper-button>
+
+      <paper-button on-click="{{logoutUser}}"
+                    affirmative>Ok</paper-button>
+
+      <core-ajax
+        id="socoboLogoutForm"
+        url="/logout"
+        method="POST"
+        headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
+        handleAs="json"
+        contentType="application/json"
+        on-core-response="{{handleLogutOnResponse}}"
+        on-core-error="{{handleLogutOnError}}">
+      </core-ajax>
+    </paper-dialog>
+
+  </template>
+  <script>
+    Polymer('socobo-logout-popup', socoboLogoutPopup);
+  </script>
+</polymer-element>

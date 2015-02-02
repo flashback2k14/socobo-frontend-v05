@@ -1,0 +1,106 @@
+/*Default Element Settings*/
+:host {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  margin-left: 10px;
+}
+
+#core_card_home {
+  width: 70%;
+  min-width: 320px;
+  height: 210px;
+  border-radius: 2px;
+  margin-top: 50px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  background-color: rgb(255, 255, 255);
+}
+
+ #core_card_maps {
+    width: 70%;
+    min-width: 320px;
+    height: 500px;
+    border-radius: 2px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+    background-color: rgb(255, 255, 255);
+  }
+
+core-toolbar {
+  right: 0px;
+  color: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+  background-color: rgb(79, 125, 201);
+}
+
+#sectionHeadline {
+  padding: 5px;
+  margin: 10px;
+  opacity: 1;
+  font-size: 20px;
+}
+
+#sectionLorem {
+  padding: 5px;
+  margin: 10px;
+  height: 100%;
+  overflow: auto;
+}
+
+/*Input Fields*/
+paper-input {
+  color: #fff;
+  width: 25%;
+  max-width: 120px;
+  text-align: right;
+}
+
+paper-input-decorator {
+  width: 25%;
+  max-width: 120px;
+  font-size: 16px;
+  text-align: right;
+}
+
+paper-input-decorator /deep/ .unfocused-underline {
+  /* line color when the input is unfocused */
+  background-color: #fff;
+  text-align: right;
+}
+
+paper-input-decorator[focused] /deep/ .label-text {
+  /* label color when the input is focused */
+  color: #fff;
+  text-align: right;
+}
+
+paper-input-decorator /deep/ .focused-underline {
+  /* line color when the input is focused */
+  background-color: #fff;
+  text-align: right;
+}
+
+/*Maps*/
+#mapsContainer {
+  margin: 5px;
+  height: 370px;
+}
+
+leaflet-map {
+  display: block;
+  height: 100%;
+}
+
+/*Button*/
+paper-button, p {
+  margin: 5px;
+  padding: 0px;
+}
+
+paper-button.colored {
+  color: #4285f4;
+}
+
+paper-button[raised].colored {
+  background: #4285f4;
+  color: #fff;
+}

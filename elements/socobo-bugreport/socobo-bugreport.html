@@ -1,50 +1,11 @@
-<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-shadow/paper-shadow.html">
-
+<link rel="import" href="../socobo-imports/socobo-imports.html">
+<script src="socobo-bugreport.js"></script>
 
 <polymer-element name="socobo-bugreport">
-
   <template>
-    <style>
-      :host {
-        font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-        margin-left: 10px;
-      }
-
-      #core_card_bugreport {
-        width: 30%;
-        min-width: 320px;
-        height: 250px;
-        border-radius: 2px;
-        margin-top: 50px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        background-color: rgb(255, 255, 255);
-      }
-
-      #core_toolbar_bugreport {
-        right: 0px;
-        color: rgb(255, 255, 255);
-        fill: rgb(255, 255, 255);
-        background-color: rgb(79, 125, 201);
-      }
-
-      /*Paper Button*/
-      paper-button {
-        margin: 10px;
-        padding: 5px;
-      }
-
-      paper-button.colored {
-        color: #4285f4;
-      }
-
-      paper-button[raised].colored {
-        background: #4285f4;
-        color: #fff;
-      }
-    </style>
-
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-bugreport.css">
+    <!-- Element Content -->
     <core-card id="core_card_bugreport" vertical layout shadow>
       <paper-shadow z="2">
         <core-toolbar id="core_toolbar_bugreport">
@@ -66,18 +27,6 @@
   </template>
 
   <script>
-
-    Polymer({
-
-      btnBackend: function() {
-        window.open('https://github.com/lyio/socobo/issues/new')
-      },
-
-      btnFrontend: function() {
-        window.open('https://github.com/flashback2k14/socobo-frontend/issues/new')
-      }
-    });
-
+    Polymer('socobo-bugreport', socoboBugreport);
   </script>
-
 </polymer-element>

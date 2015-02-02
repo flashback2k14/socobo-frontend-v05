@@ -1,0 +1,20 @@
+/*Default Element Settings*/
+:host {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+}
+
+paper-dialog {
+  width: 23%;
+  min-width: 200px;
+  height: 200px;
+  margin: 0px;
+  padding: 0px;
+}
+
+paper-dialog paper-button {
+  font-weight: bold;
+}
+
+paper-button[autofocus] {
+  color: #4285f4;
+}
