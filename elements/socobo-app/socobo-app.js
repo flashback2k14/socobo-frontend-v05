@@ -11,16 +11,25 @@
      * @description:
      * - identify the user
      */
-    authToken: undefined,
+    authToken: '',
 
     /**
      * @variable: userName
      * @datatype: String
-     * @defaultValue: 'Username'
+     * @defaultValue: 'username'
      * @description:
      * - it's self-describing
      */
-    userName: 'Username',
+    userName: 'username',
+
+    /**
+     * @variable: emailAddress
+     * @datatype: String
+     * @defaultValue: 'user@gmail.com'
+     * @description:
+     * - it's self-describing
+     */
+    emailAddress: 'user@gmail.com',
 
     /**
      * @variable: userPictureUrl
@@ -115,8 +124,9 @@
      * - redirects to socobo-home
      */
     signupOk: function(e) {
-      this.userName = e.detail.username;
       this.userPictureUrl = e.detail.pictureurl;
+      this.userName = e.detail.username;
+      this.emailAddress = e.detail.emailaddress;
 
       this.$.socoboSignupPopup.closePopup();
 
