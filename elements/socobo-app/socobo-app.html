@@ -49,15 +49,15 @@
         <!-- Area: Toolbar Main -->
         <div class="core-header">
           <core-toolbar id="core_toolbar_main" class="medium-tall" shadow>
-            <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
+            <paper-icon-button icon="menu" fill core-drawer-toggle></paper-icon-button>
             <span flex>socobo - social cookbook</span>
-            <paper-icon-button icon="refresh" on-tap="{{refreshAction}}"></paper-icon-button>
+            <paper-icon-button icon="refresh" on-tap="{{refreshAction}}" fill></paper-icon-button>
 
             <paper-menu-button>
-              <paper-icon-button icon="menu" noink></paper-icon-button>
+              <paper-icon-button icon="menu" fill noink></paper-icon-button>
 
-              <paper-dropdown halign="right" duration="350" class="dropdown">
-                <core-menu class="menu">
+              <paper-dropdown halign="right" duration="350" class="dropdown" transition="core-transition-fade">
+                <core-menu id="menuRight" class="menu">
                   <paper-item on-click="{{showPopupSignup}}">
                     <core-icon icon="create"></core-icon>
                     <a>Signup</a>
@@ -94,7 +94,8 @@
             </div>
 
             <div hash="myfridge">
-              <socobo-myfridge vertical layout center center-justified></socobo-myfridge>
+              <socobo-myfridge authToken="{{authToken}}"
+                               vertical layout center center-justified></socobo-myfridge>
             </div>
 
             <div hash="myrecipes">
