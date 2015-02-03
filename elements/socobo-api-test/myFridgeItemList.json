@@ -1,14 +1,12 @@
-{
-  "data":[
-      {"id":"1","bezeichnung":"Bezeichnung Item 1","erstellungsdatum":"01-01-2015","menge":"1","einheit":"liter","kategorie":"Kategorie 1"},
-      {"id":"2","bezeichnung":"Bezeichnung Item 2","erstellungsdatum":"01-01-2015","menge":"2","einheit":"liter","kategorie":"Kategorie 2"},
-      {"id":"3","bezeichnung":"Bezeichnung Item 3","erstellungsdatum":"01-01-2015","menge":"10","einheit":"stueck","kategorie":"Kategorie 3"},
-      {"id":"4","bezeichnung":"Bezeichnung Item 4","erstellungsdatum":"02-01-2015","menge":"5","einheit":"stueck","kategorie":"Kategorie 4"},
-      {"id":"5","bezeichnung":"Bezeichnung Item 5","erstellungsdatum":"02-01-2015","menge":"800","einheit":"gramm","kategorie":"Kategorie 5"},
-      {"id":"6","bezeichnung":"Bezeichnung Item 6","erstellungsdatum":"02-01-2015","menge":"6,5","einheit":"gramm","kategorie":"Kategorie 6"},
-      {"id":"7","bezeichnung":"Bezeichnung Item 7","erstellungsdatum":"03-01-2015","menge":"3","einheit":"stueck","kategorie":"Kategorie 7"},
-      {"id":"8","bezeichnung":"Bezeichnung Item 8","erstellungsdatum":"03-01-2015","menge":"1","einheit":"kilo","kategorie":"Kategorie 8"},
-      {"id":"9","bezeichnung":"Bezeichnung Item 9","erstellungsdatum":"04-01-2015","menge":"500","einheit":"gramm","kategorie":"Kategorie 9"},
-      {"id":"10","bezeichnung":"Bezeichnung Item 10","erstellungsdatum":"04-01-2015","menge":"240","einheit":"gramm","kategorie":"Kategorie 10"}
-  ]
-}
+[
+  {"id":"1","bezeichnung":"Bezeichnung Item 1","erstellungsdatum":"01-01-2015","menge":"1","einheit":"liter","kategorie":"Kategorie 1"},
+  {"id":"2","bezeichnung":"Bezeichnung Item 2","erstellungsdatum":"01-01-2015","menge":"2","einheit":"liter","kategorie":"Kategorie 2"},
+  {"id":"3","bezeichnung":"Bezeichnung Item 3","erstellungsdatum":"01-01-2015","menge":"10","einheit":"stueck","kategorie":"Kategorie 3"},
+  {"id":"4","bezeichnung":"Bezeichnung Item 4","erstellungsdatum":"02-01-2015","menge":"5","einheit":"stueck","kategorie":"Kategorie 4"},
+  {"id":"5","bezeichnung":"Bezeichnung Item 5","erstellungsdatum":"02-01-2015","menge":"800","einheit":"gramm","kategorie":"Kategorie 5"},
+  {"id":"6","bezeichnung":"Bezeichnung Item 6","erstellungsdatum":"02-01-2015","menge":"6,5","einheit":"gramm","kategorie":"Kategorie 6"},
+  {"id":"7","bezeichnung":"Bezeichnung Item 7","erstellungsdatum":"03-01-2015","menge":"3","einheit":"stueck","kategorie":"Kategorie 7"},
+  {"id":"8","bezeichnung":"Bezeichnung Item 8","erstellungsdatum":"03-01-2015","menge":"1","einheit":"kilo","kategorie":"Kategorie 8"},
+  {"id":"9","bezeichnung":"Bezeichnung Item 9","erstellungsdatum":"04-01-2015","menge":"500","einheit":"gramm","kategorie":"Kategorie 9"},
+  {"id":"10","bezeichnung":"Bezeichnung Item 10","erstellungsdatum":"04-01-2015","menge":"240","einheit":"gramm","kategorie":"Kategorie 10"}
+]

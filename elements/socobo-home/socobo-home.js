@@ -52,6 +52,10 @@
           this.$.showErrorMessage.value = this.errorMessage;
           break;
       }
+    },
+
+    toFixed: function(value, precision) {
+      return Number(value).toFixed(precision);
     }
   };
 }());

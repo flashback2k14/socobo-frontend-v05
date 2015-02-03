@@ -53,6 +53,11 @@ core-menu {
   margin: 10px 0 0 0;
 }
 
+#menuRight {
+  color: rgb(182, 182, 182);
+  margin: 0px;
+}
+
 core-menu > paper-item {
   transition: all 200ms ease-in-out;
 }
@@ -73,6 +78,7 @@ core-menu > paper-item.core-selected {
 [drawer] image-mask {
   margin-left: 14px;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 
 [drawer] p {

@@ -47,7 +47,7 @@
                      id="txtLatitude"
                      type="number"
                      align="right"
-                     value="{{latitude}}"
+                     value="{{latitude | toFixed(6)}}"
                      step="any">
             </paper-input-decorator>
             <paper-input-decorator label="Enter your longitude...">
@@ -55,7 +55,7 @@
                      id="txtLongitude"
                      type="number"
                      align="right"
-                     value="{{longitude}}"
+                     value="{{longitude | toFixed(6)}}"
                      step="any">
             </paper-input-decorator>
           </core-toolbar>
