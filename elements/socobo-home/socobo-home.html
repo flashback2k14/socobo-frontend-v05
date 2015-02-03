@@ -8,73 +8,77 @@
     <link rel="stylesheet" href="socobo-home.css">
     <!-- Element Content -->
     <!-- Welcome Card -->
-    <core-card id="core_card_home" vertical layout shadow>
-      <paper-shadow z="1">
-        <core-toolbar id="core_toolbar_home" shadow>
-          <div id="div" flex>Home</div>
-        </core-toolbar>
-      </paper-shadow>
+    <paper-shadow id="paperShadowWelcomeCard" z="3">
+      <core-card id="core_card_home" vertical layout shadow>
+        <paper-shadow z="2">
+          <core-toolbar id="core_toolbar_home" shadow>
+            <div id="div" flex>Home</div>
+          </core-toolbar>
+        </paper-shadow>
 
-      <br/>
+        <br/>
 
-      <section id="sectionHeadline">
-        <h4>Welcome to Socobo</h4>
-      </section>
+        <section id="sectionHeadline">
+          <h4>Welcome to Socobo</h4>
+        </section>
 
-      <br/>
+        <br/>
 
-      <section id="sectionLorem">
-        <article>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                 sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                 sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                 clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                 tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</article>
-      </section>
-    </core-card>
+        <section id="sectionLorem">
+          <article>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                   sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                   sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                   clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                   tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</article>
+        </section>
+      </core-card>
+    </paper-shadow>
 
     <!-- Map Card -->
-    <core-card id="core_card_maps" vertical layout shadow>
-      <paper-shadow z="1">
-        <core-toolbar id="core_toolbar_maps" shadow>
-          <div id="div" flex>Maps</div>
-          <p id="showErrorMessage"></p>
-          <paper-input-decorator label="Enter your latitude...">
-            <input is="core-input"
-                   id="txtLatitude"
-                   type="number"
-                   align="right"
-                   value="{{latitude}}"
-                   step="any">
-          </paper-input-decorator>
-          <paper-input-decorator label="Enter your longitude...">
-            <input is="core-input"
-                   id="txtLongitude"
-                   type="number"
-                   align="right"
-                   value="{{longitude}}"
-                   step="any">
-          </paper-input-decorator>
-        </core-toolbar>
-      </paper-shadow>
+    <paper-shadow id="paperShadowMapsCard" z="3">
+      <core-card id="core_card_maps" vertical layout shadow>
+        <paper-shadow z="2">
+          <core-toolbar id="core_toolbar_maps" shadow>
+            <div id="div" flex>Maps</div>
+            <p id="showErrorMessage"></p>
+            <paper-input-decorator label="Enter your latitude...">
+              <input is="core-input"
+                     id="txtLatitude"
+                     type="number"
+                     align="right"
+                     value="{{latitude}}"
+                     step="any">
+            </paper-input-decorator>
+            <paper-input-decorator label="Enter your longitude...">
+              <input is="core-input"
+                     id="txtLongitude"
+                     type="number"
+                     align="right"
+                     value="{{longitude}}"
+                     step="any">
+            </paper-input-decorator>
+          </core-toolbar>
+        </paper-shadow>
 
-      <div id="mapsContainer">
-        <leaflet-map latitude="{{latitude}}"
-                     longitude="{{longitude}}"
-                     zoom="13">
-          <leaflet-marker latitude="{{latitude}}"
-                          longitude="{{longitude}}"
-                          title="You are here!">
-              <b>You are here!</b>
-          </leaflet-marker>
-        </leaflet-map>
-      </div>
+        <div id="mapsContainer">
+          <leaflet-map latitude="{{latitude}}"
+                       longitude="{{longitude}}"
+                       zoom="13">
+            <leaflet-marker latitude="{{latitude}}"
+                            longitude="{{longitude}}"
+                            title="You are here!">
+                <b>You are here!</b>
+            </leaflet-marker>
+          </leaflet-map>
+        </div>
 
-      <paper-button id="btnBackend"
-                    on-click="{{getLocation}}"
-                    raised
-                    class="colored">Get My Location</paper-button>
-    </core-card>
+        <paper-button id="btnBackend"
+                      on-click="{{getLocation}}"
+                      raised
+                      class="colored">Get My Location</paper-button>
+      </core-card>
+    </paper-shadow>
   </template>
 
   <script>

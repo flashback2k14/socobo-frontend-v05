@@ -4,24 +4,38 @@
   margin-left: 10px;
 }
 
-core-card {
-  width: 55%;
-  min-width: 320px;
-  height: 820px;
-  border-radius: 2px;
+#paperShadowAboutCard {
+  min-width: 280px;
+  width: 40%;
+  min-height: 820px;
+  height: 80%;
   margin-top: 50px;
   margin-bottom: 20px;
   box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+}
+
+core-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
   background-color: rgb(255, 255, 255);
-  overflow: auto;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
 }
 
 core-toolbar {
+  right: 0px;
   color: rgb(255, 255, 255);
   fill: rgb(255, 255, 255);
-  background-color: rgb(79, 125, 201);
+  background: rgb(0, 121, 107);
 }
 
-github-card {
+#content {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  margin-left: 2px;
+}
+
+polymer-github-card {
   margin: 5px;
 }

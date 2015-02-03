@@ -17,11 +17,11 @@
       <p>Are you sure you want to log out?</p>
 
       <paper-button on-click="{{closePopup}}"
-                    affirmative
+                    dismissive
                     autofocus>Cancel</paper-button>
 
       <paper-button on-click="{{logoutUser}}"
-                    affirmative>Ok</paper-button>
+                    dismissive>Ok</paper-button>
 
       <core-ajax
         id="socoboLogoutForm"

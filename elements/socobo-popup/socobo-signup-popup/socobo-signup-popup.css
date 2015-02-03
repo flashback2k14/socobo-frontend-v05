@@ -14,11 +14,14 @@ core-header-panel {
 paper-dialog {
   width: 25%;
   min-width: 320px;
-  height: 66%;
-  max-height: 470px;
+  height: 72%;
+  max-height: 460px;
   margin: 0px;
   padding: 0px;
   border-radius: 2px;
+  position: !absolute;
+  top: 55px;
+  right: 25px;
 }
 
 paper-dialog::shadow #scroller {
@@ -31,11 +34,11 @@ core-toolbar{
   right: 0px;
   color: rgb(255, 255, 255);
   fill: rgb(255, 255, 255);
-  background-color: rgb(79, 125, 201);
+  background: rgb(0, 121, 107);
 }
 /*FAB*/
 paper-fab {
-  background-color: #e0a30b;
+  background: rgb(255, 87, 34);
   position: absolute !important;
   bottom: -28px;
   right: 16px;
@@ -53,7 +56,7 @@ paper-fab {
 paper-input {
   width: 94%;
   min-width: 200px;
-  max-width: 350px;
+  max-width: 390px;
   height: 70px;
   margin-left: 10px;
   margin-right: 10px;
@@ -63,7 +66,7 @@ paper-input {
 paper-input-decorator {
   width: 94%;
   min-width: 200px;
-  max-width: 350px;
+  max-width: 390px;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -72,44 +75,54 @@ paper-input-decorator.invalid {
   padding-top: 2px;
 }
 
-paper-input-decorator /deep/ .error {
-  /* error message and error icon color when the input is unfocused */
-  color: salmon;
-}
-
 paper-input-decorator /deep/ ::-webkit-input-placeholder {
   /* platform specific rules for placeholder text */
-  color: rgb(79, 125, 201);
+  color: rgb(33, 33, 33);
 }
 paper-input-decorator /deep/ ::-moz-placeholder {
-  color: rgb(79, 125, 201);
+  color: rgb(33, 33, 33);
 }
 paper-input-decorator /deep/ :-ms-input-placeholder {
-  color: rgb(79, 125, 201);
+  color: rgb(33, 33, 33);
 }
 
 paper-input-decorator /deep/ .unfocused-underline {
   /* line color when the input is unfocused */
-  background-color: rgb(79, 125, 201);
+  background: rgb(33, 33, 33);
 }
 
 paper-input-decorator[focused] /deep/ .floating-label .label-text {
   /* floating label color when the input is focused */
-  color: rgb(79, 125, 201);
+  color: rgb(33, 33, 33);
 }
 
 paper-input-decorator /deep/ .focused-underline {
   /* line color when the input is focused */
-  background-color: rgb(79, 125, 201);
+  background: rgb(33, 33, 33);
 }
 
 paper-input-decorator.invalid[focused] /deep/ .floated-label .label-text,
 paper-input-decorator[focused] /deep/ .error {
   /* floating label, error message and error icon color when the input is invalid and focused */
-  color: salmon;
+  color: rgb(211, 47, 47);
+}´
+
+paper-input-decorator /deep/ .error {
+  /* error message and error icon color when the input is unfocused */
+  color: rgb(211, 47, 47);
 }
 
 paper-input-decorator.invalid /deep/ .focused-underline {
   /* line and color when the input is invalid and focused */
-  background-color: salmon;
+  background: rgb(211, 47, 47);
+}
+
+paper-input-decorator.invalid /deep/ .unfocused-underline {
+  /* line and color when the input is invalid and focused */
+  background: rgb(211, 47, 47);
+}
+
+paper-toast {
+  color: rgb(255, 255, 255);
+  background: rgb(0, 121, 107);
 }

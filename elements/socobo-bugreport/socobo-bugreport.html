@@ -6,24 +6,26 @@
     <!-- Styling -->
     <link rel="stylesheet" href="socobo-bugreport.css">
     <!-- Element Content -->
-    <core-card id="core_card_bugreport" vertical layout shadow>
-      <paper-shadow z="2">
-        <core-toolbar id="core_toolbar_bugreport">
-          <div id="div" flex>Bugreport</div>
-        </core-toolbar>
-      </paper-shadow>
+    <paper-shadow id="paperShadowBugreportCard" z="3">
+      <core-card id="core_card_bugreport" vertical layout shadow>
+        <paper-shadow z="2">
+          <core-toolbar id="core_toolbar_bugreport">
+            <div id="div" flex>Bugreport</div>
+          </core-toolbar>
+        </paper-shadow>
 
-      <br/>
+        <br/>
 
-      <paper-button id="btnBackend" on-click="{{btnBackend}}" raised class="colored">
-        Backend - New Issue
-      </paper-button>
+        <paper-button id="btnBackend" on-click="{{btnBackend}}" raised class="colored">
+          Backend - New Issue
+        </paper-button>
 
-      <paper-button id="btnFrontend" on-click="{{btnFrontend}}" raised class="colored">
-        Frontend - New Issue
-      </paper-button>
+        <paper-button id="btnFrontend" on-click="{{btnFrontend}}" raised class="colored">
+          Frontend - New Issue
+        </paper-button>
 
-    </core-card>
+      </core-card>
+    </paper-shadow>
   </template>
 
   <script>
