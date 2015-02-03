@@ -239,6 +239,16 @@
      },
 
     /**
+     * @function: goToMyProfile
+     * @params:
+     * @description:
+     * - go to my profile after image clicked in navdrawer menu
+     */
+    goToMyProfile: function() {
+      this.route = 'myprofile';
+    },
+
+    /**
      * @function: refreshAction
      * @params:
      * @description:
