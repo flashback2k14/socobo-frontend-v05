@@ -86,7 +86,7 @@
         this.$.paper_input_password.value = '';
         this.$.paper_input_password_again.value = '';
 
-        this.fire('signup-response-ok', {username: username, pictureurl: pictureUrl});
+        this.fire('signup-response-ok', {pictureurl: pictureUrl, username: username, emailaddress: email});
       } else {
         this.$.paper_input_password.value = '';
         this.$.paper_input_password_again.value = '';
