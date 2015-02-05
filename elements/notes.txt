@@ -12,6 +12,8 @@
 - bugreport
   --> username + switch button (frontend - backend) as popup
   --> redirect to github page
+- Demo Data
+  --> https://egghead.io/lessons/nodejs-creating-demo-apis-with-json-server
 
 
 ###################################################

@@ -38,6 +38,9 @@
      */
     loginSubmit: function(){
       this.$.socoboLoginForm.go();
+      //
+      this.fire('login-submitted', {isSubmitted: true});
+      //
       this.$.toast.text = "Login submitted!";
       this.$.toast.show();
     },
