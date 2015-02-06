@@ -37,9 +37,24 @@
      * - shows a toast message to inform the user
      */
     loginSubmit: function(){
-      this.$.socoboLoginForm.go();
-      this.$.toast.text = "Login submitted!";
-      this.$.toast.show();
+      
+      var inputIsValid = false;
+
+      if (this.$.paper_input_password.value.length >= 8) {
+          inputIsValid = true;
+        }
+      }
+
+      if (inputIsValid) {
+        this.$.socoboLoginForm.go();
+        this.$.toast.text = "Login submitted!";
+        this.$.toast.show();
+      } else {
+        this.$.paper_input_password.value = '';
+
+        this.$.toast.text = "Input validation failed!";
+        this.$.toast.show();
+      }
     },
 
     /**
