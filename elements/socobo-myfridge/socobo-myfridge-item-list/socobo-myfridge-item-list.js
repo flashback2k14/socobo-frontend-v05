@@ -1,15 +1,6 @@
 (function() {
   this.socoboMyfridgeItemList = {
     /**
-     * @variable: authToken
-     * @datatype: String
-     * @defaultValue: undefined
-     * @description:
-     * - identify the user
-     */
-    authToken: '',
-
-    /**
      * @variable: myFridgeItems
      * @datatype: Array
      * @defaultValue: undefined
@@ -17,6 +8,24 @@
      * - contains myFridge items
      */
     myFridgeItems: [],
+
+    /**
+     * DEFAULT POLYMER
+     */
+    /**
+     * @function: ready
+     * @params:
+     * @description:
+     * - default polymer function
+     * - is called after component is fully loaded
+     * - get the myFridge items
+     */
+    ready: function() {
+      /**
+       * ToDo: call backend for Items
+       */
+      //this.$.socoboMyfridgeItems.sendRequest();
+    },
 
     /**
      * @function: openItemEditor

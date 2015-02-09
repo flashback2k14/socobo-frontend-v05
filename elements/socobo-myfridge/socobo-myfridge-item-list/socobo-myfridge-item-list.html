@@ -5,8 +5,7 @@
 <link rel="import" href="../../socobo-imports/socobo-imports.html">
 <script src="socobo-myfridge-item-list.js"></script>
 
-<polymer-element name="socobo-myfridge-item-list"
-                 attributes="authtoken">
+<polymer-element name="socobo-myfridge-item-list">
 
   <template>
     <!-- Styling -->
@@ -23,6 +22,15 @@
                  on-core-response="{{handleMyFridgeItemsOnResponse}}"
                  on-core-error="{{handleMyFridgeItemsOnError}}">
       </core-ajax>
+      <!--
+        ToDo: API atm not there
+      <socobo-ajax id="socoboMyfridgeItems"
+                   url="/getAllFridgeItems"
+                   method="POST"
+                   on-socobo-ajax-response-ok="{{handleMyFridgeItemsOnResponse}}"
+                   on-socobo-ajax-response-failed="{{handleMyFridgeItemsOnError}}">
+      </socobo-ajax>
+      -->
 
       <template repeat="{{item in myFridgeItems}}">
         <socobo-myfridge-item item="{{item}}"

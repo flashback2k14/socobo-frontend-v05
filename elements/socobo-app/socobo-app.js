@@ -5,15 +5,6 @@
      * PROPERTIES
      */
     /**
-     * @variable: authToken
-     * @datatype: String
-     * @defaultValue: undefined
-     * @description:
-     * - identify the user
-     */
-    authToken: '',
-
-    /**
      * @variable: userName
      * @datatype: String
      * @defaultValue: 'username'
@@ -73,16 +64,14 @@
      * DEFAULT POLYMER
      */
     /**
-     * @function: ready
+     * @function: created
      * @params:
      * @description:
      * - default polymer function
-     * - is called after component is fully loaded
+     * - is called after an instance of the element is created
      * - get the authToken from cookie
-     * - sets the route for navigation
      */
-    ready: function() {
-
+    created: function() {
       document.cookie.split('; ').forEach(function(cookieString) {
         var cookie;
         cookie = cookieString.split("=");
@@ -93,11 +82,21 @@
       });
 
       if (window.authToken !== null) {
-        this.authToken = window.authToken;
+        this.route = 'home';
       } else {
         this.$.socoboLoginPopup.showPopup();
       }
+    },
 
+    /**
+     * @function: ready
+     * @params:
+     * @description:
+     * - default polymer function
+     * - is called after component is fully prepared
+     * - sets the route for navigation
+     */
+    ready: function() {
       this.route = this.route || this.DEFAULT_ROUTE;
     },
 
@@ -171,7 +170,6 @@
      * - sets authToken
      */
     loginOk: function(e) {
-      this.authToken = e.detail.authToken;
       this.userName = e.detail.username;
       this.userPictureUrl = e.detail.pictureurl;
 
@@ -216,8 +214,12 @@
      * - reset authToken
      */
     logoutOk: function(e) {
-      this.authToken = e.detail.authToken;
       this.$.socoboLogoutPopup.closePopup();
+
+      this.userName = 'username';
+      this.emailAddress = 'user@gmail.com';
+      this.userPictureUrl = 'images/github.png';
+
       this.route = 'home';
     },
 

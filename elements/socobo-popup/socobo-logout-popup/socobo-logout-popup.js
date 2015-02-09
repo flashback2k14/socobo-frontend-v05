@@ -1,15 +1,6 @@
 (function() {
   this.socoboLogoutPopup = {
     /**
-     * @variable: authToken
-     * @datatype: String
-     * @defaultValue: undefined
-     * @description:
-     * - identify the user
-     */
-    authToken: undefined,
-
-    /**
      * @function: showPopup
      * @params:
      * @description:
@@ -37,7 +28,7 @@
      * - shows a toast message to inform the user
      */
     logoutUser: function() {
-      this.$.socoboLogoutForm.go();
+      this.$.socoboLogoutForm.sendRequest();
       this.$.toast.text = "Logout submitted!";
       this.$.toast.show();
     },
@@ -54,9 +45,9 @@
       this.$.toast.text = "Response entered!";
       this.$.toast.show();
 
-      var statusCode = e.detail.xhr.status;
+      var statusCode = e.detail.statusCode;
       if (statusCode === 200) {
-        this.fire('logout-response-ok', {authToken: undefined});
+        this.fire('logout-response-ok', {statusCode: statusCode});
       } else {
         this.fire('logout-response-failed', {statusCode: statusCode});
       }
@@ -70,8 +61,7 @@
      * - firing custom event to socobo-app
      */
     handleLogutOnError: function(e) {
-      var statusCode = e.detail.xhr.status;
-      console.log('handleLogoutOnError: ' + statusCode);
+      var statusCode = e.detail.statusCode;
       this.fire('logout-response-failed', {statusCode: statusCode});
     }
   };
