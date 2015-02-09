@@ -11,7 +11,7 @@
      * @description:
      * - identify the user
      */
-    authToken: '',
+    //authToken: '',
 
     /**
      * @variable: userName
@@ -83,7 +83,7 @@
      */
     ready: function() {
 
-      document.cookie.split('; ').forEach(function(cookieString) {
+      /*document.cookie.split('; ').forEach(function(cookieString) {
         var cookie;
         cookie = cookieString.split("=");
 
@@ -96,7 +96,7 @@
         this.authToken = window.authToken;
       } else {
         this.$.socoboLoginPopup.showPopup();
-      }
+      }*/
 
       this.route = this.route || this.DEFAULT_ROUTE;
     },

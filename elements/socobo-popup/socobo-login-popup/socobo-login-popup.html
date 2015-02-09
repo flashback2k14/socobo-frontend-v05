@@ -34,7 +34,15 @@
           </paper-input-decorator>
         </div>
 
-        <core-ajax
+        <socobo-ajax id="socoboLoginForm"
+                     url="/Login"
+                     method="POST"
+                     params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
+                     on-socobo-ajax-response-ok="{{handleLoginOnResponse}}"
+                     on-socobo-ajax-response-failed="{{handleLoginOnError}}">
+        </socobo-ajax>
+
+        <!--<core-ajax
           id="socoboLoginForm"
           url="/login"
           method="POST"
@@ -44,7 +52,7 @@
           contentType="application/json"
           on-core-response="{{handleLoginOnResponse}}"
           on-core-error="{{handleLoginOnError}}">
-        </core-ajax>
+        </core-ajax>-->
       </core-header-panel>
     </paper-dialog>
 
