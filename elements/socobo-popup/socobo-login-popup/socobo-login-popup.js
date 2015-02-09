@@ -1,15 +1,6 @@
 (function() {
   this.socoboLoginPopup = {
     /**
-     * @variable: authToken
-     * @datatype: String
-     * @defaultValue: undefined
-     * @description:
-     * - identify the user
-     */
-    authToken: undefined,
-
-    /**
      * @function: showPopup
      * @params:
      * @description:
@@ -45,7 +36,10 @@
       }
 
       if (inputIsValid) {
-        this.$.socoboLoginForm.go();
+        this.$.socoboLoginForm.sendRequest();
+        //
+        this.fire('login-submitted', {isSubmitted: true});
+		//
         this.$.toast.text = "Login submitted!";
         this.$.toast.show();
       } else {
@@ -69,22 +63,20 @@
       this.$.toast.text = "Response entered!";
       this.$.toast.show();
 
-      var statusCode = e.detail.xhr.status;
+      var statusCode = e.detail.statusCode;
 
       if (statusCode === 200) {
-        var registerData = e.detail.response;
-        var authToken = registerData.authToken;
+        var registerData = e.detail.responseData;
         var userName = registerData.userName;
         var pictureUrl = registerData.pictureUrl;
 
-        console.log('AuthToken ' + authToken);
         console.log('Username ' + userName);
         console.log('PictureUrl ' + pictureUrl);
 
         this.$.paper_input_email.value = '';
         this.$.paper_input_password.value = '';
 
-        this.fire('login-response-ok', {authToken: authToken, username: userName, pictureurl: pictureUrl});
+        this.fire('login-response-ok', {username: userName, pictureurl: pictureUrl});
       } else {
         this.$.paper_input_email.value = '';
         this.$.paper_input_password.value = '';
@@ -101,8 +93,7 @@
      * - firing custom event to socobo-app
      */
     handleLoginOnError: function(e) {
-      var statusCode = e.detail.xhr.status;
-      console.log('handleLoginOnError: ' + statusCode);
+      var statusCode = e.detail.statusCode;
 
       this.$.paper_input_email.value = '';
       this.$.paper_input_password.value = '';

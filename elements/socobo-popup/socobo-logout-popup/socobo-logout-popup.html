@@ -2,8 +2,7 @@
 <script src="socobo-logout-popup.js"></script>
 
 
-<polymer-element name="socobo-logout-popup"
-                 attributes="authToken">
+<polymer-element name="socobo-logout-popup">
   <template>
     <!-- Styling -->
     <link rel="stylesheet" href="socobo-logout-popup.css">
@@ -23,17 +22,17 @@
       <paper-button on-click="{{logoutUser}}"
                     dismissive>Ok</paper-button>
 
-      <core-ajax
-        id="socoboLogoutForm"
-        url="/logout"
-        method="POST"
-        headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
-        handleAs="json"
-        contentType="application/json"
-        on-core-response="{{handleLogutOnResponse}}"
-        on-core-error="{{handleLogutOnError}}">
-      </core-ajax>
+      <socobo-ajax id="socoboLogoutForm"
+                   url="/logout"
+                   method="POST"
+                   on-socobo-ajax-response-ok="{{handleLogutOnResponse}}"
+                   on-socobo-ajax-response-failed="{{handleLogutOnError}}">
+      </socobo-ajax>
     </paper-dialog>
+
+    <paper-toast id="toast"
+                 duration="1500">
+    </paper-toast>
 
   </template>
   <script>
