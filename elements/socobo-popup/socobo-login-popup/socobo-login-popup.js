@@ -37,7 +37,6 @@
      * - shows a toast message to inform the user
      */
     loginSubmit: function(){
-      
       var inputIsValid = false;
 
       if (this.$.paper_input_password.value.length >= 8) {

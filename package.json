@@ -1,0 +1,16 @@
+{
+  "name": "module-name",
+  "version": "0.0.1",
+  "description": "An example module to illustrate the usage of a package.json",
+  "author": "lyio",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "bower": "*",
+    "grunt": "^0.4.5",
+    "matchdep": "~0.1.1",
+    "web-component-tester" : "~2.2.3"
+  },
+  "preferGlobal": true,
+  "private": true
+}
