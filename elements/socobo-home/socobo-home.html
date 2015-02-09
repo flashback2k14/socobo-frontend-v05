@@ -40,14 +40,14 @@
       <core-card id="core_card_maps" vertical layout shadow>
         <paper-shadow z="2">
           <core-toolbar id="core_toolbar_maps" shadow>
-            <div id="div" flex>Maps</div>
+            <div flex>Maps</div>
             <p id="showErrorMessage"></p>
             <paper-input-decorator label="Enter your latitude...">
               <input is="core-input"
                      id="txtLatitude"
                      type="number"
                      align="right"
-                     value="{{latitude | toFixed(6)}}"
+                     value="{{latitude|toFixed(6)}}"
                      step="any">
             </paper-input-decorator>
             <paper-input-decorator label="Enter your longitude...">
@@ -55,7 +55,7 @@
                      id="txtLongitude"
                      type="number"
                      align="right"
-                     value="{{longitude | toFixed(6)}}"
+                     value="{{longitude|toFixed(6)}}"
                      step="any">
             </paper-input-decorator>
           </core-toolbar>

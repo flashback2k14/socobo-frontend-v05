@@ -40,7 +40,7 @@
       }
 
       if (inputIsValid) {
-        this.$.socoboSignUpForm.go();
+        this.$.socoboSignUpForm.sendRequest();
         this.$.toast.text = "Signup submitted!";
         this.$.toast.show();
       } else {
@@ -65,21 +65,15 @@
       this.$.toast.text = "Response entered!";
       this.$.toast.show();
 
-      var statusCode = e.detail.xhr.status;
+      var statusCode = e.detail.statusCode;
 
       if (statusCode === 200) {
-        var responseData = e.detail.response;
+        var responseData = e.detail.responseData;
         console.log('responseData: ' + responseData);
 
         var username = responseData.userName;
-        var name = responseData.name;
         var email = responseData.email;
         var pictureUrl = responseData.pictureUrl;
-
-        console.log('Username ' + username);
-        console.log('Name ' + name);
-        console.log('Email ' + email);
-        console.log('PictureUrl ' + pictureUrl);
 
         this.$.paper_input_name.value = '';
         this.$.paper_input_email.value = '';
@@ -103,9 +97,7 @@
      * - firing custom event to socobo-app
      */
     handleSignupOnError: function(e) {
-
-      var statusCode = e.detail.xhr.status;
-      console.log('handleSignupOnError: ' + statusCode);
+      var statusCode = e.detail.statusCode;
 
       this.$.paper_input_password.value = '';
       this.$.paper_input_password_again.value = '';

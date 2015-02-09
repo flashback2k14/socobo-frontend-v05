@@ -2,8 +2,7 @@
 <script src="socobo-login-popup.js"></script>
 
 
-<polymer-element name="socobo-login-popup"
-                 attributes="authToken">
+<polymer-element name="socobo-login-popup">
   <template>
     <!-- Styling -->
     <link rel="stylesheet" href="socobo-login-popup.css">
@@ -42,17 +41,6 @@
                      on-socobo-ajax-response-failed="{{handleLoginOnError}}">
         </socobo-ajax>
 
-        <!--<core-ajax
-          id="socoboLoginForm"
-          url="/login"
-          method="POST"
-          params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
-          headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
-          handleAs="json"
-          contentType="application/json"
-          on-core-response="{{handleLoginOnResponse}}"
-          on-core-error="{{handleLoginOnError}}">
-        </core-ajax>-->
       </core-header-panel>
     </paper-dialog>
 
