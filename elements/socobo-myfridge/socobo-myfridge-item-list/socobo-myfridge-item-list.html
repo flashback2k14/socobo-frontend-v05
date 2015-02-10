@@ -33,11 +33,13 @@
       -->
 
       <template repeat="{{item in myFridgeItems}}">
-        <socobo-myfridge-item item="{{item}}"
-                              on-itemEditIsClicked="{{openItemEditor}}">
-        </socobo-myfridge-item>
+        <socobo-myfridge-item item="{{item}}"></socobo-myfridge-item>
       </template>
     </div>
+
+    <paper-toast id="toast"
+                 duration="1500">
+    </paper-toast>
   </template>
   <script>
     Polymer('socobo-myfridge-item-list', socoboMyfridgeItemList);

@@ -2,17 +2,20 @@
   this.socoboMyfridgeItem = {
 
     publish: {
-      item: {},
-
-      editMyFridgeItem: {
-        value: false,
-        reflect: true
-      }
+      item: {}
     },
 
-    itemEditIsClicked: function(event, detail, sender) {
-      this.editMyFridgeItem = !this.editMyFridgeItem;
-      this.fire('itemEditIsClicked');
+    ready: function() {
+      // Initialize the instance's "list" property to empty array.
+      this.item = this.item || [];
+    },
+
+    itemEdit: function() {
+      this.fire('myFridgeItemEdit', {item: this.item});
+    },
+
+    itemDelete: function() {
+      this.fire('myFridgeItemDelete', {item: this.item});
     }
   };
 }());

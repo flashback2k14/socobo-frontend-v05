@@ -17,7 +17,7 @@
      * @params:
      * @description:
      * - default polymer function
-     * - is called after component is fully loaded
+     * - is called after component is fully prepared
      * - get the myFridge items
      */
     ready: function() {
@@ -25,34 +25,57 @@
        * ToDo: call backend for Items
        */
       //this.$.socoboMyfridgeItems.sendRequest();
+      /**
+       * Register Eventlistener
+       * - Workaround, because the old variant don't firing
+       * - on-myFridgeItemDelete in element tag
+       */
+      this.addEventListener('myFridgeItemEdit', this.openItemEditDialog);
+      this.addEventListener('myFridgeItemDelete', this.openItemDeleteDialog);
     },
 
     /**
-     * @function: openItemEditor
-     * @params:
+     * @function: handleMyFridgeItemsOnResponse
+     * @params: e event
      * @description:
-     * - open item editor
+     * - handle response from server
+     * - set my fridge items
      */
-    openItemEditor: function() {
-      console.log("item edit clicked!");
-    },
-
     handleMyFridgeItemsOnResponse: function(e) {
       this.myFridgeItems = e.detail.response;
     },
 
+    /**
+     * @function: handleMyFridgeItemsOnError
+     * @params: e event
+     * @description:
+     * - handle error from server
+     */
     handleMyFridgeItemsOnError: function(e) {
-
-    }
-    /*,
-    gerade: function(item) {
-      if (Number(item.id) % 2 === 0) return item;
-      else console.log("err gerade");
+      this.$.toast.text = 'Statuscode: ' +  e.detail.xhr.status;
+      this.$.toast.show();
     },
 
-    ungerade: function(item) {
-      if (Number(item.id) % 2 !== 0) return item;
-      else console.log("err ungerade");
-    }*/
+    /**
+     * @function: openItemEditDialog
+     * @params: e event
+     * @description:
+     * - open item editor
+     */
+    openItemEditDialog: function(e) {
+      this.$.toast.text = 'Edit: ' + e.detail.item.bezeichnung;
+      this.$.toast.show();
+    },
+
+    /**
+     * @function: openItemDeleteDialog
+     * @params: e event
+     * @description:
+     * - open delete confirm dialog
+     */
+    openItemDeleteDialog: function(e) {
+      this.$.toast.text = 'Delete: ' + e.detail.item.bezeichnung;
+      this.$.toast.show();
+    }
   };
 }());

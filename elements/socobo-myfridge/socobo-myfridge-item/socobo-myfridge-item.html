@@ -12,16 +12,14 @@
     <link rel="stylesheet" href="socobo-myfridge-item.css">
     <!-- Element Content -->
     <core-card vertical layout>
+      <paper-shadow z="2">
+        <core-toolbar shadow>
+          <div flex>{{item.bezeichnung}}</div>
+        </core-toolbar>
+      </paper-shadow>
+
       <div id="cardContent" vertical layout>
         <table>
-          <tr>
-            <td><label>Id:</label></td>
-            <td><p>{{item.id}}</p></td>
-          </tr>
-          <tr>
-            <td><label>Bezeichnung:</label></td>
-            <td><p>{{item.bezeichnung}}</p></td>
-          </tr>
           <tr>
             <td><label>Erstellungsdatum:</label></td>
             <td><p>{{item.erstellungsdatum}}</p></td>
@@ -38,14 +36,16 @@
             <td><label>Kategorie:</label></td>
             <td><p>{{item.kategorie}}</p></td>
           </tr>
-          <tr>
-            <td>
-              <input type="checkbox" on-click="{{itemEditIsClicked}}">
-              <label id="labelEdit">Edit</label>
-            </td>
-            <td></td>
-          </tr>
         </table>
+      </div>
+
+      <div id="btnContent" horizontal layout reverse>
+        <paper-button id="btnDelete" on-click="{{itemDelete}}" raised class="colored">
+          Delete
+        </paper-button>
+        <paper-button id="btnEdit" on-click="{{itemEdit}}" raised class="colored">
+          Edit
+        </paper-button>
       </div>
     </core-card>
   </template>

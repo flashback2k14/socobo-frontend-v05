@@ -6,11 +6,21 @@
 }
 core-card {
   width: 380px;
-  height: 220px;
-  padding-top: 5px;
+  height: 245px;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
   background-color: rgb(255, 255, 255);
+}
+
+core-toolbar {
+  right: 0px;
+  color: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+  background: rgb(0, 121, 107);
+}
+
+#cardContent {
+  margin-top: 10px;
 }
 
 label, p {
@@ -30,4 +40,20 @@ input[type="checkbox"] {
 #labelEdit {
   margin-left: 2px;
   padding-left: 2px;
+}
+
+#btnContent {
+  margin: 5px;
+}
+
+paper-button {
+  background: rgb(0, 121, 107);
+  color: rgb(255, 255, 255);
+  font-size: small;
+}
+
+#btnDelete {
+  background: rgb(229, 57, 53);
+  color: rgb(255, 255, 255);
+  font-size: small;
 }
