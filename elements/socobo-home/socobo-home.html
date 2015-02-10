@@ -35,50 +35,6 @@
       </core-card>
     </paper-shadow>
 
-    <!-- Map Card -->
-    <paper-shadow id="paperShadowMapsCard" z="3">
-      <core-card id="core_card_maps" vertical layout shadow>
-        <paper-shadow z="2">
-          <core-toolbar id="core_toolbar_maps" shadow>
-            <div flex>Maps</div>
-            <p id="showErrorMessage"></p>
-            <paper-input-decorator label="Enter your latitude...">
-              <input is="core-input"
-                     id="txtLatitude"
-                     type="number"
-                     align="right"
-                     value="{{latitude|toFixed(6)}}"
-                     step="any">
-            </paper-input-decorator>
-            <paper-input-decorator label="Enter your longitude...">
-              <input is="core-input"
-                     id="txtLongitude"
-                     type="number"
-                     align="right"
-                     value="{{longitude|toFixed(6)}}"
-                     step="any">
-            </paper-input-decorator>
-          </core-toolbar>
-        </paper-shadow>
-
-        <div id="mapsContainer">
-          <leaflet-map latitude="{{latitude}}"
-                       longitude="{{longitude}}"
-                       zoom="13">
-            <leaflet-marker latitude="{{latitude}}"
-                            longitude="{{longitude}}"
-                            title="You are here!">
-                <b>You are here!</b>
-            </leaflet-marker>
-          </leaflet-map>
-        </div>
-
-        <paper-button id="btnBackend"
-                      on-click="{{getLocation}}"
-                      raised
-                      class="colored">Get My Location</paper-button>
-      </core-card>
-    </paper-shadow>
   </template>
 
   <script>

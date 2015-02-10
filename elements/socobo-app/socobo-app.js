@@ -72,19 +72,10 @@
      * - get the authToken from cookie
      */
     created: function() {
-      document.cookie.split('; ').forEach(function(cookieString) {
-        var cookie;
-        cookie = cookieString.split("=");
-
-        if ((cookie.length === 2) && (cookie[0] === "authToken")) {
-          return window.authToken = cookie[1];
-        }
-      });
-
-      if (window.authToken !== null) {
-        this.route = 'home';
+      if (isAuthTokenAvailable()){
+        setCookie();
       } else {
-        this.$.socoboLoginPopup.showPopup();
+        setCookie();
       }
     },
 

@@ -7,9 +7,9 @@
 #paperShadowWelcomeCard {
   width: 70%;
   min-width: 320px;
-  height: 210px;
+  height: 260px;
   margin-top: 50px;
-  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0 2px 4px, rgba(0, 0, 0, 0.0980392) 0 0 3px;
 }
 
 #core_card_home {
@@ -17,28 +17,11 @@
   height: 100%;
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-}
-
-#paperShadowMapsCard {
-  width: 70%;
-  min-width: 320px;
-  height: 500px;
-  margin-top: 50px;
-  margin-bottom: 20px;
-  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-}
-
-#core_card_maps {
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0 2px 4px, rgba(0, 0, 0, 0.0980392) 0 0 3px;
 }
 
 core-toolbar {
-  right: 0px;
+  right: 0;
   color: rgb(255, 255, 255);
   fill: rgb(255, 255, 255);
   background: rgb(0, 121, 107);
@@ -89,30 +72,4 @@ paper-input-decorator /deep/ .focused-underline {
   /* line color when the input is focused */
   background-color: #fff;
   text-align: right;
-}
-
-/*Maps*/
-#mapsContainer {
-  margin: 5px;
-  height: 370px;
-}
-
-leaflet-map {
-  display: block;
-  height: 100%;
-}
-
-/*Button*/
-paper-button, p {
-  margin: 5px;
-  padding: 0px;
-}
-
-paper-button.colored {
-  color: rgb(0, 121, 107);
-}
-
-paper-button[raised].colored {
-  background: rgb(0, 121, 107);
-  color: rgb(255, 255, 255);
 }

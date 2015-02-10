@@ -48,23 +48,10 @@
      * - get the authToken from cookie
      */
     ready: function() {
-
-      document.cookie.split('; ').forEach(function(cookieString) {
-        var cookie;
-        cookie = cookieString.split("=");
-
-        if ((cookie.length === 2) && (cookie[0] === "authToken")) {
-          return window.authToken = cookie[1];
-        }
-      });
-
-      if (window.authToken !== null) {
-        this.authToken = window.authToken;
-      } else {
-        this.authToken = '';
+      if (!isAuthTokenAvailable()) {
+        setCookie();
       }
     },
-
 
     sendRequest: function(){
       this.$.socoboAjax.go();

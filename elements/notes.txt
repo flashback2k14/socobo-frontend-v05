@@ -63,6 +63,7 @@
   {name: 'Login', icon: 'exit-to-app', hash: 'login'},*/  //Not needed with, if we use popups
 
 -socobo-home:
+
 -- imports
   <!--
   OpenStreetMap
@@ -94,3 +95,161 @@
                        draggable="true">
     </google-map-marker>
   </google-map>-->
+
+-socobo-home:
+-- bower
+  "leaflet-map": "nhnb/leaflet-map#0.3.1",
+
+-- imports
+<!-- OpenStreetMap -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/leaflet-map/leaflet-map.html">
+<link rel="import" href="../../bower_components/leaflet-map/leaflet-marker.html">
+
+-- styling
+#paperShadowMapsCard {
+  width: 70%;
+  min-width: 320px;
+  height: 500px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+}
+
+#core_card_maps {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+}
+
+/*Maps*/
+#mapsContainer {
+  margin: 5px;
+  height: 370px;
+}
+
+leaflet-map {
+  display: block;
+  height: 100%;
+}
+
+/*Button*/
+paper-button, p {
+  margin: 5px;
+  padding: 0px;
+}
+
+paper-button.colored {
+  color: rgb(0, 121, 107);
+}
+
+paper-button[raised].colored {
+  background: rgb(0, 121, 107);
+  color: rgb(255, 255, 255);
+}
+
+-- content area
+<!-- Map Card -->
+<paper-shadow id="paperShadowMapsCard" z="3">
+  <core-card id="core_card_maps" vertical layout shadow>
+    <paper-shadow z="2">
+      <core-toolbar id="core_toolbar_maps" shadow>
+        <div flex>Maps</div>
+        <p id="showErrorMessage"></p>
+        <paper-input-decorator label="Enter your latitude...">
+          <input is="core-input"
+                 id="txtLatitude"
+                 type="number"
+                 align="right"
+                 value="{{latitude|toFixed(6)}}"
+                 step="any">
+        </paper-input-decorator>
+        <paper-input-decorator label="Enter your longitude...">
+          <input is="core-input"
+                 id="txtLongitude"
+                 type="number"
+                 align="right"
+                 value="{{longitude|toFixed(6)}}"
+                 step="any">
+        </paper-input-decorator>
+      </core-toolbar>
+    </paper-shadow>
+
+    <div id="mapsContainer">
+      <leaflet-map latitude="{{latitude}}"
+                   longitude="{{longitude}}"
+                   zoom="13">
+        <leaflet-marker latitude="{{latitude}}"
+                        longitude="{{longitude}}"
+                        title="You are here!">
+            <b>You are here!</b>
+        </leaflet-marker>
+      </leaflet-map>
+    </div>
+
+    <paper-button id="btnBackend"
+                  on-click="{{getLocation}}"
+                  raised
+                  class="colored">Get My Location</paper-button>
+  </core-card>
+</paper-shadow>
+
+-- script
+latitude: undefined,
+longitude: undefined,
+errorMessage: undefined,
+posOptions: {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+},
+
+ready: function() {
+  this.getLocation();
+},
+
+getLocation: function() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(this.posSucces.bind(this),
+                                             this.posError.bind(this),
+                                             this.posOptions);
+  } else {
+    this.errorMessage.value = "Geolocation is not supported by this browser.";
+    this.$.showErrorMessage.value = this.errorMessage;
+  }
+},
+
+posSucces: function(position) {
+  this.latitude = position.coords.latitude;
+  this.longitude = position.coords.longitude;
+
+  this.$.txtLatitude.value = this.latitude.toFixed(6);
+  this.$.txtLongitude.value = this.longitude.toFixed(6);
+},
+
+posError: function(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      this.errorMessage.value = "User denied the request for Geolocation."
+      this.$.showErrorMessage.value = this.errorMessage;
+      break;
+    case error.POSITION_UNAVAILABLE:
+      this.errorMessage.value = "Location information is unavailable."
+      this.$.showErrorMessage.value = this.errorMessage;
+      break;
+    case error.TIMEOUT:
+      this.errorMessage.value = "The request to get user location timed out."
+      this.$.showErrorMessage.value = this.errorMessage;
+      break;
+    case error.UNKNOWN_ERROR:
+      this.errorMessage.value = "An unknown error occurred."
+      this.$.showErrorMessage.value = this.errorMessage;
+      break;
+  }
+},
+
+toFixed: function(value, precision) {
+  return Number(value).toFixed(precision);
+}
