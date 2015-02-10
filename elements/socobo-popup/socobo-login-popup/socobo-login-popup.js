@@ -21,6 +21,13 @@
     },
 
     /**
+     * Test
+     */
+    togglePopup: function() {
+      this.$.socoboLoginpPopup.toggle();
+    },
+
+    /**
      * @function: loginSubmit
      * @params:
      * @description:

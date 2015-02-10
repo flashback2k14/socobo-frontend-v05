@@ -18,6 +18,7 @@
     <script>
         // init element for testing
         var elem = document.querySelector('socobo-login-popup');
+        //var dialog = elem.getElementById('socoboLoginpPopup');
 
         suite('<socobo-login-popup>', function() {
 
@@ -28,6 +29,10 @@
           test('attribute authToken is undefined by default', function() {
             assert.equal(elem.authToken, undefined);
           });
+
+          /*test('dialog should be closed by default', function() {
+            assert.equal(false, dialog.togglePopup());
+          });*/
 
           test('is login data submitted?', function() {
             elem.addEventListener('login-submitted', function(event) {
