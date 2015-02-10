@@ -63,6 +63,7 @@
   {name: 'Login', icon: 'exit-to-app', hash: 'login'},*/  //Not needed with, if we use popups
 
 -socobo-home:
+
 -- imports
   <!--
   OpenStreetMap
@@ -96,6 +97,8 @@
   </google-map>-->
 
 -socobo-home:
+-- bower
+  "leaflet-map": "nhnb/leaflet-map#0.3.1",
 
 -- imports
 <!-- OpenStreetMap -->
