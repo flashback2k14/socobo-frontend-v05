@@ -20,7 +20,7 @@ paper-dialog {
   margin: 0px;
   padding: 0px;
   border-radius: 2px;
-  position: !absolute;
+  position: absolute !important;
   top: 55px;
   right: 25px;
 }

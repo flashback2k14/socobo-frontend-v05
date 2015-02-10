@@ -31,15 +31,14 @@
       var inputIsValid = false;
 
       if (this.$.paper_input_password.value.length >= 8) {
-          inputIsValid = true;
-        }
+        inputIsValid = true;
       }
 
       if (inputIsValid) {
         this.$.socoboLoginForm.sendRequest();
         //
         this.fire('login-submitted', {isSubmitted: true});
-		//
+		    //
         this.$.toast.text = "Login submitted!";
         this.$.toast.show();
       } else {
