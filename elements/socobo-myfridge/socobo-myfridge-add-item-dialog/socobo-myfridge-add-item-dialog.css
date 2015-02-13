@@ -2,4 +2,58 @@
 :host {
   font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
   margin-left: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+core-card {
+  position: absolute !important;
+  left: 600px;
+  bottom: -480px;
+  width: 400px;
+  height: 460px;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  background-color: rgb(255, 255, 255);
+}
+
+core-toolbar {
+  right: 0px;
+  color: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+  background: rgb(0, 121, 107);
+}
+
+#content {
+  margin-top: 10px;
+}
+
+paper-input, paper-dropdown-menu {
+  width: 90%;
+  margin-left: 5px;
+  padding-left: 5px;
+}
+
+paper-icon-button {
+  margin-bottom: 8px;
+}
+
+paper-dropdown {
+  padding: 2px;
+  margin: 2px;
+}
+
+paper-dropdown::shadow #scroller {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+paper-dropdown core-menu paper-item {
+  margin: 0px;
+  padding: 0px;
+}
+
+paper-dropdown core-menu paper-item a{
+  margin: 0px;
+  padding: 0px;
 }

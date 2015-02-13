@@ -1,15 +1,6 @@
 (function() {
   this.socoboMyfridgeItemList = {
     /**
-     * @variable: myFridgeItems
-     * @datatype: Array
-     * @defaultValue: undefined
-     * @description:
-     * - contains myFridge items
-     */
-    myFridgeItems: [],
-
-    /**
      * DEFAULT POLYMER
      */
     /**
@@ -26,12 +17,13 @@
        */
       //this.$.socoboMyfridgeItems.sendRequest();
       /**
-       * Register Eventlistener
-       * - Workaround, because the old variant don't firing
-       * - on-myFridgeItemDelete in element tag
+       * @variable: myFridgeItems
+       * @datatype: Array
+       * @defaultValue: undefined
+       * @description:
+       * - contains myFridge items
        */
-      this.addEventListener('myFridgeItemEdit', this.openItemEditDialog);
-      this.addEventListener('myFridgeItemDelete', this.openItemDeleteDialog);
+      this.myFridgeItems = [];
     },
 
     /**
@@ -56,26 +48,13 @@
       this.$.toast.show();
     },
 
-    /**
-     * @function: openItemEditDialog
-     * @params: e event
-     * @description:
-     * - open item editor
-     */
-    openItemEditDialog: function(e) {
-      this.$.toast.text = 'Edit: ' + e.detail.item.bezeichnung;
-      this.$.toast.show();
-    },
-
-    /**
-     * @function: openItemDeleteDialog
-     * @params: e event
-     * @description:
-     * - open delete confirm dialog
-     */
-    openItemDeleteDialog: function(e) {
-      this.$.toast.text = 'Delete: ' + e.detail.item.bezeichnung;
-      this.$.toast.show();
+    searchForItems: function(item, searchStr) {
+      if (searchStr !== undefined) {
+        if (searchStr.length === 0) return item;
+        else return item.bezeichnung.toLowerCase().match(searchStr.toLowerCase());
+      } else {
+        return this.myFridgeItems;
+      }
     }
   };
 }());

@@ -1,7 +1,50 @@
 (function() {
   this.socoboMyFridge = {
     /**
-     * ToDo: implement functionality
+     * DEFAULT POLYMER
      */
+    /**
+     * @function: ready
+     * @params:
+     * @description:
+     * - default polymer function
+     * - is called after component is fully prepared
+     * - get the myFridge items
+     */
+    ready: function() {
+      /**
+       * Register Eventlistener
+       * - Workaround, because the old variant don't firing
+       * - on-myFridgeItemDelete in element tag
+       */
+      this.addEventListener('myFridgeItemEdit', this.openItemEditDialog);
+      this.addEventListener('myFridgeItemDelete', this.openItemDeleteDialog);
+    },
+
+    /**
+     * @function: openItemEditDialog
+     * @params: e event
+     * @description:
+     * - open item editor
+     */
+     openItemEditDialog: function(e) {
+      this.$.socoboMyFridgeDialog.style.visibility = 'visible';
+
+      this.fire('item-for-edit', {item: e});
+
+      this.$.toast.text = 'Edit: ' + e.detail.item.bezeichnung;
+      this.$.toast.show();
+    },
+
+    /**
+     * @function: openItemDeleteDialog
+     * @params: e event
+     * @description:
+     * - open delete confirm dialog
+     */
+     openItemDeleteDialog: function(e) {
+      this.$.toast.text = 'Delete: ' + e.detail.item.bezeichnung;
+      this.$.toast.show();
+    }
   };
 }());

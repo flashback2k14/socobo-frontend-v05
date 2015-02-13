@@ -29,7 +29,8 @@
     "font-roboto": "Polymer/font-roboto#^0.5.4",
     "flatiron-director": "PolymerLabs/flatiron-director#^0.5.0",
     "image-mask": "hejty/image-mask#^0.1.1",
-    "polymer-github-card": "iamolivinius/polymer-github-card#0.0.1"
+    "polymer-github-card": "iamolivinius/polymer-github-card#0.0.1",
+    "paper-date-picker": "David-Mulder/paper-date-picker"
   },
   "resolutions": {
     "polymer": "^0.5",

@@ -10,7 +10,72 @@
     <!-- Styling -->
     <link rel="stylesheet" href="socobo-myfridge-add-item-dialog.css">
     <!-- Element Content -->
-    <p>PlaceHolder</p>
+    <core-card layout vertical>
+      <paper-shadow z="2">
+        <core-toolbar id="core_toolbar">
+          <div id="div" flex>Edit: {{item.bezeichnung}}</div>
+        </core-toolbar>
+      </paper-shadow>
+
+      <div id="content" vertical layout>
+        <paper-input id="iBezeichnung"
+                     label="Bezeichnung"
+                     floatingLabel vertical layout>
+          {{item.bezeichnung}}
+        </paper-input>
+
+        <div horizontal layout>
+          <paper-input id="iHaltbarkeitsdatum"
+                       label="Haltbarkeitsdatum"
+                       value="{{selectedData | formatDateFilter}}"
+                       type="date"
+                       floatingLabel vertical layout>
+            {{item.haltbarkeitsdatum}}
+          </paper-input>
+          <paper-icon-button id="btnOpenDatePicker"
+                             icon="today"
+                             on-click="{{openDatePicker}}"
+                             self-end>
+          </paper-icon-button>
+          <paper-date-picker-dialog id="datePicker"
+                                    date="{{item.haltbarkeitsdatum}}"
+                                    value="{{selectedData}}"
+                                    locale="de-DE">
+          </paper-date-picker-dialog>
+        </div>
+
+        <paper-input id="iMenge"
+                     label="Menge"
+                     floatingLabel vertical layout>
+          {{item.menge}}
+        </paper-input>
+
+        <paper-dropdown-menu label="Mengeneinheit">
+          <paper-dropdown duration="350" class="dropdown" transition="core-transition-fade">
+            <core-menu class="menu"">
+              <template repeat="{{einheit in mengeneinheiten}}">
+                <paper-item id="{{einheit.id}}">{{einheit.bezeichnung}}</paper-item>
+              </template>
+            </core-menu>
+          </paper-dropdown>
+        </paper-dropdown-menu>
+
+        <paper-dropdown-menu label="Kategorie">
+          <paper-dropdown duration="350" class="dropdown" transition="core-transition-fade">
+            <core-menu class="menu">
+              <template repeat="{{kategorie in kategories}}">
+                <paper-item id="{{kategorie.id}}">{{kategorie.bezeichnung}}</paper-item>
+              </template>
+            </core-menu>
+          </paper-dropdown>
+        </paper-dropdown-menu>
+      </div>
+
+      <div horizontal layout reverse>
+        <paper-button id="btnOk" on-click="{{finishEdit}}" raisedbutton>Ok</paper-button>
+        <paper-button id="btnCancel" on-click="{{cancelEdit}}" raisedbutton>Cancel</paper-button>
+      </div>
+    </core-card>
 
   </template>
   <script>

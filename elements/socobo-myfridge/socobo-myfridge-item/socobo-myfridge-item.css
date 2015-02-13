@@ -5,8 +5,12 @@
   box-sizing: border-box;
 }
 core-card {
+  min-width: 380px;
   width: 380px;
-  height: 245px;
+  max-width: 380px;
+  min-height: 275px;
+  height: 275px;
+  max-height: 275px;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
   background-color: rgb(255, 255, 255);

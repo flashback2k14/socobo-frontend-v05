@@ -3,3 +3,70 @@
   font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
   margin-left: 10px;
 }
+
+core-header-panel {
+  width: 550px;
+  min-height: 300px;
+  height: 600px;
+  margin-top: 20px;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  background-color: rgb(230, 230, 230);
+}
+
+.core-header {
+  height: 60px;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+  background: rgb(0, 121, 107);
+  transition: height 0.2s;
+}
+
+p {
+  margin: 10px;
+  width: 20%;
+}
+
+.content {
+  height: 100%;
+  margin-top: 10px;
+  background-color: rgb(230, 230, 230);
+}
+
+#myFridgeItem {
+  margin: 10px;
+}
+
+paper-input-decorator {
+  width: 30%;
+  min-width: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+paper-input-decorator /deep/ ::-webkit-input-placeholder {
+  /* platform specific rules for placeholder text */
+  color: rgb(255, 255, 255);
+}
+paper-input-decorator /deep/ ::-moz-placeholder {
+  color: rgb(255, 255, 255);
+}
+paper-input-decorator /deep/ :-ms-input-placeholder {
+  color: rgb(255, 255, 255);
+}
+
+paper-input-decorator /deep/ .unfocused-underline {
+  /* line color when the input is unfocused */
+  color: rgb(255, 255, 255);
+}
+
+paper-input-decorator[focused] /deep/ .floating-label .label-text {
+  /* floating label color when the input is focused */
+  color: rgb(255, 255, 255);
+}
+
+paper-input-decorator /deep/ .focused-underline {
+  /* line color when the input is focused */
+  color: rgb(255, 255, 255);
+}
