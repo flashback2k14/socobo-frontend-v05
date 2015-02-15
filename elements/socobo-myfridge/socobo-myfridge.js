@@ -19,6 +19,11 @@
        */
       this.addEventListener('myFridgeItemEdit', this.openItemEditDialog);
       this.addEventListener('myFridgeItemDelete', this.openItemDeleteDialog);
+      /**
+       * Register Dialog Element
+       * - Workaround, because element not defined
+       */
+      this.dialog = this.$.socoboMyFridgeDialog;
     },
 
     /**
@@ -27,10 +32,12 @@
      * @description:
      * - open item editor
      */
-     openItemEditDialog: function(e) {
+    openItemEditDialog: function(e) {
       this.$.socoboMyFridgeDialog.style.visibility = 'visible';
 
-      this.fire('item-for-edit', {item: e});
+      var editItem = e.detail.item;
+
+      this.fire('itemForEdit', {editItem: editItem}, this.dialog);
 
       this.$.toast.text = 'Edit: ' + e.detail.item.bezeichnung;
       this.$.toast.show();
@@ -42,7 +49,7 @@
      * @description:
      * - open delete confirm dialog
      */
-     openItemDeleteDialog: function(e) {
+    openItemDeleteDialog: function(e) {
       this.$.toast.text = 'Delete: ' + e.detail.item.bezeichnung;
       this.$.toast.show();
     }

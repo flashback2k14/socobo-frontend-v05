@@ -22,14 +22,16 @@
     },
 
     ready: function() {
-      this.selectedData = '2015-01-01';
+      this.selectedDate = '2015-01-01';
       this.item = this.item || [];
 
-      this.addEventListener('myFridgeItemEdit', this.setItemToDialog);
+      this.addEventListener('itemForEdit', this.setItemToDialog);
     },
 
     setItemToDialog: function(e) {
-      this.item = e.detail.item;
+      this.item = e.detail.editItem;
+      this.selectedDate = e.detail.editItem.haltbarkeitsdatum;
+      this.$.menuKategorie.value = e.detail.editItem.kategorie;
     },
 
     openDatePicker: function() {
@@ -45,6 +47,9 @@
     },
 
     finishEdit: function() {
+      /**
+       * ToDo: Ajax Call
+       */
       this.style.visibility = 'hidden';
     },
 

@@ -58,7 +58,7 @@ paper-input-decorator /deep/ :-ms-input-placeholder {
 
 paper-input-decorator /deep/ .unfocused-underline {
   /* line color when the input is unfocused */
-  color: rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
 }
 
 paper-input-decorator[focused] /deep/ .floating-label .label-text {
@@ -68,5 +68,5 @@ paper-input-decorator[focused] /deep/ .floating-label .label-text {
 
 paper-input-decorator /deep/ .focused-underline {
   /* line color when the input is focused */
-  color: rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
 }

@@ -23,38 +23,12 @@
       </div>
       <div class="content" vertical layout center>
         <template repeat="{{item in myFridgeItems}}">
-          <template if="{{ searchForItems(item,searchStr) }}">
+          <template if="{{ searchForItems(item, searchStr) }}">
             <socobo-myfridge-item id="myFridgeItem" item="{{item}}"></socobo-myfridge-item>
           </template>
         </template>
       </div>
     </core-header-panel>
-
-
-
-    <!--<core-card layout vertical>
-      <paper-shadow z="2">
-        <core-toolbar id="core_toolbar" mode="waterfall">
-          <div id="div" flex>Search:</div>
-          <paper-input-decorator>
-          <input is="core-input"
-                 id="searchQuery"
-                 type="text"
-                 value="{{searchStr}}">
-        </paper-input-decorator>
-        </core-toolbar>
-      </paper-shadow>
-
-      <div id="content" layout vertical center>
-
-        <template repeat="{{item in myFridgeItems}}">
-          <template if="{{ searchForItems(item,searchStr) }}">
-            <socobo-myfridge-item item="{{item}}"></socobo-myfridge-item>
-          </template>
-        </template>
-      </div>
-
-    </core-card>-->
 
     <core-ajax id="ajaxMyfridgeItems"
                auto

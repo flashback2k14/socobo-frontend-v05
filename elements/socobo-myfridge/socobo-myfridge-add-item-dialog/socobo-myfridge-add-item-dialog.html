@@ -20,17 +20,16 @@
       <div id="content" vertical layout>
         <paper-input id="iBezeichnung"
                      label="Bezeichnung"
+                     value="{{item.bezeichnung}}"
                      floatingLabel vertical layout>
-          {{item.bezeichnung}}
         </paper-input>
 
         <div horizontal layout>
           <paper-input id="iHaltbarkeitsdatum"
                        label="Haltbarkeitsdatum"
-                       value="{{selectedData | formatDateFilter}}"
+                       value="{{selectedDate | formatDateFilter}}"
                        type="date"
                        floatingLabel vertical layout>
-            {{item.haltbarkeitsdatum}}
           </paper-input>
           <paper-icon-button id="btnOpenDatePicker"
                              icon="today"
@@ -39,22 +38,22 @@
           </paper-icon-button>
           <paper-date-picker-dialog id="datePicker"
                                     date="{{item.haltbarkeitsdatum}}"
-                                    value="{{selectedData}}"
+                                    value="{{selectedDate}}"
                                     locale="de-DE">
           </paper-date-picker-dialog>
         </div>
 
         <paper-input id="iMenge"
                      label="Menge"
+                     value="{{item.menge}}"
                      floatingLabel vertical layout>
-          {{item.menge}}
         </paper-input>
 
         <paper-dropdown-menu label="Mengeneinheit">
           <paper-dropdown duration="350" class="dropdown" transition="core-transition-fade">
-            <core-menu class="menu"">
+            <core-menu id="menuEinheit" class="menu">
               <template repeat="{{einheit in mengeneinheiten}}">
-                <paper-item id="{{einheit.id}}">{{einheit.bezeichnung}}</paper-item>
+                <paper-item id="{{einheit.id}}" value="{{item.einheit}}">{{einheit.bezeichnung}}</paper-item>
               </template>
             </core-menu>
           </paper-dropdown>
@@ -62,9 +61,9 @@
 
         <paper-dropdown-menu label="Kategorie">
           <paper-dropdown duration="350" class="dropdown" transition="core-transition-fade">
-            <core-menu class="menu">
+            <core-menu id="menuKategorie" class="menu">
               <template repeat="{{kategorie in kategories}}">
-                <paper-item id="{{kategorie.id}}">{{kategorie.bezeichnung}}</paper-item>
+                <paper-item id="{{kategorie.id}}" value="{{item.kategorie}}">{{kategorie.bezeichnung}}</paper-item>
               </template>
             </core-menu>
           </paper-dropdown>
