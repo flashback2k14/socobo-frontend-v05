@@ -8,8 +8,9 @@
   "devDependencies": {
     "bower": "*",
     "grunt": "^0.4.5",
-    "matchdep": "~0.1.1",
-    "web-component-tester" : "~2.2.3"
+    "matchdep": "~0.3.0",
+    "web-component-tester":"~2.2.3",
+    "connect-livereload": "0.5.3"
   },
   "preferGlobal": true,
   "private": true

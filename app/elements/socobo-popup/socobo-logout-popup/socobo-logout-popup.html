@@ -1,0 +1,41 @@
+<!-- Polymer -->
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<script src="socobo-logout-popup.js"></script>
+
+<polymer-element name="socobo-logout-popup">
+  <template>
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-logout-popup.css">
+    <!-- Element Content -->
+    <paper-dialog id="socoboLogoutPopup"
+                  heading="Logout"
+                  layered="false"
+                  transition="core-transition-top"
+                  backdrop
+                  autoCloseDisabled>
+      <p>Are you sure you want to log out?</p>
+
+      <paper-button on-click="{{closePopup}}"
+                    dismissive
+                    autofocus>Cancel</paper-button>
+
+      <paper-button on-click="{{logoutUser}}"
+                    dismissive>Ok</paper-button>
+
+      <socobo-ajax id="socoboLogoutForm"
+                   url="/logout"
+                   method="POST"
+                   on-socobo-ajax-response-ok="{{handleLogutOnResponse}}"
+                   on-socobo-ajax-response-failed="{{handleLogutOnError}}">
+      </socobo-ajax>
+    </paper-dialog>
+
+    <paper-toast id="toast"
+                 duration="1500">
+    </paper-toast>
+
+  </template>
+  <script>
+    Polymer('socobo-logout-popup', socoboLogoutPopup);
+  </script>
+</polymer-element>

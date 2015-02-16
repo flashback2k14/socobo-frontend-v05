@@ -1,0 +1,56 @@
+<!--
+  ToDo:
+    view for a recipe
+-->
+<!-- Polymer -->
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<script src="socobo-myfridge-item.js"></script>
+
+<polymer-element name="socobo-myfridge-item"
+                 attribute="item">
+  <template>
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-myfridge-item.css">
+    <!-- Element Content -->
+    <core-card vertical layout>
+      <div id="cardContent" vertical layout>
+        <table>
+          <tr>
+            <td><label>Id:</label></td>
+            <td><p>{{item.id}}</p></td>
+          </tr>
+          <tr>
+            <td><label>Bezeichnung:</label></td>
+            <td><p>{{item.bezeichnung}}</p></td>
+          </tr>
+          <tr>
+            <td><label>Erstellungsdatum:</label></td>
+            <td><p>{{item.erstellungsdatum}}</p></td>
+          </tr>
+          <tr>
+            <td><label>Menge:</label></td>
+            <td><p>{{item.menge}}</p></td>
+          </tr>
+          <tr>
+            <td><label>Einheit:</label></td>
+            <td><p>{{item.einheit}}</p></td>
+          </tr>
+          <tr>
+            <td><label>Kategorie:</label></td>
+            <td><p>{{item.kategorie}}</p></td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" on-click="{{itemEditIsClicked}}">
+              <label id="labelEdit">Edit</label>
+            </td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </core-card>
+  </template>
+  <script>
+    Polymer('socobo-myfridge-item', socoboMyfridgeItem);
+  </script>
+</polymer-element>

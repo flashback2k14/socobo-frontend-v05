@@ -1,0 +1,46 @@
+<!--
+  ToDo:
+    content: all socobo-myfridge-item.html elements
+-->
+<!-- Polymer -->
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<script src="socobo-myfridge-item-list.js"></script>
+
+<polymer-element name="socobo-myfridge-item-list">
+
+  <template>
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-myfridge-item-list.css">
+    <!-- Element Content -->
+    <div layout vertical center>
+
+      <core-ajax id="ajaxMyfridgeItems"
+                 auto
+                 url="../../socobo-api-test/myFridgeItemList.json"
+                 headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
+                 handleAs="json"
+                 contentType="application/json"
+                 on-core-response="{{handleMyFridgeItemsOnResponse}}"
+                 on-core-error="{{handleMyFridgeItemsOnError}}">
+      </core-ajax>
+      <!--
+        ToDo: API atm not there
+      <socobo-ajax id="socoboMyfridgeItems"
+                   url="/getAllFridgeItems"
+                   method="POST"
+                   on-socobo-ajax-response-ok="{{handleMyFridgeItemsOnResponse}}"
+                   on-socobo-ajax-response-failed="{{handleMyFridgeItemsOnError}}">
+      </socobo-ajax>
+      -->
+
+      <template repeat="{{item in myFridgeItems}}">
+        <socobo-myfridge-item item="{{item}}"
+                              on-itemEditIsClicked="{{openItemEditor}}">
+        </socobo-myfridge-item>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer('socobo-myfridge-item-list', socoboMyfridgeItemList);
+  </script>
+</polymer-element>

@@ -1,0 +1,55 @@
+<!-- Polymer -->
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<script src="socobo-login-popup.js"></script>
+
+<polymer-element name="socobo-login-popup">
+  <template>
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-login-popup.css">
+    <!-- Element Content -->
+    <paper-dialog id="socoboLoginpPopup" transition="core-transition-top" layered="false" backdrop autoCloseDisabled>
+      <core-header-panel mode="waterfall" shadow>
+        <div class="core-header">
+          <paper-shadow z="2">
+            <core-toolbar>
+              <div id="div" on-click="{{closePopup}}" flex>Login</div>
+              <paper-fab id="paper_fab_login"
+                         icon="send"
+                         on-click="{{loginSubmit}}"
+                         recenteringtouch end></paper-fab>
+            </core-toolbar>
+          </paper-shadow>
+        </div>
+
+        <br/>
+
+        <div id="content">
+          <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
+            <input is="core-input" id="paper_input_email" type="email" value="{{emailAddress}}" required>
+          </paper-input-decorator>
+
+          <paper-input-decorator label="Enter your password..." floatingLabel error="password is required!" isInvalid="{{!$.paper_input_password.validity.valid}}" >
+            <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
+          </paper-input-decorator>
+        </div>
+
+        <socobo-ajax id="socoboLoginForm"
+                     url="/Login"
+                     method="POST"
+                     params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
+                     on-socobo-ajax-response-ok="{{handleLoginOnResponse}}"
+                     on-socobo-ajax-response-failed="{{handleLoginOnError}}">
+        </socobo-ajax>
+
+      </core-header-panel>
+    </paper-dialog>
+
+    <paper-toast id="toast"
+                 duration="1500">
+    </paper-toast>
+
+  </template>
+  <script>
+    Polymer('socobo-login-popup', socoboLoginPopup);
+  </script>
+</polymer-element>

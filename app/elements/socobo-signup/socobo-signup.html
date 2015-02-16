@@ -1,0 +1,250 @@
+<!-- Polymer -->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<!--
+  DEPRECATED
+-->
+<polymer-element name="socobo-signup">
+
+  <template>
+    <style>
+      :host {
+        font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+        margin-left: 10px;
+      }
+
+      core-card {
+        width: 40%;
+        min-width: 320px;
+        height: 440px;
+        border-radius: 2px;
+        margin-top: 50px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        background-color: rgb(255, 255, 255);
+        /*overflow: auto;*/
+      }
+
+      core-toolbar {
+        right: 0px;
+        color: rgb(255, 255, 255);
+        fill: rgb(255, 255, 255);
+        background-color: rgb(79, 125, 201);
+      }
+
+      paper-input {
+        width: 80%;
+        min-width: 200px;
+        max-width: 350px;
+        height: 70px;
+        margin: 2px 2px 2px 10px;
+        padding: 2px 2px 2px 10px;
+      }
+
+      /*paper input decorator*/
+      paper-input-decorator {
+        width: 80%;
+        min-width: 200px;
+        max-width: 350px;
+        margin-left: 10px;
+      }
+
+      paper-input-decorator.invalid {
+        padding-top: 2px;
+      }
+
+      paper-input-decorator /deep/ .error {
+        /* error message and error icon color when the input is unfocused */
+        color: salmon;
+      }
+
+      paper-input-decorator /deep/ ::-webkit-input-placeholder {
+        /* platform specific rules for placeholder text */
+        color: rgb(79, 125, 201);
+      }
+      paper-input-decorator /deep/ ::-moz-placeholder {
+        color: rgb(79, 125, 201);
+      }
+      paper-input-decorator /deep/ :-ms-input-placeholder {
+        color: rgb(79, 125, 201);
+      }
+
+      paper-input-decorator /deep/ .unfocused-underline {
+        /* line color when the input is unfocused */
+        background-color: rgb(79, 125, 201);
+      }
+
+      paper-input-decorator[focused] /deep/ .floating-label .label-text {
+        /* floating label color when the input is focused */
+        color: rgb(79, 125, 201);
+      }
+
+      paper-input-decorator /deep/ .focused-underline {
+        /* line color when the input is focused */
+        background-color: rgb(79, 125, 201);
+      }
+
+      paper-input-decorator.invalid[focused] /deep/ .floated-label .label-text,
+      paper-input-decorator[focused] /deep/ .error {
+        /* floating label, error message and error icon color when the input is invalid and focused */
+        color: salmon;
+      }
+
+      paper-input-decorator.invalid /deep/ .focused-underline {
+        /* line and color when the input is invalid and focused */
+        background-color: salmon;
+      }
+
+      /*FAB*/
+      paper-fab {
+        background-color: #e0a30b;
+        position: absolute !important;
+        bottom: -28px;
+        right: 16px;
+        z-index: 10;
+      }
+
+      #content {
+        margin-top: 15px;
+      }
+    </style>
+
+    <core-card vertical layout shadow>
+      <paper-shadow z="2">
+        <core-toolbar>
+          <div id="div" flex>Signup</div>
+          <paper-fab id="paper_fab_signup"
+                     icon="send"
+                     on-click="{{signUpSubmit}}"
+                     recenteringtouch end></paper-fab>
+        </core-toolbar>
+      </paper-shadow>
+
+      <div id="content">
+        <paper-input-decorator label="Enter your username..." floatingLabel error="username is required! min. 3 digits" isInvalid="{{!$.paper_input_name.validity.valid}}" >
+          <input is="core-input" id="paper_input_name" type="text" value="{{userName}}" required>
+        </paper-input-decorator>
+
+        <paper-input-decorator label="Enter your email address..." floatingLabel error="email is required!" isInvalid="{{!$.paper_input_email.validity.valid}}" >
+          <input is="core-input" id="paper_input_email" type="email" value="{{email}}" required>
+        </paper-input-decorator>
+
+        <paper-input-decorator label="Enter your password..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password.validity.valid}}" >
+          <input is="core-input" id="paper_input_password" type="password" value="{{password}}" required>
+        </paper-input-decorator>
+
+        <paper-input-decorator label="Enter your password again..." floatingLabel error="password is required! min. 8 digits" isInvalid="{{!$.paper_input_password_again.validity.valid}}" >
+          <input is="core-input" id="paper_input_password_again" type="password" value="{{passwordRepeat}}" required>
+        </paper-input-decorator>
+      </div>
+
+      <core-ajax
+        id="socoboSignUpForm" url="/signup" method="POST"
+        params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
+        handleAs="json"
+        on-core-response="{{handleSignupOnResponse}}"
+        on-core-error="{{handleSignupOnError}}">
+      </core-ajax>
+
+    </core-card>
+
+    <paper-toast id="toast"
+                 duration="1500"></paper-toast>
+
+  </template>
+
+  <script>
+
+    Polymer('socobo-signup', {
+      /**
+       * @function: signUpSubmit
+       * @params:
+       * @description:
+       * - user input validation
+       * - fire form content to backend
+       * - shows a toast message to inform the user
+       */
+      signUpSubmit: function() {
+        var inputIsValid = false;
+
+        if (this.$.paper_input_name.value.length >= 3 && this.$.paper_input_password.value.length >= 8 && this.$.paper_input_password_again.value.length >= 8) {
+          if (this.$.paper_input_password.value.match(this.$.paper_input_password_again.value)) {
+            inputIsValid = true;
+          }
+        }
+
+        if (inputIsValid) {
+          this.$.socoboSignUpForm.go();
+          this.$.toast.text = "Signup submitted!";
+          this.$.toast.show();
+        } else {
+          this.$.paper_input_password.value = '';
+          this.$.paper_input_password_again.value = '';
+
+          this.$.toast.text = "Input validation failed!";
+          this.$.toast.show();
+        }
+      },
+
+      /**
+       * @function: handleSignupOnResponse
+       * @params: e - event
+       * @description:
+       * - handle response from backend
+       * - shows a toast message to inform the user
+       * - firing custom event to socobo-app with userData
+       */
+      handleSignupOnResponse: function(e) {
+
+        this.$.toast.text = "Response entered!";
+        this.$.toast.show();
+
+        var statusCode = e.detail.xhr.status;
+
+        if (statusCode === 200) {
+          var responseData = e.detail.response;
+          console.log('responseData: ' + responseData);
+
+          var username = responseData.userName;
+          var name = responseData.name;
+          var email = responseData.email;
+          var pictureUrl = responseData.pictureUrl;
+
+          console.log('Username ' + username);
+          console.log('Name ' + name);
+          console.log('Email ' + email);
+          console.log('PictureUrl ' + pictureUrl);
+
+          this.$.paper_input_name.value = '';
+          this.$.paper_input_email.value = '';
+          this.$.paper_input_password.value = '';
+          this.$.paper_input_password_again.value = '';
+
+          this.fire('signup-response-ok', {username: username, pictureurl: pictureUrl});
+        } else {
+          this.$.paper_input_password.value = '';
+          this.$.paper_input_password_again.value = '';
+
+          this.fire('signup-response-failed', {statusCode: statusCode});
+        }
+      },
+
+      /**
+       * @function: handleSignupOnError
+       * @params: e - event
+       * @description:
+       * - handle error from backend
+       * - firing custom event to socobo-app
+       */
+      handleSignupOnError: function(e) {
+
+        var statusCode = e.detail.xhr.status;
+        console.log('handleSignupOnError: ' + statusCode);
+
+        this.$.paper_input_password.value = '';
+        this.$.paper_input_password_again.value = '';
+
+        this.fire('signup-response-failed', {statusCode: statusCode});
+      }
+    });
+
+  </script>
+</polymer-element>
