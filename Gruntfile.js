@@ -1,5 +1,20 @@
 'use strict';
 
+/**
+ * Tutorials
+ *  http://gruntjs.com/sample-gruntfile
+ *  http://blog.teamtreehouse.com/getting-started-with-grunt
+ */
+/**
+ * http://stackoverflow.com/questions/13713273/how-to-concatenate-and-minify-multiple-css-and-javascript-files-with-grunt-js
+ *
+ * Workflow
+ *  1. Copy all JS, CSS in .tmp
+ *  2. Concat JS, CSS from .tmp
+ *  3. Min JS
+ *  4. Min CSS
+ *  5. Maybe delete .tmp
+ */
 module.exports = function (grunt) {
   //show elapsed time at the end
   require('time-grunt')(grunt);
@@ -198,27 +213,38 @@ module.exports = function (grunt) {
       }
     },
     /**
-     * cssmin
+     * Failed - cssmin
      */
     cssmin: {
-      main: {
-        files: {
-          '<%= yeoman.dist %>/styles/main.css': [
-            '.tmp/concat/styles/{,*/}*.css'
-          ]
-        }
-      },
-      elements: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/elements',
-          src: '{,*/}*.css',
-          dest: '<%= yeoman.dist %>/elements'
-        }]
+      css:{
+        files: [
+          { src: '<%= yeoman.app %>/styles/{,*/}*.css', dest: '<%= yeoman.dist %>/styles/style.min.css' },
+          { src: '<%= yeoman.app %>/styles/{,*/}*.css', dest: '.tmp/styles/style.min.css' }
+        ]
+
+        //src: '<%= yeoman.app %>/styles/{,*/}*.css',
+        //dest: '<%= yeoman.dist %>/styles/style.min.css'
       }
+      //main: {
+      //  files: {
+      //    '<%= yeoman.dist %>/styles/main.css': [
+      //      '.tmp/concat/styles/{,*/}*.css'   //--> Failed - needed?
+      //      //'.tmp/styles/{,*/}*.css',
+      //      //'.tmp/elements/**/*.css'
+      //    ]
+      //  }
+      //},
+      //elements: {
+      //  files: [{
+      //    expand: true,
+      //    cwd: '.tmp/elements',
+      //    src: '{,*/}*.css',
+      //    dest: '<%= yeoman.dist %>/elements'
+      //  }]
+      //}
     },
     /**
-     * MinifyHtml
+     * OK - MinifyHtml
      */
     minifyHtml: {
       options: {
@@ -236,7 +262,7 @@ module.exports = function (grunt) {
       }
     },
     /**
-     * Copy
+     * OK - Copy
      */
     copy: {
       dist: {
@@ -246,14 +272,15 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
-            '*.{ico,txt}',
-            '.htaccess',
+            //'*.{ico,txt}',
+            //'.htaccess',
             '*.html',
             'elements/**',
             'manifests/**',
             'scripts/**',
+            //'styles/**',
             '!elements/**/*.css',
-            'images/{,*/}*.{webp,gif}'
+            'images/**/*.{png,,jpg,gif}'
           ]
         }, {
           expand: true,
@@ -272,7 +299,7 @@ module.exports = function (grunt) {
       }
     },
     /**
-     * Tests
+     * Failed - Tests
      */
     'wct-test': {
       local: {
@@ -283,7 +310,7 @@ module.exports = function (grunt) {
       }
     },
     /**
-     * Pagespeed
+     * OK - Pagespeed
      */
     pagespeed: {
       // See this tutorial if you'd like to run PageSpeed
