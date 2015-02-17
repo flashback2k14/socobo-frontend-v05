@@ -1,6 +1,7 @@
 {
-  "name": "socobo-frontend",
+  "name": "socobofrontend",
   "description": "Frontend Project for Socobo",
+  "version": "0.0.0.5",
   "homepage": "",
   "keywords": [],
   "author": "flashback2k14 <https://github.com/flashback2k14>",

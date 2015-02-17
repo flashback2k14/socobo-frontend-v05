@@ -1,4 +1,11 @@
-/bower_components
+bower_components
+node_modules
+dist
+.tmp
+app/bower_components
+test/bower_components/
+test/temp
+
+#Intellij
 .idea
 *.iml
-/node_modules
