@@ -1,20 +1,5 @@
 'use strict';
 
-/**
- * Tutorials
- *  http://gruntjs.com/sample-gruntfile
- *  http://blog.teamtreehouse.com/getting-started-with-grunt
- */
-/**
- * http://stackoverflow.com/questions/13713273/how-to-concatenate-and-minify-multiple-css-and-javascript-files-with-grunt-js
- *
- * Workflow
- *  1. Copy all JS, CSS in .tmp
- *  2. Concat JS, CSS from .tmp
- *  3. Min JS
- *  4. Min CSS
- *  5. Maybe delete .tmp
- */
 module.exports = function (grunt) {
   //show elapsed time at the end
   require('time-grunt')(grunt);
@@ -27,48 +12,304 @@ module.exports = function (grunt) {
    */
   var yeomanConfig = {
     app: 'app',
-    dist: 'dist'
+    dist: 'dist',
+    tmp: '.tmp'
   };
 
   /**
    * Grunt Config
    */
   grunt.initConfig({
+    /**
+     * set Enum
+     */
     yeoman: yeomanConfig,
     /**
-     * Watch
+     * maybe some clean up needed ;-P
      */
-    watch: {
-      options: {
-        nospawn: true
+    /**
+     * clean
+     */
+    clean: {
+      tmp: '<%= yeoman.tmp %>',
+      dist: '<%= yeoman.dist %>/*'
+    },
+    /**
+     * copy
+     */
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            '*.html',
+            'manifests/**',
+            'images/**/*.{png,jpg,gif}'
+          ]
+        }]
       },
-      default: {
-        files: [
-          '<%= yeoman.app %>/*.html',
-          '<%= yeoman.app %>/elements/{,*/}*.html',
-          '{.tmp,<%= yeoman.app %>}/elements/{,*/}*.{css,js}',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
+      elements: {
+        files: [{
+          expand: true,
+          flatten: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>/elements',
+          src: [
+            'elements/**/*.html',
+            '!elements/**/index.html',
+            '!elements/**/*-test.html',
+            '!elements/**/*-template.html',
+            '!elements/**/*.css',
+            '!elements/**/*.js'
+          ]
+        }]
       },
-      js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['jshint']
+      styles_to_tmp: {
+        files: [{
+          expand: true,
+          flatten: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['**/*.css'],
+          dest: '<%= yeoman.tmp %>/styles/'
+        }]
       },
-      styles: {
-        files: [
-          '<%= yeoman.app %>/styles/{,*/}*.css',
-          '<%= yeoman.app %>/elements/{,*/}*.css'
-        ],
-        tasks: ['copy:styles', 'autoprefixer:server']
-      },
-      json: {
-        files: ['<%= yeoman.app %>/manifests/{,*/}*.json']
+      scripts_to_tmp: {
+        files: [{
+          expand: true,
+          flatten: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['**/*.js'],
+          dest: '<%= yeoman.tmp %>/scripts/'
+        }]
       }
     },
     /**
-     * Autoprefixer
+     * concat CSS from .tmp
+     */
+    concat: {
+      options: {
+        separator: '/*next*/'
+      },
+      css: {
+        src: '<%= yeoman.tmp %>/styles/{,*/}*.css',
+        dest: '<%= yeoman.tmp %>/concat/styles/concat.css'
+      },
+      js: {
+        src: '<%= yeoman.tmp %>/scripts/{,*/}*.js',
+        dest: '<%= yeoman.tmp %>/concat/scripts/concat.js'
+      }
+    },
+    /**
+     * cssmin
+     */
+    cssmin: {
+      css:{
+        files: [{
+          src: '<%= yeoman.tmp %>/concat/styles/*.css',
+          dest: '<%= yeoman.dist %>/styles/style.min.css'
+        }]
+      }
+    },
+    /**
+     * jsmin
+     */
+    uglify: {
+      options: {
+        mangle: true
+      },
+      my_scripts: {
+        files: {
+          '<%= yeoman.dist %>/scripts/script.min.js': ['<%= yeoman.tmp %>/concat/scripts/*.js']
+        }
+      }
+    },
+    /**
+     * minifyHtml
+     */
+    minifyHtml: {
+      options: {
+        quotes: true,
+        empty: true,
+        spare: true
+      },
+      app: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          src: '*.html',
+          dest: '<%= yeoman.dist %>'
+        }]
+      }
+    },
+    /**
+     * replace
+     */
+    replace: {
+      dist: {
+        options: {
+          patterns: [{
+            match: /..\/bower_components\/webcomponentsjs\/webcomponents.js/g,
+            replacement: '../bower_components/webcomponentsjs/webcomponents.min.js'
+          },
+          //without vulcanization
+          {
+            match: /\elements\/socobo-imports\/socobo-imports\.html/g,
+            replacement: 'elements/socobo-imports.html'
+          },
+          //with vulcanization
+          //{
+          //  match: /\elements\/socobo-imports\/socobo-imports\.html/g,
+          //  replacement: 'elements/socobo-imports.vulcanized.html'
+          //},
+          {
+            match: /styles\/styles\.css/g,
+            replacement: 'styles/style.min.css'
+          },
+          {
+            match: /scripts\/main\.js/g,
+            replacement: 'scripts/script.min.js'
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: '<%= yeoman.app %>/*.html',
+          dest: '<%= yeoman.dist %>/'
+        }]
+      },
+      elements: {
+        options: {
+          patterns: [{
+            match: /href="..\/..\/..\/bower_components\/polymer\/polymer.html"/g,
+            replacement: 'href="../../bower_components/polymer/polymer.html"'
+          },{
+            match: /src="[a-z-]+\.js"/g,
+            replacement: 'src="../scripts/script.min.js"'
+          },
+          {
+            match: /href="[a-z-]+\.css"/g,
+            replacement: 'href="../styles/style.min.css"'
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          src: ['elements/**/*.html'],
+          dest: '<%= yeoman.dist %>/'
+        }]
+      },
+      imports: {
+        options: {
+          patterns: [{
+            match: /..\/..\/..\//g,
+            replacement: '../../'
+          },
+          {
+            match: /..\/socobo-[a-z-]+\//g,
+            replacement: ''
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          src: ['elements/*-imports.html'],
+          dest: '<%= yeoman.dist %>/'
+        }]
+      },
+      imports_deeper: {
+        options: {
+          patterns: [{
+            match: /socobo-[a-z-]+\//g,
+            replacement: ''
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          src: ['elements/*-imports.html'],
+          dest: '<%= yeoman.dist %>/'
+        }]
+      }
+    },
+    /**
+     * totally failed - vulcanize
+     */
+    vulcanize: {
+      default: {
+        options: {
+          //csp: true,
+          strip: true,
+          excludes: {
+            imports: [
+              "polymer.html"
+            ]
+          }
+        },
+        files: {
+          '<%= yeoman.dist %>/elements/socobo-imports.vulcanized.html':
+              '<%= yeoman.app %>/elements/socobo-imports/socobo-imports.html'
+        }
+      }
+    },
+    /**
+     * half failed - jshint
+     */
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc',
+        reporter: require('jshint-stylish')
+      },
+      all: [
+        //'<%= yeoman.tmp %>/scripts/*.js'        //--> Failed
+        //'!<%= yeoman.app %>/scripts/vendor/*',  --> needed?
+        //'test/spec/{,*/}*.js'                   --> needed?
+      ]
+    },
+    /**
+     * server test
+     */
+    /**
+     * browserSync
+     */
+    browserSync: {
+      options: {
+        notify: false,
+        port: 9000,
+        open: true
+      },
+      app: {
+        options: {
+          watchTask: true,
+          injectChanges: false, // can't inject Shadow DOM
+          server: {
+            baseDir: '<%= yeoman.app %>',
+            routes: {
+              '/bower_components': 'bower_components'
+            }
+          }
+        },
+        src: [
+          '<%= yeoman.app %>/**/*.{css,html,js}'
+        ]
+      },
+      dist: {
+        options: {
+          server: {
+            baseDir: 'dist'
+          }
+        },
+        src: [
+          '<%= yeoman.dist %>/**/*.{css,html,js}',
+          '!<%= yeoman.dist %>/bower_components/**/*'
+        ]
+      }
+    },
+    /**
+     * autoprefixer
      */
     autoprefixer: {
       options: {
@@ -92,225 +333,39 @@ module.exports = function (grunt) {
       }
     },
     /**
-     * BrowserSync
+     * watch
      */
-    browserSync: {
+    watch: {
       options: {
-        notify: false,
-        port: 9000,
-        open: true
+        nospawn: true
       },
-      app: {
-        options: {
-          watchTask: true,
-          injectChanges: false, // can't inject Shadow DOM
-          server: {
-            baseDir: ['.tmp', '<%= yeoman.app %>'],
-            routes: {
-              '/bower_components': 'bower_components'
-            }
-          }
-        },
-        src: [
-          '.tmp/**/*.{css,html,js}',
-          '<%= yeoman.app %>/**/*.{css,html,js}'
-        ]
-      },
-      dist: {
-        options: {
-          server: {
-            baseDir: 'dist'
-          }
-        },
-        src: [
-          '<%= yeoman.dist %>/**/*.{css,html,js}',
-          '!<%= yeoman.dist %>/bower_components/**/*'
-        ]
-      }
-    },
-    /**
-     * Clean
-     */
-    clean: {
-      dist: ['.tmp', '<%= yeoman.dist %>/*'],
-      server: '.tmp'
-    },
-    /**
-     * Jshint
-     */
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: [
-        //'<%= yeoman.app %>/scripts/{,*/}*.js'   --> Failed
-        //'!<%= yeoman.app %>/scripts/vendor/*',  --> needed?
-        //'test/spec/{,*/}*.js'                   --> needed?
-      ]
-    },
-    /**
-     * UseminPrepare
-     */
-    useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>'
-      }
-    },
-    /**
-     * Usemin
-     */
-    usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-      options: {
-        dirs: ['<%= yeoman.dist %>']
-      }
-    },
-    /**
-     * Replace
-     */
-    replace: {
-      dist: {
-        options: {
-          patterns: [{
-            match: /\/elements\/socobo-imports\/socobo-imports\.html/g,
-            replacement: '/elements/socobo-imports/socobo-imports.vulcanized.html'
-          }]
-        },
-        files: {
-          '<%= yeoman.dist %>/index.html': ['<%= yeoman.dist %>/index.html']
-        }
-      }
-    },
-    /**
-     * Vulcanize
-     */
-    vulcanize: {
       default: {
-        options: {
-          strip: true
-        },
-        files: {
-          '<%= yeoman.dist %>/elements/socobo-imports/socobo-imports.vulcanized.html': [
-            '<%= yeoman.dist %>/elements/socobo-imports/socobo-imports.html'
-          ]
-        }
-      }
-    },
-    /**
-     * Imagemin
-     */
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,svg}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-    /**
-     * Failed - cssmin
-     */
-    cssmin: {
-      css:{
         files: [
-          { src: '<%= yeoman.app %>/styles/{,*/}*.css', dest: '<%= yeoman.dist %>/styles/style.min.css' },
-          { src: '<%= yeoman.app %>/styles/{,*/}*.css', dest: '.tmp/styles/style.min.css' }
+          '<%= yeoman.app %>/*.html',
+          '<%= yeoman.app %>/elements/{,*/}*.html',
+          '{.tmp,<%= yeoman.app %>}/elements/{,*/}*.{css,js}',
+          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,gif}'
         ]
-
-        //src: '<%= yeoman.app %>/styles/{,*/}*.css',
-        //dest: '<%= yeoman.dist %>/styles/style.min.css'
-      }
-      //main: {
-      //  files: {
-      //    '<%= yeoman.dist %>/styles/main.css': [
-      //      '.tmp/concat/styles/{,*/}*.css'   //--> Failed - needed?
-      //      //'.tmp/styles/{,*/}*.css',
-      //      //'.tmp/elements/**/*.css'
-      //    ]
-      //  }
-      //},
-      //elements: {
-      //  files: [{
-      //    expand: true,
-      //    cwd: '.tmp/elements',
-      //    src: '{,*/}*.css',
-      //    dest: '<%= yeoman.dist %>/elements'
-      //  }]
-      //}
-    },
-    /**
-     * OK - MinifyHtml
-     */
-    minifyHtml: {
-      options: {
-        quotes: true,
-        empty: true,
-        spare: true
       },
-      app: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: '*.html',
-          dest: '<%= yeoman.dist %>'
-        }]
-      }
-    },
-    /**
-     * OK - Copy
-     */
-    copy: {
-      dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
-          src: [
-            //'*.{ico,txt}',
-            //'.htaccess',
-            '*.html',
-            'elements/**',
-            'manifests/**',
-            'scripts/**',
-            //'styles/**',
-            '!elements/**/*.css',
-            'images/**/*.{png,,jpg,gif}'
-          ]
-        }, {
-          expand: true,
-          dot: true,
-          dest: '<%= yeoman.dist %>',
-          src: ['bower_components/**']
-        }]
+      js: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        tasks: ['jshint']
       },
       styles: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '.tmp',
-          src: ['{styles,elements}/{,*/}*.css']
-        }]
+        files: [
+          '<%= yeoman.app %>/styles/{,*/}*.css',
+          '<%= yeoman.app %>/elements/{,*/}*.css'
+        ]
+        //,tasks: 'autoprefixer:server'
       }
     },
     /**
-     * Failed - Tests
+     * Nice to have
      */
-    'wct-test': {
-      local: {
-        options: {remote: false}
-      },
-      remote: {
-        options: {remote: true}
-      }
-    },
     /**
-     * OK - Pagespeed
+     * Pagespeed
      */
     pagespeed: {
       // See this tutorial if you'd like to run PageSpeed
@@ -335,12 +390,52 @@ module.exports = function (grunt) {
   });
 
   /**
-   * Grunt Tasks
+   * Grunt tasks
    */
-  grunt.registerTask('server', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
-  });
+  grunt.registerTask('build', [
+    'socobo-copying',
+    'socobo-minification',
+    'socobo-replacing',
+    'clean:tmp'
+  ]);
+
+  /**
+   * Grunt selfmade tasks
+   */
+  grunt.registerTask('socobo-copying', [
+    'copy:dist',
+    'copy:elements'
+  ]);
+
+  grunt.registerTask('socobo-minification', [
+    'copy:styles_to_tmp',
+    'concat:css',
+    'cssmin',
+    'copy:scripts_to_tmp',
+    'concat:js',
+    'jshint',
+    'uglify:my_scripts',
+    'minifyHtml'
+    //,'vulcanize:default',
+  ]);
+
+  grunt.registerTask('socobo-replacing', [
+    'replace:dist',
+    'replace:elements',
+    'replace:imports',
+    'replace:imports_deeper'
+  ]);
+
+  /**
+   * Grunt server task
+   */
+  grunt.registerTask('socobo-server-dev', [
+    'serve'
+  ]);
+
+  grunt.registerTask('socobo-server-prod', [
+    'serve:dist'
+  ]);
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
@@ -348,35 +443,10 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      'clean:server',
-      'copy:styles',
-      'autoprefixer:server',
+      'clean:tmp',
+      //'autoprefixer:server',
       'browserSync:app',
       'watch'
     ]);
   });
-
-  grunt.registerTask('test:local', ['wct-test:local']);
-  grunt.registerTask('test:remote', ['wct-test:remote']);
-
-  grunt.registerTask('build', [
-    'clean:dist',
-    'copy',
-    //'useminPrepare', --> Failed
-    //'imagemin',      --> Failed
-    //'concat',        --> Failed
-    'autoprefixer',
-    //'uglify',        --> Failed
-    //'cssmin',        --> Failed
-    //'vulcanize',     --> Failed
-    //'usemin',        --> Failed
-    'replace',
-    'minifyHtml'
-  ]);
-
-  grunt.registerTask('default', [
-    'jshint',
-    //'test:local',    --> Failed
-    'build'
-  ]);
 };
