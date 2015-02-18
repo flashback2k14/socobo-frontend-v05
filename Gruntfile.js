@@ -272,7 +272,7 @@ module.exports = function (grunt) {
       ]
     },
     /**
-     * server test
+     * server
      */
     /**
      * browserSync
@@ -366,6 +366,24 @@ module.exports = function (grunt) {
       }
     },
     /**
+     * test -- Failed - missing chromedriver?!
+     */
+    'wct-test': {
+      local: {
+        options: {remote: false}
+      },
+      remote: {
+        options: {remote: true}
+      }
+      //,
+      //chrome: {
+      //  options: {browsers: ['chrome']}
+      //},
+      //files: {
+      //  src: '<%= yeoman.app %>'
+      //}
+    },
+    /**
      * Nice to have
      */
     /**
@@ -431,7 +449,7 @@ module.exports = function (grunt) {
   ]);
 
   /**
-   * Grunt server task
+   * Grunt server tasks
    */
   grunt.registerTask('socobo-server-dev', [
     'serve'
@@ -453,4 +471,15 @@ module.exports = function (grunt) {
       'watch'
     ]);
   });
+
+  /**
+   * Grunt test tasks
+   */
+  grunt.registerTask('test:local', [
+    'wct-test:local'
+  ]);
+
+  grunt.registerTask('test:remote', [
+    'wct-test:remote'
+  ]);
 };
