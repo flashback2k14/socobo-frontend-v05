@@ -134,13 +134,15 @@ module.exports = function (grunt) {
       options: {
         quotes: true,
         empty: true,
-        spare: true
+        spare: true,
+        comments: true,
+        loose: true
       },
       app: {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: '*.html',
+          src: '**/*.html',
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -299,12 +301,14 @@ module.exports = function (grunt) {
       dist: {
         options: {
           server: {
-            baseDir: 'dist'
+            baseDir: '<%= yeoman.dist %>',
+            routes: {
+              '/bower_components': 'bower_components'
+            }
           }
         },
         src: [
-          '<%= yeoman.dist %>/**/*.{css,html,js}',
-          '!<%= yeoman.dist %>/bower_components/**/*'
+          '<%= yeoman.dist %>/**/*.{css,html,js}'
         ]
       }
     },
