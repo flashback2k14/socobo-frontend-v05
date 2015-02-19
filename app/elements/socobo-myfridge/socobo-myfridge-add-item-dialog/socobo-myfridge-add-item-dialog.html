@@ -1,0 +1,84 @@
+<!--
+  ToDo:
+    function: add new item to my-recipes
+-->
+<!-- Polymer -->
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<script src="socobo-myfridge-add-item-dialog.js"></script>
+
+<polymer-element name="socobo-myfridge-add-item-dialog">
+  <template>
+    <!-- Styling -->
+    <link rel="stylesheet" href="socobo-myfridge-add-item-dialog.css">
+    <!-- Element Content -->
+    <core-card layout vertical>
+      <paper-shadow z="2">
+        <core-toolbar id="core_toolbar">
+          <div id="div" flex>Edit: {{item.bezeichnung}}</div>
+        </core-toolbar>
+      </paper-shadow>
+
+      <div id="content" vertical layout>
+        <paper-input id="iBezeichnung"
+                     label="Bezeichnung"
+                     value="{{item.bezeichnung}}"
+                     floatingLabel vertical layout>
+        </paper-input>
+
+        <div horizontal layout>
+          <paper-input id="iHaltbarkeitsdatum"
+                       label="Haltbarkeitsdatum"
+                       value="{{selectedDate | formatDateFilter}}"
+                       type="date"
+                       floatingLabel vertical layout>
+          </paper-input>
+          <paper-icon-button id="btnOpenDatePicker"
+                             icon="today"
+                             on-click="{{openDatePicker}}"
+                             self-end>
+          </paper-icon-button>
+          <paper-date-picker-dialog id="datePicker"
+                                    date="{{item.haltbarkeitsdatum}}"
+                                    value="{{selectedDate}}"
+                                    locale="de-DE">
+          </paper-date-picker-dialog>
+        </div>
+
+        <paper-input id="iMenge"
+                     label="Menge"
+                     value="{{item.menge}}"
+                     floatingLabel vertical layout>
+        </paper-input>
+
+        <paper-dropdown-menu label="Mengeneinheit">
+          <paper-dropdown duration="350" class="dropdown" transition="core-transition-fade">
+            <core-menu id="menuEinheit" class="menu">
+              <template repeat="{{einheit in mengeneinheiten}}">
+                <paper-item id="{{einheit.id}}" value="{{item.einheit}}">{{einheit.bezeichnung}}</paper-item>
+              </template>
+            </core-menu>
+          </paper-dropdown>
+        </paper-dropdown-menu>
+
+        <paper-dropdown-menu label="Kategorie">
+          <paper-dropdown duration="350" class="dropdown" transition="core-transition-fade">
+            <core-menu id="menuKategorie" class="menu">
+              <template repeat="{{kategorie in kategories}}">
+                <paper-item id="{{kategorie.id}}" value="{{item.kategorie}}">{{kategorie.bezeichnung}}</paper-item>
+              </template>
+            </core-menu>
+          </paper-dropdown>
+        </paper-dropdown-menu>
+      </div>
+
+      <div horizontal layout reverse>
+        <paper-button id="btnOk" on-click="{{finishEdit}}" raisedbutton>Ok</paper-button>
+        <paper-button id="btnCancel" on-click="{{cancelEdit}}" raisedbutton>Cancel</paper-button>
+      </div>
+    </core-card>
+
+  </template>
+  <script>
+    Polymer('socobo-myfridge-add-item-dialog', socoboMyfridgeAddItemDialog);
+  </script>
+</polymer-element>

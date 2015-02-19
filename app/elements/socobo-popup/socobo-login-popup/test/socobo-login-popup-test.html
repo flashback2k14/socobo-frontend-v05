@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Socobo-Login-Popup-Element</title>
+    <!-- Tester -->
+    <script src="../../../../../bower_components/web-component-tester/browser.js"></script>
+    <script src="../../../../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <!-- testable element -->
+    <link rel="import" href="../socobo-login-popup.html">
+</head>
+<body>
+    <!-- Declare Element-->
+    <socobo-login-popup></socobo-login-popup>
+
+    <!-- Test Script -->
+    <script>
+        // init element for testing
+        var elem = document.querySelector('socobo-login-popup');
+
+        suite('<socobo-login-popup>', function() {
+
+          test('attribute authToken is null by default', function() {
+            assert.equal(elem.authToken, null);
+          });
+
+          test('attribute authToken is undefined by default', function() {
+            assert.equal(elem.authToken, undefined);
+          });
+
+          test('is login data submitted?', function() {
+            elem.addEventListener('login-submitted', function(event) {
+              assert.equal(event.detail.isSubmitted, true);
+              done();
+            });
+          });
+
+          test('is login response with ok?', function() {
+            elem.addEventListener('login-response-ok', function(event) {
+              assert.equal(event.detail.authToken, isNotNull());
+              assert.equal(event.detail.username, isNotNull());
+              assert.equal(event.detail.pictureurl, isNotNull());
+              done();
+            });
+          });
+
+          test('is login response with failded?', function() {
+            elem.addEventListener('login-response-failed', function(event) {
+              assert.equal(event.detail.statusCode, '404');
+              done();
+            });
+          });
+        });
+    </script>
+</body>
+</html>
