@@ -24,8 +24,8 @@ core-header-panel {
 }
 
 p {
-  margin: 10px;
-  width: 20%;
+  margin-left: 10px;
+  margin-top: 25px;
 }
 
 .content {
@@ -39,7 +39,7 @@ p {
 }
 
 paper-input-decorator {
-  width: 30%;
+  width: 68.5%;
   min-width: 200px;
   margin-left: 10px;
   margin-right: 10px;

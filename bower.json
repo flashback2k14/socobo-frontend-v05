@@ -28,17 +28,36 @@
     "core-elements": "Polymer/core-elements#^0.5.4",
     "font-roboto": "Polymer/font-roboto#^0.5.4",
     "flatiron-director": "PolymerLabs/flatiron-director#^0.5.0",
-    "image-mask": "hejty/image-mask#^0.1.1",
-    "polymer-github-card": "iamolivinius/polymer-github-card#0.0.1",
-    "paper-date-picker": "David-Mulder/paper-date-picker"
-  },
-  "resolutions": {
-    "polymer": "^0.5",
-    "core-component-page": "^0.5",
-    "webcomponentsjs": "^0.5",
-    "platform": "^0.3.1"
+    "image-mask": "hejty/image-mask#latest",
+    "polymer-github-card": "iamolivinius/polymer-github-card#latest",
+    "paper-date-picker": "David-Mulder/paper-date-picker#latest"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#latest"
+  },
+  "resolutions": {
+    "core-component-page": "^0.3.0",
+    "polymer": "^0.5",
+    "webcomponentsjs": "^0.5",
+    "platform": "^0.3.0",
+    "font-roboto": "^0.5",
+    "core-animated-pages": "^0.5",
+    "core-icons": "^0.5",
+    "core-meta": "^0.5",
+    "core-overlay": "^0.5",
+    "core-selection": "^0.5",
+    "core-selector": "^0.5",
+    "core-style": "^0.5",
+    "core-transition": "^0.5",
+    "paper-button": "^0.5",
+    "paper-dialog": "^0.5",
+    "paper-shadow": "^0.5",
+    "paper-ripple": "^0.5",
+    "core-resizable": "^0.5",
+    "core-focusable": "^0.5",
+    "core-icon": "^0.5",
+    "core-a11y-keys": "^0.5",
+    "core-iconset-svg": "^0.5",
+    "core-iconset": "^0.5"
   }
 }
