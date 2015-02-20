@@ -11,7 +11,7 @@
      * @description:
      * - it's self-describing
      */
-    userName: 'username',
+    userName: '',
 
     /**
      * @variable: emailAddress
@@ -20,7 +20,7 @@
      * @description:
      * - it's self-describing
      */
-    emailAddress: 'user@gmail.com',
+    emailAddress: '',
 
     /**
      * @variable: userPictureUrl
@@ -30,7 +30,7 @@
      * - it's self-describing
      * - ! changing for production
      */
-    userPictureUrl: 'images/github.png',
+    userPictureUrl: '',
 
     /**
      * @variable: DEFAULT_ROUTE
@@ -89,6 +89,8 @@
      */
     ready: function() {
       this.route = this.route || this.DEFAULT_ROUTE;
+      //this.setGlobalUserToUi();
+      this.setUserToGlobal(undefined);
     },
 
     /**
@@ -114,9 +116,8 @@
      * - redirects to socobo-home
      */
     signupOk: function(e) {
-      this.userPictureUrl = e.detail.pictureurl;
-      this.userName = e.detail.username;
-      this.emailAddress = e.detail.emailaddress;
+      this.setUserToGlobal(e);
+      this.setGlobalUserToUi();
 
       this.$.socoboSignupPopup.closePopup();
 
@@ -161,8 +162,8 @@
      * - sets authToken
      */
     loginOk: function(e) {
-      this.userName = e.detail.username;
-      this.userPictureUrl = e.detail.pictureurl;
+      this.setUserToGlobal(e);
+      this.setGlobalUserToUi();
 
       this.$.socoboLoginPopup.closePopup();
 
@@ -207,9 +208,8 @@
     logoutOk: function(e) {
       this.$.socoboLogoutPopup.closePopup();
 
-      this.userName = 'username';
-      this.emailAddress = 'user@gmail.com';
-      this.userPictureUrl = 'images/github.png';
+      this.setUserToGlobal(e);
+      this.setGlobalUserToUi();
 
       this.route = 'home';
     },
@@ -273,6 +273,30 @@
     settingsAction: function() {
       this.$.toast.text = 'Settings...';
       this.$.toast.show();
+    },
+
+    /**
+     * Testing Global User #1
+     */
+    setUserToGlobal: function(e) {
+      if (e !== undefined) {
+        setUserNameGlobal(e.detail.username);
+        setEmailAddressGlobal(e.detail.emailaddress);
+        setPictureUrlGlobal(e.detail.pictureurl);
+      } else {
+        setUserNameGlobal('username');
+        setEmailAddressGlobal('username@test.com');
+        setPictureUrlGlobal('images/github.png');
+      }
+    },
+
+    /**
+     * Testing Global User #2
+     */
+    setGlobalUserToUi: function() {
+      this.userName = getUserNameGlobal();
+      this.emailAddress = getEmailAddressGlobal();
+      this.userPictureUrl = getPictureUrlGlobal();
     }
   };
 }());

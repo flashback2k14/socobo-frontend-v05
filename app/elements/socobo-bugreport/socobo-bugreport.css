@@ -7,7 +7,7 @@
 #paperShadowBugreportCard {
   width: 30%;
   min-width: 320px;
-  height: 250px;
+  height: 310px;
   margin-top: 50px;
   box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
 }

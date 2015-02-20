@@ -1,5 +1,5 @@
 function isAuthTokenAvailable() {
-  return (getCookie() !== null);
+  return getCookie() !== null;
 }
 
 function setCookie() {
@@ -23,4 +23,37 @@ function getCookieFromDOM() {
     }
   }
   return "";
+}
+
+/**
+ * Workaround
+ */
+function setUserNameGlobal(value) {
+  if (window.userNameGlobal === undefined) window.userNameGlobal = 'username-global';
+  else if (window.userNameGlobal !== value) window.userNameGlobal = value;
+  else window.userNameGlobal = undefined;
+}
+
+function getUserNameGlobal() {
+  return window.userNameGlobal ? window.userNameGlobal : undefined;
+}
+
+function setEmailAddressGlobal(value) {
+  if (window.emailAddressGlobal === undefined) window.emailAddressGlobal = 'username-global@test.com';
+  else if (window.emailAddressGlobal !== value) window.emailAddressGlobal = value;
+  else window.emailAddressGlobal = undefined;
+}
+
+function getEmailAddressGlobal() {
+  return window.emailAddressGlobal ? window.emailAddressGlobal : undefined;
+}
+
+function setPictureUrlGlobal(value) {
+  if (window.pictureUrlGlobal === undefined) window.pictureUrlGlobal = 'images/github.png';
+  else if (window.pictureUrlGlobal !== value) window.pictureUrlGlobal = value;
+  else window.pictureUrlGlobal = undefined;
+}
+
+function getPictureUrlGlobal() {
+  return window.pictureUrlGlobal ? window.pictureUrlGlobal : undefined;
 }
