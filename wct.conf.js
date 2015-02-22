@@ -1,4 +1,6 @@
 module.exports = {
-  root: '.',
+  //root: '.',
+  verbose: true,
+  persistent: true,
   suites: ['app/test']
 };
