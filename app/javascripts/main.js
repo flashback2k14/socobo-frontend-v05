@@ -29,31 +29,37 @@ function getCookieFromDOM() {
  * Workaround
  */
 function setUserNameGlobal(value) {
-  if (window.userNameGlobal === undefined) window.userNameGlobal = 'username-global';
-  else if (window.userNameGlobal !== value) window.userNameGlobal = value;
-  else window.userNameGlobal = undefined;
+  if (window.userNameGlobal === undefined || window.userNameGlobal === '') {
+    window.userNameGlobal = 'username-global';
+  } else {
+    window.userNameGlobal = value;
+  }
 }
 
 function getUserNameGlobal() {
-  return window.userNameGlobal ? window.userNameGlobal : undefined;
+  return window.userNameGlobal;
 }
 
 function setEmailAddressGlobal(value) {
-  if (window.emailAddressGlobal === undefined) window.emailAddressGlobal = 'username-global@test.com';
-  else if (window.emailAddressGlobal !== value) window.emailAddressGlobal = value;
-  else window.emailAddressGlobal = undefined;
+  if (window.emailAddressGlobal === undefined || window.emailAddressGlobal === '') {
+    window.emailAddressGlobal = 'username-global@test.com';
+  } else {
+    window.emailAddressGlobal = value;
+  }
 }
 
 function getEmailAddressGlobal() {
-  return window.emailAddressGlobal ? window.emailAddressGlobal : undefined;
+  return window.emailAddressGlobal;
 }
 
 function setPictureUrlGlobal(value) {
-  if (window.pictureUrlGlobal === undefined) window.pictureUrlGlobal = 'images/github.png';
-  else if (window.pictureUrlGlobal !== value) window.pictureUrlGlobal = value;
-  else window.pictureUrlGlobal = undefined;
+  if (window.pictureUrlGlobal === undefined || window.pictureUrlGlobal === '') {
+    window.pictureUrlGlobal = 'images/github.png';
+  } else {
+    window.pictureUrlGlobal = value;
+  }
 }
 
 function getPictureUrlGlobal() {
-  return window.pictureUrlGlobal ? window.pictureUrlGlobal : undefined;
+  return window.pictureUrlGlobal;
 }
