@@ -317,14 +317,15 @@ module.exports = function (grunt) {
      */
     autoprefixer: {
       options: {
-        browsers: ['last 2 versions']
+        browsers: ['last 2 versions'],
+        safe: true
       },
-      server: {
+      app: {
         files: [{
           expand: true,
-          cwd: '.tmp',
+          cwd: '<%= yeoman.app %>',
           src: '**/*.css',
-          dest: '.tmp'
+          dest: '<%= yeoman.app %>'
         }]
       },
       dist: {
@@ -361,8 +362,8 @@ module.exports = function (grunt) {
         files: [
           '<%= yeoman.app %>/styles/{,*/}*.css',
           '<%= yeoman.app %>/elements/{,*/}*.css'
-        ]
-        //,tasks: 'autoprefixer:server'
+        ],
+        tasks: ['autoprefixer:app']
       }
     },
     /**
@@ -433,6 +434,7 @@ module.exports = function (grunt) {
     'copy:styles_to_tmp',
     'concat:css',
     'cssmin',
+    'autoprefixer:dist',
     'copy:scripts_to_tmp',
     'concat:js',
     'jshint',
@@ -466,7 +468,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:tmp',
-      //'autoprefixer:server',
+      'autoprefixer:app',
       'browserSync:app',
       'watch'
     ]);
