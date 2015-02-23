@@ -89,8 +89,8 @@
      */
     ready: function() {
       this.route = this.route || this.DEFAULT_ROUTE;
-      //this.setGlobalUserToUi();
-      this.setUserToGlobal(undefined);
+      this.setDefaultUserToGlobal();
+      this.setGlobalUserToUi();
     },
 
     /**
@@ -278,20 +278,23 @@
     /**
      * Testing Global User #1
      */
-    setUserToGlobal: function(e) {
-      if (e !== undefined) {
-        setUserNameGlobal(e.detail.username);
-        setEmailAddressGlobal(e.detail.emailaddress);
-        setPictureUrlGlobal(e.detail.pictureurl);
-      } else {
-        setUserNameGlobal('username');
-        setEmailAddressGlobal('username@test.com');
-        setPictureUrlGlobal('images/github.png');
-      }
+    setDefaultUserToGlobal: function() {
+      setUserNameGlobal('username');
+      setEmailAddressGlobal('username@test.com');
+      setPictureUrlGlobal('images/github.png');
     },
 
     /**
      * Testing Global User #2
+     */
+    setUserToGlobal: function(e) {
+      setUserNameGlobal(e.detail.username);
+      setEmailAddressGlobal(e.detail.emailaddress);
+      setPictureUrlGlobal(e.detail.pictureurl);
+    },
+
+    /**
+     * Testing Global User #3
      */
     setGlobalUserToUi: function() {
       this.userName = getUserNameGlobal();

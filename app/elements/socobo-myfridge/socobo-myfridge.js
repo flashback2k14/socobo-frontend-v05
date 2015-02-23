@@ -58,7 +58,7 @@
      * Test Get Global User
      */
     alertMeUser: function() {
-      alert('socobo-myfridge\nUsername: ' + getUserNameGlobal()
+      alert('socobo-myfridge\n\nUsername: ' + getUserNameGlobal()
             + "\nEmailaddress: " + getEmailAddressGlobal()
             + "\nPictureUrl: " + getPictureUrlGlobal());
     }

@@ -75,7 +75,7 @@ core-menu > paper-item.core-selected {
 }
 
 /*User Profile*/
-[drawer] image-mask {
+[drawer] img {
   margin-left: 14px;
   margin-bottom: 5px;
   cursor: pointer;

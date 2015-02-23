@@ -29,7 +29,7 @@ function getCookieFromDOM() {
  * Workaround
  */
 function setUserNameGlobal(value) {
-  if (window.userNameGlobal === undefined || window.userNameGlobal === '') {
+  if (window.userNameGlobal === undefined && window.userNameGlobal === '') {
     window.userNameGlobal = 'username-global';
   } else {
     window.userNameGlobal = value;
@@ -41,7 +41,7 @@ function getUserNameGlobal() {
 }
 
 function setEmailAddressGlobal(value) {
-  if (window.emailAddressGlobal === undefined || window.emailAddressGlobal === '') {
+  if (window.emailAddressGlobal === undefined && window.emailAddressGlobal === '') {
     window.emailAddressGlobal = 'username-global@test.com';
   } else {
     window.emailAddressGlobal = value;
@@ -53,7 +53,7 @@ function getEmailAddressGlobal() {
 }
 
 function setPictureUrlGlobal(value) {
-  if (window.pictureUrlGlobal === undefined || window.pictureUrlGlobal === '') {
+  if (window.pictureUrlGlobal === undefined && window.pictureUrlGlobal === '') {
     window.pictureUrlGlobal = 'images/github.png';
   } else {
     window.pictureUrlGlobal = value;
