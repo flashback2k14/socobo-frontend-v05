@@ -52,6 +52,15 @@
     openItemDeleteDialog: function(e) {
       this.$.toast.text = 'Delete: ' + e.detail.item.bezeichnung;
       this.$.toast.show();
+    },
+
+    /**
+     * Test Get Global User
+     */
+    alertMeUser: function() {
+      alert('socobo-myfridge\n\nUsername: ' + getUserNameGlobal()
+            + "\nEmailaddress: " + getEmailAddressGlobal()
+            + "\nPictureUrl: " + getPictureUrlGlobal());
     }
   };
 }());

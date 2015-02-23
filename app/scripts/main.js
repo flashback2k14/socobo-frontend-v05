@@ -1,3 +1,11 @@
+function isAuthTokenAvailable() {
+  return getCookie() !== null;
+}
+
+function setCookie() {
+  window.authToken = getCookieFromDOM();
+}
+
 function getCookie() {
   return window.authToken;
 }
@@ -19,10 +27,41 @@ function getCookieFromDOM() {
   return '';
 }
 
-function isAuthTokenAvailable() {
-  return (getCookie() !== null);
+/**
+ * Workaround
+ */
+function setUserNameGlobal(value) {
+  if (window.userNameGlobal === undefined && window.userNameGlobal === '') {
+    window.userNameGlobal = 'username-global';
+  } else {
+    window.userNameGlobal = value;
+  }
 }
 
-function setCookie() {
-  window.authToken = getCookieFromDOM();
+function getUserNameGlobal() {
+  return window.userNameGlobal;
+}
+
+function setEmailAddressGlobal(value) {
+  if (window.emailAddressGlobal === undefined && window.emailAddressGlobal === '') {
+    window.emailAddressGlobal = 'username-global@test.com';
+  } else {
+    window.emailAddressGlobal = value;
+  }
+}
+
+function getEmailAddressGlobal() {
+  return window.emailAddressGlobal;
+}
+
+function setPictureUrlGlobal(value) {
+  if (window.pictureUrlGlobal === undefined && window.pictureUrlGlobal === '') {
+    window.pictureUrlGlobal = 'images/github.png';
+  } else {
+    window.pictureUrlGlobal = value;
+  }
+}
+
+function getPictureUrlGlobal() {
+  return window.pictureUrlGlobal;
 }

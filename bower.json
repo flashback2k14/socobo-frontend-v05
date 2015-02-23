@@ -29,12 +29,11 @@
     "core-elements": "Polymer/core-elements#^0.5.4",
     "font-roboto": "Polymer/font-roboto#^0.5.4",
     "flatiron-director": "PolymerLabs/flatiron-director#^0.5.0",
-    "image-mask": "hejty/image-mask#latest",
-    "polymer-github-card": "iamolivinius/polymer-github-card#latest",
-    "paper-date-picker": "David-Mulder/paper-date-picker#latest"
+    "polymer-github-card": "iamolivinius/polymer-github-card#master",
+    "paper-date-picker": "David-Mulder/paper-date-picker#master"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#latest"
+    "web-component-tester": "Polymer/web-component-tester#master"
   },
   "resolutions": {
     "core-component-page": "^0.3.0",
