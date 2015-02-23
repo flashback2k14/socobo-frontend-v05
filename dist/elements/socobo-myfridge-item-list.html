@@ -1,14 +1,14 @@
 <!--
   ToDo:
     content: all socobo-myfridge-item.html elements
---> <!-- Polymer --> <link rel="import" href="../../../../bower_components/polymer/polymer.html"> <script src="../scripts/script.min.js"></script> <polymer-element name="socobo-myfridge-item-list"> <template> <!-- Styling --> <link rel="stylesheet" href="../styles/style.min.css"> <!-- Element Content --> <div layout="" vertical="" center=""> <core-ajax id="ajaxMyfridgeItems" auto="" url="../../socobo-api-test/myFridgeItemList.json" headers="{"X-AUTH-TOKEN":"{{authtoken}}"}" handleas="json" contenttype="application/json" on-core-response="{{handleMyFridgeItemsOnResponse}}" on-core-error="{{handleMyFridgeItemsOnError}}"> </core-ajax> <!--
-        ToDo: API atm not there
-      <socobo-ajax id="socoboMyfridgeItems"
-                   url="/getAllFridgeItems"
-                   method="POST"
-                   on-socobo-ajax-response-ok="{{handleMyFridgeItemsOnResponse}}"
-                   on-socobo-ajax-response-failed="{{handleMyFridgeItemsOnError}}">
-      </socobo-ajax>
-      --> <template repeat="{{item in myFridgeItems}}"> <socobo-myfridge-item item="{{item}}" on-itemeditisclicked="{{openItemEditor}}"> </socobo-myfridge-item> </template> </div> </template> <script>
+--> <!-- Polymer --> <link rel="import" href="../../../../bower_components/polymer/polymer.html"> <script src="../scripts/script.min.js"></script> <polymer-element name="socobo-myfridge-item-list"> <template> <!-- Styling --> <link rel="stylesheet" href="../styles/style.min.css"> <!-- Element Content --> <core-header-panel mode="waterfall"> <div class="core-header" horizontal="" layout="" center=""> <p>Search:</p> <paper-input-decorator> <input is="core-input" id="searchQuery" type="text" value="{{searchStr}}"> </paper-input-decorator> </div> <div class="content" vertical="" layout="" center=""> <template repeat="{{item in myFridgeItems}}"> <template if="{{ searchForItems(item, searchStr) }}"> <socobo-myfridge-item id="myFridgeItem" item="{{item}}"></socobo-myfridge-item> </template> </template> </div> </core-header-panel> <core-ajax id="ajaxMyfridgeItems" auto="" url="../../socobo-api-test/myFridgeItemList.json" headers="{"X-AUTH-TOKEN":"{{authtoken}}"}" handleas="json" contenttype="application/json" on-core-response="{{handleMyFridgeItemsOnResponse}}" on-core-error="{{handleMyFridgeItemsOnError}}"> </core-ajax> <!--
+      ToDo: API atm not there
+    <socobo-ajax id="socoboMyfridgeItems"
+                 url="/getAllFridgeItems"
+                 method="POST"
+                 on-socobo-ajax-response-ok="{{handleMyFridgeItemsOnResponse}}"
+                 on-socobo-ajax-response-failed="{{handleMyFridgeItemsOnError}}">
+    </socobo-ajax>
+    --> </template> <script>
     Polymer('socobo-myfridge-item-list', socoboMyfridgeItemList);
   </script> </polymer-element>

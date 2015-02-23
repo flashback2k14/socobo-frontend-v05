@@ -3,6 +3,6 @@
     content: socobo-myfridge-item-list.html
              fab -> opening dialog: socobo-myfridge-add-item-dialog.html
                  -> create new items
---> <!-- Polymer --> <link rel="import" href="../../bower_components/polymer/polymer.html"> <script src="../scripts/script.min.js"></script> <polymer-element name="socobo-myfridge"> <template> <!-- Styling --> <link rel="stylesheet" href="../styles/style.min.css"> <!-- Element Content --> <p>PlaceHolder</p> <socobo-myfridge-item-list></socobo-myfridge-item-list> </template> <script>
+--> <!-- Polymer --> <link rel="import" href="../../bower_components/polymer/polymer.html"> <script src="../scripts/script.min.js"></script> <polymer-element name="socobo-myfridge"> <template> <!-- Styling --> <link rel="stylesheet" href="../styles/style.min.css"> <!-- Element Content --> <div id="content" horizontal="" layout=""> <socobo-myfridge-item-list id="socoboMyFridgeItemList"></socobo-myfridge-item-list> <socobo-myfridge-add-item-dialog id="socoboMyFridgeDialog"></socobo-myfridge-add-item-dialog> </div> <paper-toast id="toast" duration="1500"> </paper-toast> </template> <script>
     Polymer('socobo-myfridge', socoboMyFridge);
   </script> </polymer-element>
