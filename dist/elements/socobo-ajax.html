@@ -1,0 +1,3 @@
+<!-- Polymer --> <link rel="import" href="../../bower_components/polymer/polymer.html"> <script src="../scripts/script.min.js"></script> <polymer-element name="socobo-ajax" attributes="url method params"> <template> <core-ajax id="socoboAjax" url="{{url}}" method="{{method}}" params="{{params}}" headers="{"X-AUTH-TOKEN":"{{authtoken}}"}" handleas="json" contenttype="application/json" on-core-response="{{socoboAjaxResponse}}" on-core-error="{{socoboAjaxError}}"> </core-ajax> </template> <script>
+    Polymer('socobo-ajax', socoboAjax);
+  </script> </polymer-element>
