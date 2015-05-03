@@ -36,6 +36,13 @@
      */
     params: '',
 
+      /**
+       * @variable: body
+       * @datatype: Object
+       * @defaultValue: null
+       * @description: data to be send with POST and PUT requests
+       */
+    body: null,
     /**
      * DEFAULT POLYMER
      */

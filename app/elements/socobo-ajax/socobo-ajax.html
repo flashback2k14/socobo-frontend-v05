@@ -3,7 +3,7 @@
 <script src="socobo-ajax.js"></script>
 
 <polymer-element name="socobo-ajax"
-                 attributes="url method params">
+                 attributes="url method params body">
   <template>
 
     <core-ajax
@@ -11,8 +11,8 @@
       url="{{url}}"
       method="{{method}}"
       params='{{params}}'
+      body='{{body}}'
       headers='{"X-AUTH-TOKEN":"{{authtoken}}"}'
-      handleAs="json"
       contentType="application/json"
       on-core-response="{{socoboAjaxResponse}}"
       on-core-error="{{socoboAjaxError}}">

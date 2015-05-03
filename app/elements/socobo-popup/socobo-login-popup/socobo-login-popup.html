@@ -34,9 +34,8 @@
         </div>
 
         <socobo-ajax id="socoboLoginForm"
-                     url="/Login"
+                     url="/login"
                      method="POST"
-                     params='{"emailAddress":"{{emailAddress}}", "password": "{{password}}"}'
                      on-socobo-ajax-response-ok="{{handleLoginOnResponse}}"
                      on-socobo-ajax-response-failed="{{handleLoginOnError}}">
         </socobo-ajax>

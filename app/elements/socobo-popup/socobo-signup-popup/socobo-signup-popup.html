@@ -43,7 +43,7 @@
         <socobo-ajax id="socoboSignUpForm"
                      url="/signup"
                      method="POST"
-                     params='{"userName":"{{userName}}", "email":"{{email}}", "password":"{{password}}","passwordRepeat":"{{passwordRepeat}}"}'
+                     body='{}'
                      on-socobo-ajax-response-ok="{{handleSignupOnResponse}}"
                      on-socobo-ajax-response-failed="{{handleSignupOnError}}">
         </socobo-ajax>
