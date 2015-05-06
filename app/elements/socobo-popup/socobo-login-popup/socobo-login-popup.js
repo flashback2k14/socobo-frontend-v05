@@ -35,7 +35,7 @@
       }
 
       if (inputIsValid) {
-          this.$.socoboLoginForm.body= JSON.stringify({emailAddress: this.emailAddress, password: this.password });
+          this.$.socoboLoginForm.body= JSON.stringify({email: this.email, password: this.password });
         this.$.socoboLoginForm.sendRequest();
         //
         this.fire('login-submitted', {isSubmitted: true});
