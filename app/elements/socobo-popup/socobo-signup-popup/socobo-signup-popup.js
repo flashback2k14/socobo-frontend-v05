@@ -42,10 +42,10 @@
 
             if (inputIsValid) {
                 var signUp = {
-                    "userName": username,
-                    "email": email,
-                    "password": "password",
-                    "passwordRepeat": "password"
+                    "userName": this.$.paper_input_name.value,
+                    "email": this.$.paper_input_email.value,
+                    "password": this.$.paper_input_password.value,
+                    "passwordRepeat": this.$.paper_input_password_again.value
                 };
                 this.$.socoboSignUpForm.body = JSON.stringify(signUp);
                 this.$.socoboSignUpForm.sendRequest();
